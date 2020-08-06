@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Accommodation;
+use App\Models\Accommodation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AccommodationUpdateRequest;
 use App\Http\Requests\AccommodationStoreRequest;
 use App\Http\Resources\AccommodationResource;
@@ -21,8 +22,17 @@ class AccommodationController extends Controller
 
     public function index()
     {
+        $data = Accommodation::has('tenant')->get();
         $rows = AccommodationResource::collection(Accommodation::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+            'all'       => count($data),
+            'active'    => count($data->where('status', true)->where('trash', false)),
+            'inactive'  => count($data->where('status', false)->where('trash', false)), 
+            'trash'     => count($data->where('trash', true)),
+
+            'rows'      => $rows,
+            'paginate'  => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(AccommodationStoreRequest $request)
@@ -83,7 +93,7 @@ class AccommodationController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

@@ -13,7 +13,7 @@ class Imageable extends Model
         return $this->morphTo();
     }
 
-    public static function uploadFile($file, $name, $key=0)
+    public static function uploadFile($file, $belong, $key=0)
     {
         $base64_str   = substr($imagePath, strpos($imagePath, ",")+1);
         $imageDecoded = base64_decode($base64_str);
@@ -25,17 +25,19 @@ class Imageable extends Model
           }
         }
 
-        $time         = $name.time().$key.uniqid();
-        $imageName    = $time.'.'.$type;
+        $name         = $belong.time().$key.uniqid();
+        $imageName    = $name.'.'.$type;
         // AWS 
-        Storage::disk('s3')->put('multitenacy/'.$this->plural($name).'/'.$imageName, $imageDecoded);
+        //Storage::disk('s3')->put('multitenacy/'.$this->plural($name).'/'.$imageName, $imageDecoded);
+        Storage::disk('public')->put('uploads/'.$this->plural($name).'/'.$imageName, $imageDecoded);
 
-        return $path.$fileName;
+        return $imageName;
     }
 
     public static function getImagePath($path, $image)
     {
-        return 'https://s3.eu-central-1.amazonaws.com/other.projects.storage/multitenacy/'.$path.'/'.$image;
+        return request()->root().'/'.$path.'/'.$image;
+        //return 'https://s3.eu-central-1.amazonaws.com/other.projects.storage/multitenacy/'.$path.'/'.$image;
     }
 
     public function plural($singular = '')

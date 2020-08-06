@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Social;
+use App\Models\Social;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SocialUpdateRequest;
 use App\Http\Requests\SocialStoreRequest;
 use App\Http\Resources\SocialResource;
@@ -83,7 +84,7 @@ class SocialController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

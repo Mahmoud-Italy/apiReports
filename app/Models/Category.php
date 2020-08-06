@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Tag;
+use Str;
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
+use App\Models\Package;
 use App\Models\Metable;
+use App\Models\Taggable;
 use App\Models\Imageable;
+use App\Models\Destination;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -16,33 +19,39 @@ class Category extends Model
     protected $guarded = [];
 
     public function tenant() {
-        return $this->belongsTo(Tenant::class, 'tenant_id')
-                    ->where('tenant_id', Domain::getTenantId());
+        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
-
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function destination() {
+        return $this->belongsTo(Destination::class, 'destination_id');
     }
 
     public function meta() {
         return $this->morphOne(Metable::class, 'metable')
                     ->select('meta_title', 'meta_keywords', 'meta_description');
     }
-
     public function image() {
         return $this->morphOne(Imageable::class, 'imageable')
                     ->where('is_icon', false)
                     ->select('image_url', 'image_alt', 'image_title');
     }
-
     public function icon() {
         return $this->morphOne(Imageable::class, 'imageable')
                     ->where('is_icon', true)
                     ->select('image_url', 'image_alt', 'image_title');
     }
 
+    public function tags() {
+        return $this->morphMany(Taggable::class, 'taggable');
+    }
+
     public function childs() {
         return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    }
+    public function packages() {
+        return $this->hasMany(Package::class, 'category_id', 'id'); 
     }
 
 
@@ -56,8 +65,8 @@ class Category extends Model
           $obj->has('tenant');
 
           // search for multiple columns..
-          if(isset($value['search'])) {
-            $obj->where(function($q){
+          if(isset($value['search']) && $value['search']) {
+            $obj->where(function($q) use ($value) {
                 $q->where('slug', 'like', '%'.$value['search'].'%');
                 $q->orWhere('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
@@ -65,7 +74,7 @@ class Category extends Model
           }
 
           // status
-          if(isset($value['status'])) {
+          if(isset($value['status']) && $value['status']) {
               if($value['status'] == 'active')
                   $obj->where(['status' => true, 'trash' => false]);
               else if ($value['status'] == 'inactive')
@@ -75,7 +84,7 @@ class Category extends Model
           }
 
           // order By..
-          if(isset($value['order'])) {
+          if(isset($value['order']) && $value['order']) {
             if($value['order_by'] == 'title')
               $obj->orderBy('title', $value['order']);
             else if ($value['order_by'] == 'created_at')
@@ -102,15 +111,16 @@ class Category extends Model
             DB::beginTransaction();
 
               // Row
-              $row              = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id   = Domain::getTenantId();
-              $row->user_id     = auth()->guard('api')->user()->id;
-              $row->parent_id   = $value['parent_id'] ?? NULL;
-              $row->slug        = $value['slug'] ?? NULL;
-              $row->title       = $value['title'] ?? NULL;
-              $row->body        = $value['body'] ?? NULL;
-              $row->color       = $value['color'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
+              $row                 = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->tenant_id      = Domain::getTenantId();
+              $row->user_id        = auth()->guard('api')->user()->id;
+              $row->destination_id = $value['destination_id'] ?? NULL;
+              $row->parent_id      = $value['parent_id'] ?? NULL;
+              $row->slug           = $value['slug'] ?? NULL;
+              $row->title          = $value['title'] ?? NULL;
+              $row->body           = $value['body'] ?? NULL;
+              $row->color          = $value['color'] ?? NULL;
+              $row->status         = (boolean)$value['status'] ?? false;
               $row->save();
 
 
@@ -127,10 +137,15 @@ class Category extends Model
 
               // Image
               if(isset($value['image_url'])) {
-                $image = Image::uploadImage($value['image_url'], 'category', 0, 'categories');
+                if($value['image_url'] 
+                  && !Str::contains($value['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
+                    $image = Imageable::uploadImage($value['image_url'], 'category');
+                } else {
+                    $image = $value['image_url'];
+                }
                 $row->image()->delete();
                 $row->image()->create([
-                    'image_url'       => $image,
+                    'image_url'       => $image ?? NULL,
                     'image_alt'       => $value['image_alt'] ?? NULL,
                     'image_title'     => $value['image_title'] ?? NULL
                 ]);
@@ -138,10 +153,15 @@ class Category extends Model
 
               // icon
               if(isset($value['icon_url'])) {
-                $icon = Image::uploadImage($value['icon_url'], 'icon', 0, 'categories');
+                if($value['icon_url'] 
+                  && !Str::contains($value['icon_url'],['s3.eu-central-1.amazonaws.com'])) {
+                    $icon = Imageable::uploadImage($value['icon_url'], 'category', 1);
+                } else {
+                    $icon = $value['icon_url'];
+                }
                 $row->icon()->delete();
                 $row->icon()->create([
-                    'image_url'       => $icon,
+                    'image_url'       => $icon ?? NULL,
                     'image_alt'       => (isset($value['icon_alt'])) ? $value['icon_alt'] : NULL,
                     'image_title'     => (isset($value['icon_title'])) ? $value['icon_alt'] : NULL,
                     'is_icon'         => true

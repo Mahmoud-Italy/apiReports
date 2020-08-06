@@ -22,8 +22,17 @@ class DestinationController extends Controller
 
     public function index()
     {
+        $data = Destination::has('tenant')->get();
         $rows = DestinationResource::collection(Destination::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+            'all'       => count($data),
+            'active'    => count($data->where('status', true)->where('trash', false)),
+            'inactive'  => count($data->where('status', false)->where('trash', false)), 
+            'trash'     => count($data->where('trash', true)),
+
+            'rows'      => $rows,
+            'paginate'  => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(DestinationStoreRequest $request)
@@ -84,7 +93,7 @@ class DestinationController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

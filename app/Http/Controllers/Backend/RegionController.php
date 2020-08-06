@@ -2,32 +2,42 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\BlogCategory;
+use App\Models\Region;
 use Illuminate\Http\Request;
-use App\Http\Requests\BlogCategoryUpdateRequest;
-use App\Http\Requests\BlogCategoryStoreRequest;
-use App\Http\Resources\BlogCategoryResource;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RegionUpdateRequest;
+use App\Http\Requests\RegionStoreRequest;
+use App\Http\Resources\RegionResource;
 
-class BlogCategoryController extends Controller
+class RegionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_blogs', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_blogs',  ['only' => ['store']]);
-        $this->middleware('permission:edit_blogs', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_blogs', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_regions', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_regions',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_regions', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_regions', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $rows = BlogCategoryResource::collection(BlogCategory::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        $data = Region::has('tenant')->get();
+        $rows = RegionResource::collection(Region::fetchData(request()->all()));
+        return response()->json([
+            'all'       => count($data),
+            'active'    => count($data->where('status', true)->where('trash', false)),
+            'inactive'  => count($data->where('status', false)->where('trash', false)), 
+            'trash'     => count($data->where('trash', true)),
+
+            'rows'      => $rows,
+            'paginate'  => $this->paginate($rows)
+        ], 200);
     }
 
-    public function store(BlogCategoryStoreRequest $request)
+    public function store(RegionStoreRequest $request)
     {
-        $row = BlogCategory::createOrUpdate(NULL, $request->all());
+        $row = Region::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -37,13 +47,13 @@ class BlogCategoryController extends Controller
 
     public function show($id)
     {
-        $row = new BlogCategoryResource(BlogCategory::has('tenant')->findOrFail($id));
+        $row = new RegionResource(Region::has('tenant')->findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(BlogCategoryUpdateRequest $request, $id)
+    public function update(RegionUpdateRequest $request, $id)
     {
-        $row = BlogCategory::createOrUpdate($id, $request->all());
+        $row = Region::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -54,7 +64,7 @@ class BlogCategoryController extends Controller
     public function destroy($id)
     {
         try {
-            $row = BlogCategory::has('tenant');
+            $row = Region::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -75,7 +85,7 @@ class BlogCategoryController extends Controller
     public function active($id)
     {
         try {
-            $row = BlogCategory::has('tenant');
+            $row = Region::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -83,7 +93,7 @@ class BlogCategoryController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 
@@ -96,7 +106,7 @@ class BlogCategoryController extends Controller
     public function inactive($id)
     {
         try {
-            $row = BlogCategory::has('tenant');
+            $row = Region::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -117,7 +127,7 @@ class BlogCategoryController extends Controller
     public function trash($id)
     {
         try {
-            $row = BlogCategory::has('tenant');
+            $row = Region::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -138,7 +148,7 @@ class BlogCategoryController extends Controller
     public function restore($id)
     {
         try {
-            $row = BlogCategory::has('tenant');
+            $row = Region::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -158,7 +168,7 @@ class BlogCategoryController extends Controller
 
     public function export()
     {
-        $data = BlogCategory::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Region::has('tenant')->where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -173,6 +183,6 @@ class BlogCategoryController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => BlogCategoryResource::collection($data)], 200);
+        return response()->json(['rows' => RegionResource::collection($data)], 200);
     }
 }

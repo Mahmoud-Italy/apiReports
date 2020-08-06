@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Package;
+use App\Models\Package;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Resources\PackageResource;
@@ -21,8 +22,17 @@ class PackageController extends Controller
 
     public function index()
     {
+        $data = Package::has('tenant')->get();
         $rows = PackageResource::collection(Package::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+            'all'       => count($data),
+            'active'    => count($data->where('status', true)->where('trash', false)),
+            'inactive'  => count($data->where('status', false)->where('trash', false)), 
+            'trash'     => count($data->where('trash', true)),
+
+            'rows'      => $rows,
+            'paginate'  => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(PackageStoreRequest $request)
@@ -83,7 +93,7 @@ class PackageController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

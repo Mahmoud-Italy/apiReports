@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Review;
+use App\Models\Review;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ReviewUpdateRequest;
 use App\Http\Requests\ReviewStoreRequest;
 use App\Http\Resources\ReviewResource;
@@ -21,8 +22,17 @@ class ReviewController extends Controller
 
     public function index()
     {
+        $data = Review::has('tenant')->get();
         $rows = ReviewResource::collection(Review::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+            'all'       => count($data),
+            'active'    => count($data->where('status', true)->where('trash', false)),
+            'inactive'  => count($data->where('status', false)->where('trash', false)), 
+            'trash'     => count($data->where('trash', true)),
+
+            'rows'      => $rows,
+            'paginate'  => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(ReviewStoreRequest $request)
@@ -83,7 +93,7 @@ class ReviewController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

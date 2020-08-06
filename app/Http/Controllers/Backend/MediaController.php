@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Media;
+use App\Models\Media;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaUpdateRequest;
 use App\Http\Requests\MediaStoreRequest;
 use App\Http\Resources\MediaResource;
@@ -83,7 +84,7 @@ class MediaController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

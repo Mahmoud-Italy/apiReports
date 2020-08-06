@@ -22,8 +22,17 @@ class WikiController extends Controller
 
     public function index()
     {
+        $data = Wiki::has('tenant')->get();
         $rows = WikiResource::collection(Wiki::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+            'all'       => count($data),
+            'active'    => count($data->where('status', true)->where('trash', false)),
+            'inactive'  => count($data->where('status', false)->where('trash', false)), 
+            'trash'     => count($data->where('trash', true)),
+
+            'rows'      => $rows,
+            'paginate'  => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(WikiStoreRequest $request)

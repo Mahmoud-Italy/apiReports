@@ -17,6 +17,7 @@ class CreateDestinationsTable extends Migration
             $table->id();
             $table->bigInteger('tenant_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('region_id')->unsigned()->nullable();
             $table->bigInteger('parent_id')->unsigned()->nullable();
             
             $table->string('slug')->nullable();
@@ -32,6 +33,9 @@ class CreateDestinationsTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->foreign('region_id')->references('id')->on('regions')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
         });

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Update;
+use App\Models\Update;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUpdateRequest;
 use App\Http\Requests\UpdateStoreRequest;
 use App\Http\Resources\UpdateResource;
@@ -83,7 +84,7 @@ class UpdateController extends Controller
                 }
                 $row->whereIN('id', $ids);
             } else {
-                $row->where('id', $id)
+                $row->where('id', $id);
             }   
             $row->update(['status' => true, 'trash' => false]);
 

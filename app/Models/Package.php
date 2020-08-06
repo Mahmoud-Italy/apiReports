@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Str;
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
@@ -93,8 +94,8 @@ class Package extends Model
           $obj->has('tenant');
 
           // search for multiple columns..
-          if(isset($value['search'])) {
-            $obj->where(function($q){
+          if(isset($value['search']) && $value['search']) {
+            $obj->where(function($q) use ($value) {
                 $q->where('slug', 'like', '%'.$value['search'].'%');
                 $q->orWhere('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
@@ -102,7 +103,7 @@ class Package extends Model
           }
 
           // status
-          if(isset($value['status'])) {
+          if(isset($value['status']) && $value['status']) {
               if($value['status'] == 'active')
                   $obj->where(['status' => true, 'trash' => false]);
               else if ($value['status'] == 'inactive')
@@ -112,7 +113,7 @@ class Package extends Model
           }
 
           // order By..
-          if(isset($value['order'])) {
+          if(isset($value['order']) && $value['order']) {
             if($value['order_by'] == 'title')
               $obj->orderBy('title', $value['order']);
             else if ($value['order_by'] == 'created_at')
@@ -183,10 +184,15 @@ class Package extends Model
 
               // Image
               if(isset($value['image_url'])) {
-                $image = Image::uploadImage($value['image_url'], 'package', 0, 'packages');
+                if($value['image_url'] 
+                  && !Str::contains($value['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
+                    $image = Imageable::uploadImage($value['image_url'], 'package');
+                } else {
+                    $image = $value['image_url'];
+                }
                 $row->image()->delete();
                 $row->image()->create([
-                    'image_url'       => $image,
+                    'image_url'       => $image ?? NULL,
                     'image_alt'       => $value['image_alt'] ?? NULL,
                     'image_title'     => $value['image_title'] ?? NULL
                 ]);
@@ -194,13 +200,17 @@ class Package extends Model
 
               // image 2
               if(isset($value['image2_url'])) {
-                $image2 = Image::uploadImage($value['image2_url'], 'package2', 0, 'packages');
-                $row->image2()->delete();
-                $row->image2()->create([
-                    'image_url'       => $image2,
-                    'image_alt'       => $value['image2_alt'] ?? NULL,
-                    'image_title'     => $value['image2_title'] ?? NULL,
-                    'is_tiny'         => true
+                if($value['image2_url'] 
+                  && !Str::contains($value['image2_url'], ['s3.eu-central-1.amazonaws.com'])) {
+                    $image2 = Imageable::uploadImage($value['image2_url'], 'package');
+                } else {
+                    $image2 = $value['image2_url'];
+                }
+                $row->image()->delete();
+                $row->image()->create([
+                    'image_url'       => $image2 ?? NULL,
+                    'image_alt'       => $value['image_alt'] ?? NULL,
+                    'image_title'     => $value['image_title'] ?? NULL
                 ]);
               }
 

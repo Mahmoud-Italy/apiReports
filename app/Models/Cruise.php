@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Str;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Domain;
@@ -16,8 +17,7 @@ class Cruise extends Model
     protected $guarded = [];
 
     public function tenant() {
-        return $this->belongsTo(Tenant::class, 'tenant_id')
-                    ->where('tenant_id', Domain::getTenantId());
+        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
 
     public function user() {
@@ -49,8 +49,8 @@ class Cruise extends Model
           $obj->has('tenant');
 
           // search for multiple columns..
-          if(isset($value['search'])) {
-            $obj->where(function($q){
+          if(isset($value['search']) && $value['search']) {
+            $obj->where(function($q) use ($value) {
                 $q->where('slug', 'like', '%'.$value['search'].'%');
                 $q->orWhere('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
@@ -58,7 +58,7 @@ class Cruise extends Model
           }
 
           // status
-          if(isset($value['status'])) {
+          if(isset($value['status']) && $value['status']) {
               if($value['status'] == 'active')
                   $obj->where(['status' => true, 'trash' => false]);
               else if ($value['status'] == 'inactive')
@@ -68,7 +68,7 @@ class Cruise extends Model
           }
 
           // order By..
-          if(isset($value['order'])) {
+          if(isset($value['order']) && $value['order']) {
             if($value['order_by'] == 'title')
               $obj->orderBy('title', $value['order']);
             else if ($value['order_by'] == 'created_at')
@@ -120,10 +120,15 @@ class Cruise extends Model
 
               // Image
               if(isset($value['image_url'])) {
-                $image = Image::uploadImage($value['image_url'], 'category', 0, 'categories');
+                if($value['image_url'] 
+                  && !Str::contains($value['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
+                    $image = Imageable::uploadImage($value['image_url'], 'cruise');
+                } else {
+                    $image = $value['image_url'];
+                }
                 $row->image()->delete();
                 $row->image()->create([
-                    'image_url'       => $image,
+                    'image_url'       => $image ?? NULL,
                     'image_alt'       => $value['image_alt'] ?? NULL,
                     'image_title'     => $value['image_title'] ?? NULL
                 ]);

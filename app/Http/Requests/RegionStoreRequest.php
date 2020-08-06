@@ -6,7 +6,7 @@ use App\Models\Domain;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class BlogCategoryUpdateRequest extends FormRequest
+class RegionStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,12 @@ class BlogCategoryUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id        = request('id');
         $tenant_id = Domain::getTenantId();
-        
+
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:destinations,slug,' . $id . ',id,tenant_id,' . $tenant_id
+            'title'  => 'required|unique:regions,title,NULL,id,tenant_id,' . $tenant_id,
+            'order'  => 'numeric'
         ];
     }
 

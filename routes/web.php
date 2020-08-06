@@ -31,31 +31,26 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     # Navigation
     $app->apiResource('destinations', 'DestinationController');
     $app->apiResource('categories', 'CategoryController');
-    $app->apiResource('reviews', 'ReviewController');
-    $app->apiResource('hotels', 'HotelController');
-
-    # Packages
-    $app->apiResource('package_types', 'PackageTypeController');
+    $app->apiResource('writers', 'BlogWriterController');
+    $app->apiResource('articles', 'BlogArticleController');
+    $app->apiResource('packageTypes', 'PackageTypeController');
     $app->apiResource('packages', 'PackageController');
-
-    # Blogs
-    $app->apiResource('blog/categories', 'BlogCategoryController');
-    $app->apiResource('blog/writers', 'BlogWriterController');
-    $app->apiResource('blog/articles', 'BlogArticleController');
-
     $app->apiResource('medias', 'MediaController');
     $app->apiResource('cruises', 'CruiseController');
     $app->apiResource('wikis', 'WikiController');
     $app->apiResource('users', 'UserController');
+    $app->apiResource('roles', 'RoleController');
     $app->apiResource('pages', 'PageController');
+    $app->apiResource('hotels', 'HotelController');
 
     # Settings
+    $app->apiResource('regions', 'RegionController');
     $app->apiResource('updates', 'UpdateController');
     $app->apiResource('faqs', 'FaqWriterController');
     $app->apiResource('sliders', 'SliderController');
     $app->apiResource('socials', 'SocialController');
     $app->apiResource('tenants', 'TenantController');
-    $app->apiResource('roles', 'RoleController');
+    $app->apiResource('reviews', 'ReviewController');
 
     });
 

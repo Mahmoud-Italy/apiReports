@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MediaResource extends JsonResource
+class RegionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,9 +22,8 @@ class MediaResource extends JsonResource
             'meta'          => ($this->meta) ?? NULL,
             'user'          => ($this->user) ?? NULL,
 
-            'slug'          => $this->slug,
             'title'         => $this->title,
-            'body'          => $this->body,
+            'order'         => $this->order,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

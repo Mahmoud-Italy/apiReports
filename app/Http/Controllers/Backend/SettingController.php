@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Setting;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SettingUpdateRequest;
 use App\Http\Requests\SettingStoreRequest;
 use App\Http\Resources\SettingResource;
