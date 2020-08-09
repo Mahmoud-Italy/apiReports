@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthStoreRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\PermissionResource;
 
 class AuthController extends Controller
 {
@@ -111,7 +112,10 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type'   => 'bearer',
-            'expires_in'   => auth()->factory()->getTTL() * 60
+            'expires_in'   => auth()->factory()->getTTL() * 60,
+
+            'user'         => new UserResource(User::findOrFail(auth()->guard('api')->user()->id)),
+            'permissions'  => PermissionResource::collection(auth()->user()->getAllPermissions())
         ], 200);
     }
 }

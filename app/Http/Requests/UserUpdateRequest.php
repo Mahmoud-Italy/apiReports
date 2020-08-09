@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Domain;
-use Urameshibr\Requests\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
-class WikiStoreRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +23,14 @@ class WikiStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $tenant_id = Domain::getTenantId();
+        $id = $this->route()->parameter('setting')->id;
 
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            //'slug'   => 'required|unique:wikis,slug,NULL,id,tenant_id,' . $tenant_id
+            'image' => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            'email'   => 'unique:users,email,' . $id . ',id,tenant_id,' . $tenant_id
         ];
     }
 
-    // in case you want to return single line of error instead of array of errors..
     protected function formatErrors (Validator $validator)
     {
         return ['message' => $validator->errors()->first()];

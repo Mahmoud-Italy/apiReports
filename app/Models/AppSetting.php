@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use DB;
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
+use App\Models\Metable;
+use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
-class PackageType extends Model
+class AppSetting extends Model
 {
     protected $guarded = [];
 
@@ -18,10 +21,6 @@ class PackageType extends Model
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function childs() {
-        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
     }
 
 
@@ -36,9 +35,9 @@ class PackageType extends Model
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
-            $obj->where(function($q) use ($value) {
+            $obj->where(function($q){
                 $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('name', 'like', '%'.$value['search'].'%');
+                $q->orWhere('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -81,16 +80,15 @@ class PackageType extends Model
             DB::beginTransaction();
 
               // Row
-              $row                  = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id       = Domain::getTenantId();
-              $row->user_id         = auth()->guard('api')->user()->id;
-              $row->parent_id       = $value['parent_id'] ?? NULL;
-              $row->slug            = $value['slug'] ?? NULL;
-              $row->name            = $value['name'] ?? NULL;
-              $row->view_in_header  = $value['view_in_header'] ?? false;
-              $row->view_in_footer  = $value['view_in_footer'] ?? false;
-              $row->status          = $value['status'] ?? false;
+              $row              = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->tenant_id   = Domain::getTenantId();
+              $row->user_id     = auth()->guard('api')->user()->id;
+              $row->name        = $value['name'] ?? NULL;
+              $row->icon        = $value['icon'] ?? NULL;
+              $row->setup       = $value['setup'] ?? false;
+              $row->status      = $value['status'] ?? false;
               $row->save();
+
 
             DB::commit();
 

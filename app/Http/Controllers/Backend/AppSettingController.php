@@ -2,42 +2,33 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Destination;
+use App\Models\AppSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DestinationUpdateRequest;
-use App\Http\Requests\DestinationStoreRequest;
-use App\Http\Resources\DestinationResource;
+use App\Http\Requests\AppSettingUpdateRequest;
+use App\Http\Requests\AppSettingStoreRequest;
+use App\Http\Resources\AppSettingResource;
 
-class DestinationController extends Controller
+class AppSettingController extends Controller
 {
     function __construct()
     {
-        //$this->middleware('permission:view_destinations', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_destinations',  ['only' => ['store']]);
-        $this->middleware('permission:edit_destinations', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_destinations', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_'.$appSetting, ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_'.$appSetting,  ['only' => ['store']]);
+        // $this->middleware('permission:edit_'.$appSetting, 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_'.$appSetting, ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = Destination::has('tenant')->get();
-        $rows = DestinationResource::collection(Destination::fetchData(request()->all()));
-        return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
-        ], 200);
+        $rows = AppSettingResource::collection(AppSetting::fetchData(request()->all()));
+        return response()->json(['rows' => $rows], 200);
     }
 
-    public function store(DestinationStoreRequest $request)
+    public function store(AppSettingStoreRequest $request)
     {
-        $row = Destination::createOrUpdate(NULL, $request->all());
+        $row = AppSetting::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -47,13 +38,13 @@ class DestinationController extends Controller
 
     public function show($id)
     {
-        $row = new DestinationResource(Destination::has('tenant')->findOrFail($id));
+        $row = new AppSettingResource(AppSetting::has('tenant')->findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(DestinationUpdateRequest $request, $id)
+    public function update(AppSettingUpdateRequest $request, $id)
     {
-        $row = Destination::createOrUpdate($id, $request->all());
+        $row = AppSetting::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -64,7 +55,7 @@ class DestinationController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = AppSetting::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -85,7 +76,7 @@ class DestinationController extends Controller
     public function active($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = AppSetting::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -106,7 +97,7 @@ class DestinationController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = AppSetting::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -127,7 +118,7 @@ class DestinationController extends Controller
     public function trash($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = AppSetting::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -148,7 +139,7 @@ class DestinationController extends Controller
     public function restore($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = AppSetting::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -168,7 +159,7 @@ class DestinationController extends Controller
 
     public function export()
     {
-        $data = Destination::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = AppSetting::has('tenant')->where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -183,7 +174,6 @@ class DestinationController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => DestinationResource::collection($data)], 200);
+        return response()->json(['rows' => AppSettingResource::collection($data)], 200);
     }
-
 }

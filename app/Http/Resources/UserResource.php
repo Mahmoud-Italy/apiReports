@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WikiResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,18 +16,13 @@ class WikiResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            //'encrypt_id'    => encrypt($this->id),
+            'encrypt_id'    => encrypt($this->id),
+            'image'         => ($this->image) ? $this->image->url : NULL,
             
-            'image'         => ($this->image) ?? NULL,
-            'meta'          => ($this->meta) ?? NULL,
-            'user'          => ($this->user) ?? NULL,
+            'name'          => $this->name,
+            'email'         => $this->email,
 
-            'slug'          => $this->slug,
-            'title'         => $this->title,
-            'body'          => $this->body,
-            'short_body'    => $this->short_body,
-
-            'packages'      => $this->packages->count(),
+            'role'          => $this->roles()->first()->name,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

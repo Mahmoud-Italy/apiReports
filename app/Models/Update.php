@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Tag;
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\Metable;
+use App\Models\Taggable;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,6 @@ class Update extends Model
     public function tenant() {
         return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
-
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -27,14 +26,13 @@ class Update extends Model
         return $this->morphOne(Metable::class, 'metable')
                     ->select('meta_title', 'meta_keywords', 'meta_description');
     }
-
     public function image() {
         return $this->morphOne(Imageable::class, 'imageable')
                     ->select('image_url', 'image_alt', 'image_title');
     }
 
-    public function childs() {
-        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    public function tags() {
+        return $this->morphMany(Taggable::class, 'taggable');
     }
 
 
@@ -50,8 +48,7 @@ class Update extends Model
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->Where('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -97,26 +94,11 @@ class Update extends Model
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
               $row->tenant_id   = Domain::getTenantId();
               $row->user_id     = auth()->guard('api')->user()->id;
-              $row->parent_id   = $value['parent_id'] ?? NULL;
-              $row->slug        = $value['slug'] ?? NULL;
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
-              $row->color       = $value['color'] ?? NULL;
+              $row->order       = $value['order'] ?? NULL;
               $row->status      = $value['status'] ?? false;
               $row->save();
-
-
-              // Metas
-              if(isset($value['meta_title'])) {
-                $row->meta()->delete();
-                $row->meta()->create([
-                    'meta_title'       => $value['meta_title'],
-                    'meta_keywords'    => $value['meta_keywords'],
-                    'meta_description' => $value['meta_description']
-                ]);
-              }
-
-
 
             DB::commit();
 

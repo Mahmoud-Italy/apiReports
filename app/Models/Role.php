@@ -8,7 +8,7 @@ use App\Models\Domain;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Model;
 
-class PackageType extends Model
+class Role extends Model
 {
     protected $guarded = [];
 
@@ -19,11 +19,6 @@ class PackageType extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    public function childs() {
-        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
-    }
-
 
     // fetch Data
     public static function fetchData($value='')
@@ -37,8 +32,7 @@ class PackageType extends Model
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('name', 'like', '%'.$value['search'].'%');
+                $q->where('name', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -55,8 +49,8 @@ class PackageType extends Model
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'name')
+              $obj->orderBy('name', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
@@ -81,15 +75,12 @@ class PackageType extends Model
             DB::beginTransaction();
 
               // Row
-              $row                  = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id       = Domain::getTenantId();
-              $row->user_id         = auth()->guard('api')->user()->id;
-              $row->parent_id       = $value['parent_id'] ?? NULL;
-              $row->slug            = $value['slug'] ?? NULL;
-              $row->name            = $value['name'] ?? NULL;
-              $row->view_in_header  = $value['view_in_header'] ?? false;
-              $row->view_in_footer  = $value['view_in_footer'] ?? false;
-              $row->status          = $value['status'] ?? false;
+              $row                 = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->tenant_id      = Domain::getTenantId();
+              $row->user_id        = auth()->guard('api')->user()->id;
+              $row->name           = $value['name'] ?? NULL;
+              $row->authority      = $value['authority'] ?? false;
+              $row->status         = $value['status'] ?? false;
               $row->save();
 
             DB::commit();
@@ -100,5 +91,4 @@ class PackageType extends Model
             return $e->getMessage();
         }
     }
-
 }

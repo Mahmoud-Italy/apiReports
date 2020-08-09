@@ -29,29 +29,35 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     $app->authResource('auth', 'AuthController');
     
     # Navigation
-    $app->apiResource('destinations', 'DestinationController');
-    $app->apiResource('categories', 'CategoryController');
-    $app->apiResource('writers', 'BlogWriterController');
+    $app->apiResource('/', 'AppController');
     $app->apiResource('articles', 'BlogArticleController');
+    $app->apiResource('categories', 'CategoryController');
+    $app->apiResource('cruises', 'CruiseController');
+    $app->apiResource('destinations', 'DestinationController');
+    $app->apiResource('medias', 'MediaController');
+    $app->apiResource('logs', 'LogController');
     $app->apiResource('packageTypes', 'PackageTypeController');
     $app->apiResource('packages', 'PackageController');
-    $app->apiResource('medias', 'MediaController');
-    $app->apiResource('cruises', 'CruiseController');
-    $app->apiResource('wikis', 'WikiController');
-    $app->apiResource('users', 'UserController');
-    $app->apiResource('roles', 'RoleController');
     $app->apiResource('pages', 'PageController');
-    $app->apiResource('hotels', 'HotelController');
+    $app->apiResource('tags', 'TagController');
+    $app->apiResource('users', 'UserController');
+    $app->apiResource('wikis', 'WikiController');
+    $app->apiResource('writers', 'BlogWriterController');
+    $app->apiResource('appSettings', 'AppSettingController');
+    
 
-    # Settings
-    $app->apiResource('regions', 'RegionController');
-    $app->apiResource('updates', 'UpdateController');
-    $app->apiResource('faqs', 'FaqWriterController');
-    $app->apiResource('sliders', 'SliderController');
-    $app->apiResource('socials', 'SocialController');
-    $app->apiResource('tenants', 'TenantController');
-    $app->apiResource('reviews', 'ReviewController');
-
+        # App Settings
+        $app->apiResource('accomodations', 'AccomodationController');
+        $app->apiResource('faqs', 'FaqWriterController');
+        $app->apiResource('hotels', 'HotelController');
+        $app->apiResource('roles', 'RoleController');
+        $app->apiResource('regions', 'RegionController');
+        $app->apiResource('reviews', 'ReviewController');
+        $app->apiResource('sliders', 'SliderController');
+        $app->apiResource('socials', 'SocialController');
+        $app->apiResource('tenants', 'TenantController');
+        $app->apiResource('updates', 'UpdateController');
+    
     });
 
 

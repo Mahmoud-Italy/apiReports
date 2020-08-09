@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            $table->boolean('status')->default(false);
+            $table->boolean('trash')->default(false);
             $table->timestamps();
 
             $table->unique(['tenant_id', 'email']);

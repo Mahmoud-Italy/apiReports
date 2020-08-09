@@ -6,7 +6,7 @@ use App\Models\Domain;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class WikiStoreRequest extends FormRequest
+class RoleStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,8 @@ class WikiStoreRequest extends FormRequest
         $tenant_id = Domain::getTenantId();
 
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            //'slug'   => 'required|unique:wikis,slug,NULL,id,tenant_id,' . $tenant_id
+            // 'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            'name'   => 'unique:roles,slug,NULL,id,tenant_id,' . $tenant_id
         ];
     }
 

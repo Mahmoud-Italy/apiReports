@@ -16,15 +16,15 @@ class UpdateResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            //'encrypt_id'    => encrypt($this->id),
+            'encrypt_id'    => encrypt($this->id),
             
             'image'         => ($this->image) ?? NULL,
             'meta'          => ($this->meta) ?? NULL,
             'user'          => ($this->user) ?? NULL,
 
-            'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
+            'order'         => $this->order,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

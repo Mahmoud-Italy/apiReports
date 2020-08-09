@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Destination;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DestinationUpdateRequest;
-use App\Http\Requests\DestinationStoreRequest;
-use App\Http\Resources\DestinationResource;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Http\Requests\RoleStoreRequest;
+use App\Http\Resources\RoleResource;
 
-class DestinationController extends Controller
+class RoleController extends Controller
 {
     function __construct()
     {
-        //$this->middleware('permission:view_destinations', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_destinations',  ['only' => ['store']]);
-        $this->middleware('permission:edit_destinations', 
+        $this->middleware('permission:view_pages', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_pages',  ['only' => ['store']]);
+        $this->middleware('permission:edit_pages', 
                                 ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_destinations', ['only' => ['destroy']]);
+        $this->middleware('permission:delete_pages', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = Destination::has('tenant')->get();
-        $rows = DestinationResource::collection(Destination::fetchData(request()->all()));
+        $data = Role::has('tenant')->get();
+        $rows = RoleResource::collection(Role::fetchData(request()->all()));
         return response()->json([
             'all'       => count($data),
             'active'    => count($data->where('status', true)->where('trash', false)),
@@ -35,9 +35,9 @@ class DestinationController extends Controller
         ], 200);
     }
 
-    public function store(DestinationStoreRequest $request)
+    public function store(RoleStoreRequest $request)
     {
-        $row = Destination::createOrUpdate(NULL, $request->all());
+        $row = Role::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -47,13 +47,13 @@ class DestinationController extends Controller
 
     public function show($id)
     {
-        $row = new DestinationResource(Destination::has('tenant')->findOrFail($id));
+        $row = new RoleResource(Role::has('tenant')->findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(DestinationUpdateRequest $request, $id)
+    public function update(RoleUpdateRequest $request, $id)
     {
-        $row = Destination::createOrUpdate($id, $request->all());
+        $row = Role::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -64,7 +64,7 @@ class DestinationController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = Role::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -85,7 +85,7 @@ class DestinationController extends Controller
     public function active($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = Role::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -106,7 +106,7 @@ class DestinationController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = Role::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -127,7 +127,7 @@ class DestinationController extends Controller
     public function trash($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = Role::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -148,7 +148,7 @@ class DestinationController extends Controller
     public function restore($id)
     {
         try {
-            $row = Destination::has('tenant');
+            $row = Role::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -168,7 +168,7 @@ class DestinationController extends Controller
 
     public function export()
     {
-        $data = Destination::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Role::has('tenant')->where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -183,7 +183,6 @@ class DestinationController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => DestinationResource::collection($data)], 200);
+        return response()->json(['rows' => RoleResource::collection($data)], 200);
     }
-
 }

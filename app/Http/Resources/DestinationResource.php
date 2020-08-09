@@ -14,6 +14,15 @@ class DestinationResource extends JsonResource
      */
     public function toArray($request)
     {
+        // test GRAPH API idea
+        // $id = true;
+        // $res  = ($id) ? ['id' => $this->id] : []; 
+        // $res1 = ['encrypt_id' => encrypt($this->id)];
+        // $res2 = ['slug'  => $this->slug];
+        // $res3 = ['title' => $this->title];
+        // $res4 = ['body'  => $this->body];
+        // $merge = array_merge($res, $res1, $res2, $res3, $res4);
+        // return $merge;
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),

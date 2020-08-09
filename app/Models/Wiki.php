@@ -47,7 +47,7 @@ class Wiki extends Model
         return $this->hasMany(WikiItem::class, 'wiki_id');
     }
     public function packages() {
-        return $this->hasMany(WikiPackage::class,'wiki_id');
+        return $this->hasMany(WikiPackage::class, 'wiki_id');
     }
 
     
@@ -116,8 +116,8 @@ class Wiki extends Model
               $row->body           = $value['body'] ?? NULL;
               $row->short_body     = $value['short_body'] ?? NULL;
               $row->order          = $value['order'] ?? NULL;
-              $row->view_in_home   = $value['view_in_home'] ?? false;
-              $row->status         = $value['status'] ?? false;
+              $row->view_in_home   = (boolean)$value['view_in_home'] ?? false;
+              $row->status         = (boolean)$value['status'] ?? false;
               $row->save();
 
 
@@ -149,17 +149,22 @@ class Wiki extends Model
               }
 
               // wiki items
-              if(count($value['items'])) {
+              if(isset($value['items']) && count($value['items'])) {
                 $row->items()->delete();
                 foreach($value['items'] as $key => $item) {
                   $wikiItem = $row->items()->create([
-                        'title'     => $item['title'],
-                        'body'      => $item['body'],
-                        'order'     => $item['order']
+                        'title'     => $item['title'] ?? NULL,
+                        'body'      => $item['body'] ?? NULL,
+                        'order'     => $item['order'] ?? NULL
                    ]);
 
                   if(isset($item['image_url'])) {
-                    $wikiImage = Image::uploadImage($item['image_url'], 'wikiItem', $key);
+                    if($value['image_url'] 
+                      && !Str::contains($value['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
+                        $wikiImage = Imageable::uploadImage($value['image_url'], 'wiki', $key);
+                    } else {
+                        $wikiImage = $value['image_url'];
+                    }
                     $wikiItem->image()->delete();
                     $wikiItem->image()->create([
                         'image_url'       => $wikiImage,
@@ -167,17 +172,16 @@ class Wiki extends Model
                         'image_title'     => $item['image_title'] ?? NULL,
                     ]);
                   }
-
                 }
               }
 
               // wiki packages
-              if(count($value['package_ids'])) {
-                $row->packages()->delete();
-                foreach($value['package_ids'] as $package_id) {
-                   $row->packages()->create(['package_id' => $package_id]);
-                }
-              }
+              // if(count($value['package_ids'])) {
+              //   $row->packages()->delete();
+              //   foreach($value['package_ids'] as $package_id) {
+              //      $row->packages()->create(['package_id' => $package_id]);
+              //   }
+              // }
 
 
             DB::commit();

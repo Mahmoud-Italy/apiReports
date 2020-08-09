@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Image;
+use App\Models\User;
+use App\Models\Domain;
+use App\Models\Tenant;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -45,15 +47,24 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         return [];
     }
 
+
+    public function tenant() {
+        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
+    }
+
     public function image() {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphOne(Imageable::class, 'imageable');
     }
 
     public static function fetchData($value='')
     {
-        $obj = self::whereNOTNULL('id');
+        // this way will fire up speed of the query
+        $obj = self::query();
 
-            if(isset($value['roleName'])) {
+            // get only his tenants
+            $obj->has('tenant');
+
+            if(isset($value['roleName']) && $value['roleName']) {
                 if($value['roleName'] == 'Account') {
                     $obj->getRoleNames()[0] == 'Member';
                 } else if ($value['roleName'] == 'Staff') {
@@ -61,7 +72,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
                 }
             }
 
-            if(isset($value['search'])) {
+            if(isset($value['search']) && $value['search']) {
                 $obj->where(function($q){
                     $q->where('name', 'like','%'.$value['search'].'%');
                     $q->orWhere('email', 'like', '%'.$value['search'].'%');
@@ -70,7 +81,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
                 });
             }
             
-            if(isset($value['order'])) {
+            if(isset($value['order']) && $value['order']) {
                 $obj->orderBy('id', $value['order']);
             } else {
                 $obj->orderBy('id', 'DESC');
@@ -78,5 +89,38 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
         $obj = $obj->paginate($value['paginate'] ?? 10);
         return $obj;
+    }
+
+
+    public static function createOrUpdate($id, $value)
+    {
+        try {
+            
+            DB::beginTransaction();
+
+              // Row
+              $row                 = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->tenant_id      = Domain::getTenantId();
+              $row->name           = $value['name'] ?? NULL;
+              $row->email          = $value['email'] ?? NULL;
+
+              if(isset($value['password']) && $value['password']) {
+                  $plainPassword   = $value['password'];
+                  $row->password   = app('hash')->make($plainPassword);
+              }
+
+              $row->status         = $value['status'] ?? false;
+              $row->save();
+
+              // role
+              $row->assignRole($value['role']); // assign role
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
     }
 }

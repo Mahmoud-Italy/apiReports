@@ -202,7 +202,7 @@ class Package extends Model
               if(isset($value['image2_url'])) {
                 if($value['image2_url'] 
                   && !Str::contains($value['image2_url'], ['s3.eu-central-1.amazonaws.com'])) {
-                    $image2 = Imageable::uploadImage($value['image2_url'], 'package');
+                    $image2 = Imageable::uploadImage($value['image2_url'], 'package', 1);
                 } else {
                     $image2 = $value['image2_url'];
                 }
@@ -215,10 +215,14 @@ class Package extends Model
               }
 
               // gallery
-              if(count($value['gallery'])) {
+              if(count($value['gallery_url'])) {
                 $row->gallery()->delete();
-                foreach ($value['gallery'] as $key => $gallery) {
-                  $gallery_url = Image::uploadImage($value['gallery_url'], 'gallery', $key, 'packages');
+                foreach ($value['gallery_url'] as $key => $gallery) {
+                  if($gallery && !Str::contains($gallery, ['s3.eu-central-1.amazonaws.com'])) {
+                      $gallery_url = Imageable::uploadImage($gallery, 'package', $key);
+                  } else {
+                      $gallery_url = $gallery;
+                  }
                   $row->gallery()->create([
                       'image_url'       => $gallery_url,
                       'image_alt'       => $gallery['gallery_alt'] ?? NULL,
@@ -251,10 +255,14 @@ class Package extends Model
 
 
               // icons
-              if(count($value['icons'])) {
+              if(count($value['icon_url'])) {
                 $row->icon()->delete();
-                foreach ($value['icons'] as $key => $icon) {
-                  $icon_url = Image::uploadImage($value['icon_url'], 'icon', $key, 'packages');
+                foreach ($value['icon_url'] as $key => $icon) {
+                  if($icon && !Str::contains($icon, ['s3.eu-central-1.amazonaws.com'])) {
+                      $icon_url = Imageable::uploadImage($icon, 'package', $key);
+                  } else {
+                      $icon_url = $gallery;
+                  }
                   $row->icon()->create([
                       'image_url'       => $icon_url,
                       'image_alt'       => $icon['icon_alt'] ?? NULL,
