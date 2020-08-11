@@ -13,11 +13,11 @@ class AccommodationController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_accommodations', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_.$accommodations',  ['only' => ['store']]);
-        $this->middleware('permission:edit_.$accommodations', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_.$accommodations', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_accommodations', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_accommodations',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_accommodations', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_accommodations', ['only' => ['destroy']]);
     }
 
     public function index()

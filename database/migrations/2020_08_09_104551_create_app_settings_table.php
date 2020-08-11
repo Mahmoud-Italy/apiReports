@@ -13,7 +13,7 @@ class CreateAppSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_settings', function (Blueprint $table) {
+        Schema::create('apps', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('tenant_id')->unsigned()->nullable();
 

@@ -3,26 +3,17 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Tag;
-use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
-use App\Models\Metable;
-use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
-class AppSetting extends Model
+class App extends Model
 {
     protected $guarded = [];
 
     public function tenant() {
         return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
-
-    public function user() {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
 
     // fetch Data
     public static function fetchData($value='')
@@ -36,8 +27,7 @@ class AppSetting extends Model
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q){
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->Where('name', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -50,18 +40,21 @@ class AppSetting extends Model
                   $obj->where(['status' => false, 'trash' => false]);
               else if ($value['status'] == 'trash')
                   $obj->where('trash', true);
+          } else {
+            // exception for users
+            $obj->where(['status' => true, 'trash' => false]);
           }
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'name')
+              $obj->orderBy('name', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('id', 'DESC');
+            $obj->orderBy('name', 'ASC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -82,7 +75,6 @@ class AppSetting extends Model
               // Row
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
               $row->tenant_id   = Domain::getTenantId();
-              $row->user_id     = auth()->guard('api')->user()->id;
               $row->name        = $value['name'] ?? NULL;
               $row->icon        = $value['icon'] ?? NULL;
               $row->setup       = $value['setup'] ?? false;

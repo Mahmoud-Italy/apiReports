@@ -13,11 +13,11 @@ class RoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_pages', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_pages',  ['only' => ['store']]);
-        $this->middleware('permission:edit_pages', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_pages', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_pages', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_pages',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_pages', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_pages', ['only' => ['destroy']]);
     }
 
     public function index()

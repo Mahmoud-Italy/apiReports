@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\BlogWriter;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BlogWriterUpdateRequest;
-use App\Http\Requests\BlogWriterStoreRequest;
-use App\Http\Resources\BlogWriterResource;
+use App\Http\Requests\ArticleUpdateRequest;
+use App\Http\Requests\ArticleStoreRequest;
+use App\Http\Resources\ArticleResource;
 
-class BlogWriterController extends Controller
+class ArticleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_blogs', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_blogs',  ['only' => ['store']]);
-        $this->middleware('permission:edit_blogs', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_blogs', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_blogs', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_blogs',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_blogs', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_blogs', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = BlogWriter::has('tenant')->get();
-        $rows = BlogWriterResource::collection(BlogWriter::fetchData(request()->all()));
+        $data = Article::has('tenant')->get();
+        $rows = ArticleResource::collection(Article::fetchData(request()->all()));
         return response()->json([
             'all'       => count($data),
             'active'    => count($data->where('status', true)->where('trash', false)),
@@ -35,9 +35,9 @@ class BlogWriterController extends Controller
         ], 200);
     }
 
-    public function store(BlogWriterStoreRequest $request)
+    public function store(ArticleStoreRequest $request)
     {
-        $row = BlogWriter::createOrUpdate(NULL, $request->all());
+        $row = Article::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -47,13 +47,13 @@ class BlogWriterController extends Controller
 
     public function show($id)
     {
-        $row = new BlogWriterResource(BlogWriter::has('tenant')->findOrFail($id));
+        $row = new ArticleResource(BlogArticle::has('tenant')->findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(BlogWriterUpdateRequest $request, $id)
+    public function update(ArticleUpdateRequest $request, $id)
     {
-        $row = BlogWriter::createOrUpdate($id, $request->all());
+        $row = Article::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -64,7 +64,7 @@ class BlogWriterController extends Controller
     public function destroy($id)
     {
         try {
-            $row = BlogWriter::has('tenant');
+            $row = Article::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -85,7 +85,7 @@ class BlogWriterController extends Controller
     public function active($id)
     {
         try {
-            $row = BlogWriter::has('tenant');
+            $row = Article::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -106,7 +106,7 @@ class BlogWriterController extends Controller
     public function inactive($id)
     {
         try {
-            $row = BlogWriter::has('tenant');
+            $row = Article::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -127,7 +127,7 @@ class BlogWriterController extends Controller
     public function trash($id)
     {
         try {
-            $row = BlogWriter::has('tenant');
+            $row = Article::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -148,7 +148,7 @@ class BlogWriterController extends Controller
     public function restore($id)
     {
         try {
-            $row = BlogWriter::has('tenant');
+            $row = Article::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -168,7 +168,7 @@ class BlogWriterController extends Controller
 
     public function export()
     {
-        $data = BlogWriter::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Article::has('tenant')->where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -183,6 +183,6 @@ class BlogWriterController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => BlogWriterResource::collection($data)], 200);
+        return response()->json(['rows' => ArticleResource::collection($data)], 200);
     }
 }

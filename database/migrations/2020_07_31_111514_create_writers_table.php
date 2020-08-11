@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlogWritersTable extends Migration
+class CreateWritersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBlogWritersTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_writers', function (Blueprint $table) {
+        Schema::create('writers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('tenant_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
@@ -43,6 +43,6 @@ class CreateBlogWritersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_writers');
+        Schema::dropIfExists('writers');
     }
 }

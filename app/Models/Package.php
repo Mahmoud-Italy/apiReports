@@ -351,4 +351,10 @@ class Package extends Model
         }
     }
 
+
+    public function scopeGetPackagesName($query)
+    {
+      return $query->select('title')->where(['status' => true, 'trash' => false])->pluck('title');
+    }
+
 }

@@ -8,46 +8,30 @@ use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\Metable;
-use App\Models\Category;
 use App\Models\Imageable;
-use App\Models\Destination;
-use App\Models\BlogArticleItem;
 use Illuminate\Database\Eloquent\Model;
 
-class BlogArticle extends Model
+class Writer extends Model
 {
     protected $guarded = [];
 
     public function tenant() {
         return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
+
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
-    }
-    public function destination() {
-        return $this->belongsTo(Destination::class, 'destination_id');
-    }
-    public function category() {
-        return $this->belongsTo(Category::class, 'category_id');
-    }
-    public function writer() {
-        return $this->belongsTo(BlogWriter::class, 'blog_writer_id');
     }
 
     public function meta() {
         return $this->morphOne(Metable::class, 'metable')
                     ->select('meta_title', 'meta_keywords', 'meta_description');
     }
+
     public function image() {
         return $this->morphOne(Imageable::class, 'imageable')
                     ->select('image_url', 'image_alt', 'image_title');
     }
-
-
-    public function items() {
-        return $this->hasMany(BlogArticleItem::class, 'blog_article_id');
-    }
-
 
 
     // fetch Data
@@ -106,18 +90,13 @@ class BlogArticle extends Model
             DB::beginTransaction();
 
               // Row
-              $row                  = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id       = Domain::getTenantId();
-              $row->user_id         = auth()->guard('api')->user()->id;
-              $row->blog_writer_id  = $value['blog_writer_id'] ?? NULL;
-              $row->destination_id  = $value['parent_id'] ?? NULL;
-              $row->category_id     = $value['category_id'] ?? NULL;
-              $row->slug            = $value['slug'] ?? NULL;
-              $row->title           = $value['title'] ?? NULL;
-              $row->body            = $value['body'] ?? NULL;
-              $row->short_body      = $value['short_body'] ?? NULL;
-              $row->featued         = $value['featued'] ?? false;
-              $row->status          = $value['status'] ?? false;
+              $row              = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->tenant_id   = Domain::getTenantId();
+              $row->user_id     = auth()->guard('api')->user()->id;
+              $row->slug        = $value['slug'] ?? NULL;
+              $row->title       = $value['title'] ?? NULL;
+              $row->body        = $value['body'] ?? NULL;
+              $row->status      = $value['status'] ?? false;
               $row->save();
 
 
@@ -146,28 +125,6 @@ class BlogArticle extends Model
                     'image_alt'       => $value['image_alt'] ?? NULL,
                     'image_title'     => $value['image_title'] ?? NULL
                 ]);
-              }
-
-              // items
-              if(count($value['items'])) {
-                $row->items()->delete();
-                foreach($value['items'] as $key => $item) {
-                  $blogItem = $row->items()->create([
-                        'content'   => $item['content'],
-                        'link'      => $item['link'],
-                   ]);
-
-                  if(isset($item['image_url'])) {
-                    $blogImage = Image::uploadImage($item['image_url'], 'blog', $key);
-                    $blogItem->image()->delete();
-                    $blogItem->image()->create([
-                        'image_url'       => $blogItem,
-                        'image_alt'       => $item['image_alt'] ?? NULL,
-                        'image_title'     => $item['image_title'] ?? NULL,
-                    ]);
-                  }
-
-                }
               }
 
 

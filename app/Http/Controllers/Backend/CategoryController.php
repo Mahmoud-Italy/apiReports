@@ -13,11 +13,11 @@ class CategoryController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_categories', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_categories',  ['only' => ['store']]);
-        $this->middleware('permission:edit_categories', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_categories', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_categories', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_categories',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_categories', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_categories', ['only' => ['destroy']]);
     }
 
     public function index()

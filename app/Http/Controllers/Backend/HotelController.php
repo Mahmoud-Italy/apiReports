@@ -13,22 +13,24 @@ class HotelController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_hotels', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_hotels',  ['only' => ['store']]);
-        $this->middleware('permission:edit_hotels', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_hotels', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_hotels', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_hotels',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_hotels', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_hotels', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = Hotel::has('tenant')->get();
-        $rows = HotelResource::collection(Hotel::fetchData(request()->all()));
+        $data    = Hotel::has('tenant')->get();
+        $hotels  = Hotel::has('tenant')->getHotelsName();
+        $rows    = HotelResource::collection(Hotel::fetchData(request()->all()));
         return response()->json([
             'all'       => count($data),
             'active'    => count($data->where('status', true)->where('trash', false)),
             'inactive'  => count($data->where('status', false)->where('trash', false)), 
             'trash'     => count($data->where('trash', true)),
+            'hotels'    => $hotels,
 
             'rows'      => $rows,
             'paginate'  => $this->paginate($rows)

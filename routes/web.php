@@ -29,8 +29,8 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     $app->authResource('auth', 'AuthController');
     
     # Navigation
-    $app->apiResource('/', 'AppController');
-    $app->apiResource('articles', 'BlogArticleController');
+    //$app->apiResource('/', 'AppController');
+    $app->apiResource('articles', 'ArticleController');
     $app->apiResource('categories', 'CategoryController');
     $app->apiResource('cruises', 'CruiseController');
     $app->apiResource('destinations', 'DestinationController');
@@ -42,12 +42,13 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     $app->apiResource('tags', 'TagController');
     $app->apiResource('users', 'UserController');
     $app->apiResource('wikis', 'WikiController');
-    $app->apiResource('writers', 'BlogWriterController');
-    $app->apiResource('appSettings', 'AppSettingController');
+    $app->apiResource('writers', 'WriterController');
+    //$app->apiResource('appsettings', 'AppSettingController');
+    $app->apiResource('apps', 'AppController');
     
 
         # App Settings
-        $app->apiResource('accomodations', 'AccomodationController');
+        $app->apiResource('accommodations', 'AccommodationController');
         $app->apiResource('faqs', 'FaqWriterController');
         $app->apiResource('hotels', 'HotelController');
         $app->apiResource('roles', 'RoleController');

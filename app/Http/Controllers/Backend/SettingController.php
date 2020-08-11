@@ -13,11 +13,11 @@ class SettingController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_settings' ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_settings',  ['only' => ['store']]);
-        $this->middleware('permission:edit_settings', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_settings', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_settings' ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_settings',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_settings', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_settings', ['only' => ['destroy']]);
     }
 
     public function index()

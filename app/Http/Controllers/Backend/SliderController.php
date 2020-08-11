@@ -13,11 +13,11 @@ class SliderController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_sliders', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_sliders',  ['only' => ['store']]);
-        $this->middleware('permission:edit_sliders', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_sliders', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_sliders', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_sliders',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_sliders', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_sliders', ['only' => ['destroy']]);
     }
 
     public function index()

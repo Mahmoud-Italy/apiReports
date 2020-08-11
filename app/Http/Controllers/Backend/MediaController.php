@@ -13,11 +13,11 @@ class MediaController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_medias', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_medias',  ['only' => ['store']]);
-        $this->middleware('permission:edit_medias', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_medias', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_medias', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_medias',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_medias', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_medias', ['only' => ['destroy']]);
     }
 
     public function index()

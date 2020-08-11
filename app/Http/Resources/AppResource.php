@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AppSettingResource extends JsonResource
+class AppResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +18,6 @@ class AppSettingResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             
-            'user'          => ($this->user) ?? NULL,
-
             'name'         => $this->name,
             'url'          => strtolower($this->name),
             'icon'         => $this->icon,

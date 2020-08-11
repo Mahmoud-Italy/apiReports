@@ -13,11 +13,11 @@ class UpdateController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_updates', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_updates',  ['only' => ['store']]);
-        $this->middleware('permission:edit_updates', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_updates', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_updates', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_updates',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_updates', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_updates', ['only' => ['destroy']]);
     }
 
     public function index()

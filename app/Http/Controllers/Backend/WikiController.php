@@ -13,11 +13,11 @@ class WikiController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_wikis', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_wikis',  ['only' => ['store']]);
-        $this->middleware('permission:edit_wikis', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_wikis', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_wikis', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_wikis',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_wikis', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_wikis', ['only' => ['destroy']]);
     }
 
     public function index()

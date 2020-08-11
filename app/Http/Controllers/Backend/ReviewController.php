@@ -13,11 +13,11 @@ class ReviewController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_reviews' ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_reviews',  ['only' => ['store']]);
-        $this->middleware('permission:edit_reviews', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_reviews', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_reviews' ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_reviews',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_reviews', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_reviews', ['only' => ['destroy']]);
     }
 
     public function index()

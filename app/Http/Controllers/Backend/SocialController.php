@@ -13,11 +13,11 @@ class SocialController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_socials', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_socials',  ['only' => ['store']]);
-        $this->middleware('permission:edit_socials', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_socials', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_socials', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_socials',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_socials', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_socials', ['only' => ['destroy']]);
     }
 
     public function index()

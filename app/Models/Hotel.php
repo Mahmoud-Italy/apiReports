@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use DB;
-use Str
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
@@ -118,6 +117,12 @@ class Hotel extends Model
             DB::rollback();
             return $e->getMessage();
         }
+    }
+
+
+    public function scopeGetHotelsName($query)
+    {
+      return $query->select('title')->where(['status' => true, 'trash' => false])->pluck('title');
     }
 
 }

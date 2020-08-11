@@ -10,6 +10,9 @@ use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\Metable;
 use App\Models\Imageable;
+use App\Models\AccommodationHotel;
+use App\Models\AccommodationPrice;
+use App\Models\AccommodationPriceItem;
 use Illuminate\Database\Eloquent\Model;
 
 class Accommodation extends Model
@@ -24,14 +27,12 @@ class Accommodation extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function meta() {
-        return $this->morphOne(Metable::class, 'metable')
-                    ->select('meta_title', 'meta_keywords', 'meta_description');
+    public function hotels() {
+        return $this->hasMany(AccommodationHotel::class, 'accommodation_id');
     }
 
-    public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')
-                    ->select('image_url', 'image_alt', 'image_title');
+    public function price() {
+        return $this->hasMany(AccommodationPrice::class, 'accommodation_id');
     }
 
     public function childs() {
@@ -51,8 +52,7 @@ class Accommodation extends Model
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->where('name', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -69,8 +69,8 @@ class Accommodation extends Model
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'name')
+              $obj->orderBy('name', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
@@ -97,50 +97,45 @@ class Accommodation extends Model
               // Row
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
               $row->tenant_id   = Domain::getTenantId();
-              $row->user_id     = auth()->guard('api')->user()->id;
-              $row->parent_id   = $value['parent_id'] ?? NULL;
-              $row->slug        = $value['slug'] ?? NULL;
-              $row->title       = $value['title'] ?? NULL;
-              $row->body        = $value['body'] ?? NULL;
-              $row->color       = $value['color'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
+              //$row->user_id     = auth()->guard('api')->user()->id;
+              $row->name        = $value['name'] ?? NULL;
+              //$row->status      = $value['status'] ?? false;
               $row->save();
 
-
-              // Metas
-              if(isset($value['meta_title'])) {
-                $row->meta()->delete();
-                $row->meta()->create([
-                    'meta_title'       => $value['meta_title'],
-                    'meta_keywords'    => $value['meta_keywords'],
-                    'meta_description' => $value['meta_description']
-                ]);
-              }
+              // Hotels
 
 
-              // Image
-              if(isset($value['image_url'])) {
-                if($value['image_url'] 
-                  && !Str::contains($value['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
-                    $image = Imageable::uploadImage($value['image_url'], 'package');
-                } else {
-                    $image = $value['image_url'];
+              // Prices
+              if(isset($value['prices']) && count($value['prices'])) {
+                $row->price()->delete();
+
+                foreach ($value['prices'] as $val) {
+                  $price = $row->price()->create([
+                      'name' => $val['price_name']
+                  ]); 
+
+                  // Price Items
+                  if(isset($val['items']) && count($val['items'])) {
+                    $price->items()->delete();
+                    foreach ($val['items'] as $itm) {
+                      $price->items()->create([
+                          'price_value' => $itm['item_value'],
+                          'body'        => $itm['item_body']
+                      ]); 
+                    }
+                  }
+                  // end Price items
                 }
-                $row->image()->delete();
-                $row->image()->create([
-                    'image_url'       => $image ?? NULL,
-                    'image_alt'       => $value['image_alt'] ?? NULL,
-                    'image_title'     => $value['image_title'] ?? NULL
-                ]);
               }
 
+              
 
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return $e->getMessage();
+            return $e;
         }
     }
 

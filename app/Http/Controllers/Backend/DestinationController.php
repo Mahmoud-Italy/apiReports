@@ -14,10 +14,10 @@ class DestinationController extends Controller
     function __construct()
     {
         //$this->middleware('permission:view_destinations', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_destinations',  ['only' => ['store']]);
-        $this->middleware('permission:edit_destinations', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_destinations', ['only' => ['destroy']]);
+        // $this->middleware('permission:add_destinations',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_destinations', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_destinations', ['only' => ['destroy']]);
     }
 
     public function index()

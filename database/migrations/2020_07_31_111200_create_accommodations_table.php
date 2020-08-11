@@ -17,7 +17,6 @@ class CreateAccommodationsTable extends Migration
             $table->id();
             $table->bigInteger('tenant_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->bigInteger('package_id')->unsigned()->nullable();
 
             $table->string('name')->nullable();
             
@@ -26,9 +25,6 @@ class CreateAccommodationsTable extends Migration
             $table->timestamps();
 
             $table->foreign('tenant_id')->references('id')->on('tenants')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->foreign('package_id')->references('id')->on('packages')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')

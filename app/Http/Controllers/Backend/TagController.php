@@ -13,11 +13,11 @@ class TagController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_tags', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_tags',  ['only' => ['store']]);
-        $this->middleware('permission:edit_tags', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_tags', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_tags', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_tags',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_tags', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_tags', ['only' => ['destroy']]);
     }
 
     public function index()

@@ -13,22 +13,24 @@ class PackageController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_packages', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_packages',  ['only' => ['store']]);
-        $this->middleware('permission:edit_packages', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_packages', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_packages', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_packages',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_packages', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_packages', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = Package::has('tenant')->get();
-        $rows = PackageResource::collection(Package::fetchData(request()->all()));
+        $data     = Package::has('tenant')->get();
+        $packages = Package::has('tenant')->getPackagesName();
+        $rows     = PackageResource::collection(Package::fetchData(request()->all()));
         return response()->json([
             'all'       => count($data),
             'active'    => count($data->where('status', true)->where('trash', false)),
             'inactive'  => count($data->where('status', false)->where('trash', false)), 
             'trash'     => count($data->where('trash', true)),
+            'packages'  => $packages,
 
             'rows'      => $rows,
             'paginate'  => $this->paginate($rows)

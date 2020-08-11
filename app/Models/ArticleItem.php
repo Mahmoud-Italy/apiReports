@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
-class BlogArticleItem extends Model
+class ArticleItem extends Model
 {
     protected $guarded = [];
 

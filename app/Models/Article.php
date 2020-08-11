@@ -7,31 +7,48 @@ use Str;
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
+use App\Models\Writer;
 use App\Models\Metable;
+use App\Models\Category;
 use App\Models\Imageable;
+use App\Models\Destination;
+use App\Models\ArticleItem;
 use Illuminate\Database\Eloquent\Model;
 
-class BlogWriter extends Model
+class Article extends Model
 {
     protected $guarded = [];
 
     public function tenant() {
         return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
-
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function destination() {
+        return $this->belongsTo(Destination::class, 'destination_id');
+    }
+    public function category() {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+    public function writer() {
+        return $this->belongsTo(Writer::class, 'writer_id');
     }
 
     public function meta() {
         return $this->morphOne(Metable::class, 'metable')
                     ->select('meta_title', 'meta_keywords', 'meta_description');
     }
-
     public function image() {
         return $this->morphOne(Imageable::class, 'imageable')
                     ->select('image_url', 'image_alt', 'image_title');
     }
+
+
+    public function items() {
+        return $this->hasMany(ArticleItem::class, 'article_id');
+    }
+
 
 
     // fetch Data
@@ -90,13 +107,18 @@ class BlogWriter extends Model
             DB::beginTransaction();
 
               // Row
-              $row              = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id   = Domain::getTenantId();
-              $row->user_id     = auth()->guard('api')->user()->id;
-              $row->slug        = $value['slug'] ?? NULL;
-              $row->title       = $value['title'] ?? NULL;
-              $row->body        = $value['body'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
+              $row                  = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->tenant_id       = Domain::getTenantId();
+              //$row->user_id         = auth()->guard('api')->user()->id;
+              $row->writer_id       = (int)$value['writer_id'] ?? NULL;
+              //$row->destination_id  = (int)$value['destination_id'] ?? NULL;
+              //$row->category_id     = (int)$value['category_id'] ?? NULL;
+              $row->slug            = $value['slug'] ?? NULL;
+              $row->title           = $value['title'] ?? NULL;
+              $row->body            = $value['body'] ?? NULL;
+              $row->short_body      = $value['short_body'] ?? NULL;
+              $row->featured        = (boolean)$value['featured'] ?? false;
+              $row->status          = (boolean)$value['status'] ?? false;
               $row->save();
 
 
@@ -125,6 +147,33 @@ class BlogWriter extends Model
                     'image_alt'       => $value['image_alt'] ?? NULL,
                     'image_title'     => $value['image_title'] ?? NULL
                 ]);
+              }
+
+              // items
+              if(isset($value['items']) && count($value['items'])) {
+                $row->items()->delete();
+                foreach($value['items'] as $key => $item) {
+                  $items = $row->items()->create([
+                        'link'      => $item['link'] ?? NULL,
+                        'content'   => $item['body'] ?? NULL,
+                       // 'order'     => $item['order'] ?? NULL
+                   ]);
+
+                  if(isset($item['image_url'])) {
+                    if($item['image_url'] 
+                      && !Str::contains($item['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
+                        $itemImage = Imageable::uploadImage($item['image_url'], 'blog', $key);
+                    } else {
+                        $itemImage = $item['image_url'];
+                    }
+                    $items->image()->delete();
+                    $items->image()->create([
+                        'image_url'       => $itemImage,
+                        'image_alt'       => $item['image_alt'] ?? NULL,
+                        'image_title'     => $item['image_title'] ?? NULL,
+                    ]);
+                  }
+                }
               }
 
 

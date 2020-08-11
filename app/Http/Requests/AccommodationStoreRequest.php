@@ -28,8 +28,8 @@ class AccommodationStoreRequest extends FormRequest
         $tenant_id = Domain::getTenantId();
 
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:destinations,slug,NULL,id,tenant_id,' . $tenant_id
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            'name'   => 'required|unique:accommodations,name,NULL,id,tenant_id,' . $tenant_id
         ];
     }
 

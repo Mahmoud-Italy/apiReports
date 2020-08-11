@@ -13,11 +13,11 @@ class CruiseController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_cruises', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_cruises',  ['only' => ['store']]);
-        $this->middleware('permission:edit_cruises', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_cruises', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_cruises', ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_cruises',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_cruises', 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_cruises', ['only' => ['destroy']]);
     }
 
     public function index()

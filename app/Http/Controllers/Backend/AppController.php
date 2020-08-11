@@ -2,42 +2,33 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\BlogArticle;
+use App\Models\App;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BlogArticleUpdateRequest;
-use App\Http\Requests\BlogArticleStoreRequest;
-use App\Http\Resources\BlogArticleResource;
+use App\Http\Requests\AppUpdateRequest;
+use App\Http\Requests\AppStoreRequest;
+use App\Http\Resources\AppResource;
 
-class BlogArticleController extends Controller
+class AppController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:view_blogs', ['only' => ['index', 'show', 'export']]);
-        $this->middleware('permission:add_blogs',  ['only' => ['store']]);
-        $this->middleware('permission:edit_blogs', 
-                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        $this->middleware('permission:delete_blogs', ['only' => ['destroy']]);
+        // $this->middleware('permission:view_settings' ['only' => ['index', 'show', 'export']]);
+        // $this->middleware('permission:add_settings',  ['only' => ['store']]);
+        // $this->middleware('permission:edit_settings, 
+        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        // $this->middleware('permission:delete_settings, ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = BlogArticle::has('tenant')->get();
-        $rows = BlogArticleResource::collection(BlogArticle::fetchData(request()->all()));
-        return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
-        ], 200);
+        $rows = AppResource::collection(App::fetchData(request()->all()));
+        return response()->json(['rows' => $rows], 200);
     }
 
-    public function store(BlogArticleStoreRequest $request)
+    public function store(AppStoreRequest $request)
     {
-        $row = BlogArticle::createOrUpdate(NULL, $request->all());
+        $row = App::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -47,13 +38,13 @@ class BlogArticleController extends Controller
 
     public function show($id)
     {
-        $row = new BlogArticleResource(BlogArticle::has('tenant')->findOrFail($id));
+        $row = new AppResource(App::has('tenant')->findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(BlogArticleUpdateRequest $request, $id)
+    public function update(AppUpdateRequest $request, $id)
     {
-        $row = BlogArticle::createOrUpdate($id, $request->all());
+        $row = App::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -64,7 +55,7 @@ class BlogArticleController extends Controller
     public function destroy($id)
     {
         try {
-            $row = BlogArticle::has('tenant');
+            $row = App::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -85,7 +76,7 @@ class BlogArticleController extends Controller
     public function active($id)
     {
         try {
-            $row = BlogArticle::has('tenant');
+            $row = App::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -106,7 +97,7 @@ class BlogArticleController extends Controller
     public function inactive($id)
     {
         try {
-            $row = BlogArticle::has('tenant');
+            $row = App::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -127,7 +118,7 @@ class BlogArticleController extends Controller
     public function trash($id)
     {
         try {
-            $row = BlogArticle::has('tenant');
+            $row = App::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -148,7 +139,7 @@ class BlogArticleController extends Controller
     public function restore($id)
     {
         try {
-            $row = BlogArticle::has('tenant');
+            $row = App::has('tenant');
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -168,7 +159,7 @@ class BlogArticleController extends Controller
 
     public function export()
     {
-        $data = BlogArticle::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = App::has('tenant')->where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -183,6 +174,6 @@ class BlogArticleController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => BlogArticleResource::collection($data)], 200);
+        return response()->json(['rows' => AppResource::collection($data)], 200);
     }
 }
