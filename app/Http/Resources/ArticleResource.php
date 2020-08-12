@@ -16,15 +16,21 @@ class ArticleResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            //'encrypt_id'    => encrypt($this->id),
+            'encrypt_id'    => encrypt($this->id),
             
             'image'         => ($this->image) ?? NULL,
             'meta'          => ($this->meta) ?? NULL,
             'user'          => ($this->user) ?? NULL,
+            'writer'        => ($this->writer) ?? NULL,
+            'category'      => ($this->category) ?? NULL,
+            'destination'   => ($this->destination) ?? NULL,
+            'packages'      => ($this->packages) ?? NULL,
 
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
+            'short_body'    => $this->short_body,
+            'items'         => ($this->items) ?? NULL,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

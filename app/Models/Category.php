@@ -111,7 +111,7 @@ class Category extends Model
             DB::beginTransaction();
 
               // Row
-              $row                 = (isset($id)) ? self::findOrFail($id) : new self;
+              $row                 = (isset($id)) ? self::findOrFail(decrypt($id)) : new self;
               $row->tenant_id      = Domain::getTenantId();
               $row->user_id        = auth()->guard('api')->user()->id;
               $row->destination_id = $value['destination_id'] ?? NULL;

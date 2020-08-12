@@ -29,9 +29,10 @@ class AppSeeder extends Seeder
         $this->handel('Media', 'ti-cloud-up');
         $this->handel('Users', 'ti-user');
         $this->handel('Updates', 'ti-zip');
-        $this->handel('Roles', 'ti-lock');
+        $this->handel('Roles', 'ti-key');
         $this->handel('Reviews', 'ti-star');
-        $this->handel('Requests', 'ti-bell');
+        $this->handel('Inquires', 'ti-bell');
+        $this->handel('IP Blockers', 'ti-lock');
         $this->handel('Settings', 'ti-settings');
         $this->handel('Sliders', 'ti-gallery');
         $this->handel('Socials', 'ti-facebook');

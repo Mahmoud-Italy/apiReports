@@ -25,13 +25,10 @@ class FaqController extends Controller
         $data = Faq::has('tenant')->get();
         $rows = FaqResource::collection(Faq::fetchData(request()->all()));
         return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('faqs'),
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 

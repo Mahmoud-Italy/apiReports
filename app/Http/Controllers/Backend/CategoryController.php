@@ -13,11 +13,11 @@ class CategoryController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:view_categories', ['only' => ['index', 'show', 'export']]);
-        // $this->middleware('permission:add_categories',  ['only' => ['store']]);
-        // $this->middleware('permission:edit_categories', 
-        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        // $this->middleware('permission:delete_categories', ['only' => ['destroy']]);
+        $this->middleware('permission:view_categories', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_categories',  ['only' => ['store']]);
+        $this->middleware('permission:edit_categories', 
+                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        $this->middleware('permission:delete_categories', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -25,13 +25,10 @@ class CategoryController extends Controller
         $data = Category::has('tenant')->get();
         $rows = CategoryResource::collection(Category::fetchData(request()->all()));
         return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('destinations'),
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 
@@ -47,7 +44,7 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        $row = new CategoryResource(Category::has('tenant')->findOrFail($id));
+        $row = new CategoryResource(Category::has('tenant')->findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 

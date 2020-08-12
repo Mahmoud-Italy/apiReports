@@ -26,14 +26,11 @@ class HotelController extends Controller
         $hotels  = Hotel::has('tenant')->getHotelsName();
         $rows    = HotelResource::collection(Hotel::fetchData(request()->all()));
         return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-            'hotels'    => $hotels,
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('hotels'),
+            'hotels'      => $hotels,
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 

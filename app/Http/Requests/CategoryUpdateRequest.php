@@ -25,7 +25,7 @@ class CategoryUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id        = request('id');
+        $id        = decrypt(request('id'));
         $tenant_id = Domain::getTenantId();
 
         return [

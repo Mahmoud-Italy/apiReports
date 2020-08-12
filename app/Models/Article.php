@@ -109,10 +109,10 @@ class Article extends Model
               // Row
               $row                  = (isset($id)) ? self::findOrFail($id) : new self;
               $row->tenant_id       = Domain::getTenantId();
-              //$row->user_id         = auth()->guard('api')->user()->id;
-              $row->writer_id       = (int)$value['writer_id'] ?? NULL;
-              //$row->destination_id  = (int)$value['destination_id'] ?? NULL;
-              //$row->category_id     = (int)$value['category_id'] ?? NULL;
+              $row->user_id         = auth()->guard('api')->user()->id;
+              $row->writer_id       = $value['writer_id'] ? $value['writer_id'] : NULL;
+              $row->destination_id  = $value['destination_id'] ? $value['destination_id'] : NULL;
+              $row->category_id     = $value['category_id'] ? $value['writer_id'] : NULL;
               $row->slug            = $value['slug'] ?? NULL;
               $row->title           = $value['title'] ?? NULL;
               $row->body            = $value['body'] ?? NULL;
@@ -156,7 +156,7 @@ class Article extends Model
                   $items = $row->items()->create([
                         'link'      => $item['link'] ?? NULL,
                         'content'   => $item['body'] ?? NULL,
-                       // 'order'     => $item['order'] ?? NULL
+                        'order'     => $item['order'] ?? NULL
                    ]);
 
                   if(isset($item['image_url'])) {

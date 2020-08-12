@@ -26,14 +26,11 @@ class PackageController extends Controller
         $packages = Package::has('tenant')->getPackagesName();
         $rows     = PackageResource::collection(Package::fetchData(request()->all()));
         return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-            'packages'  => $packages,
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('packages'),
+            'packages'    => $packages,
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 

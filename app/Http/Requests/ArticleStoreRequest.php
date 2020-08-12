@@ -29,7 +29,7 @@ class ArticleStoreRequest extends FormRequest
 
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            //'slug'   => 'required|unique:articles,slug,NULL,id,tenant_id,' . $tenant_id
+            'slug'   => 'required|unique:articles,slug,NULL,id,tenant_id,' . $tenant_id
         ];
     }
 

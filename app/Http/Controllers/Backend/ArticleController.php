@@ -25,13 +25,10 @@ class ArticleController extends Controller
         $data = Article::has('tenant')->get();
         $rows = ArticleResource::collection(Article::fetchData(request()->all()));
         return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('articles'),
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 
@@ -47,7 +44,7 @@ class ArticleController extends Controller
 
     public function show($id)
     {
-        $row = new ArticleResource(BlogArticle::has('tenant')->findOrFail($id));
+        $row = new ArticleResource(Article::has('tenant')->findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 

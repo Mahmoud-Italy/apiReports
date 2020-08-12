@@ -22,8 +22,14 @@ class SocialController extends Controller
 
     public function index()
     {
+        $data = Social::has('tenant')->get();
         $rows = SocialResource::collection(Social::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('socials'),
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(SocialStoreRequest $request)
