@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Domain;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 

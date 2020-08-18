@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Domain;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -25,12 +24,11 @@ class SocialUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id        = request('id');
-        $tenant_id = Domain::getTenantId();
+        $id  = request('id');
         
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:destinations,slug,' . $id . ',id,tenant_id,' . $tenant_id
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            'provider'   => 'required|unique:socials,provider,' . $id
         ];
     }
 

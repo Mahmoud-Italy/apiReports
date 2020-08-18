@@ -13,20 +13,15 @@ class SocialController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:view_socials', ['only' => ['index', 'show', 'export']]);
-        // $this->middleware('permission:add_socials',  ['only' => ['store']]);
-        // $this->middleware('permission:edit_socials', 
-        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        // $this->middleware('permission:delete_socials', ['only' => ['destroy']]);
+        //
     }
 
     public function index()
     {
-        $data = Social::has('tenant')->get();
+        $data = Social::get();
         $rows = SocialResource::collection(Social::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
-            'permissions' => $this->permissions('socials'),
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
         ], 200);
@@ -44,7 +39,7 @@ class SocialController extends Controller
 
     public function show($id)
     {
-        $row = new SocialResource(Social::has('tenant')->findOrFail($id));
+        $row = new SocialResource(Social::findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
@@ -61,7 +56,7 @@ class SocialController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Social::has('tenant');
+            $row = Social::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -82,7 +77,7 @@ class SocialController extends Controller
     public function active($id)
     {
         try {
-            $row = Social::has('tenant');
+            $row = Social::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -103,7 +98,7 @@ class SocialController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Social::has('tenant');
+            $row = Social::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -124,7 +119,7 @@ class SocialController extends Controller
     public function trash($id)
     {
         try {
-            $row = Social::has('tenant');
+            $row = Social::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -145,7 +140,7 @@ class SocialController extends Controller
     public function restore($id)
     {
         try {
-            $row = Social::has('tenant');
+            $row = Social::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -165,7 +160,7 @@ class SocialController extends Controller
 
     public function export()
     {
-        $data = Social::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Social::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');

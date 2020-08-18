@@ -13,16 +13,12 @@ class RoleController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:view_pages', ['only' => ['index', 'show', 'export']]);
-        // $this->middleware('permission:add_pages',  ['only' => ['store']]);
-        // $this->middleware('permission:edit_pages', 
-        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        // $this->middleware('permission:delete_pages', ['only' => ['destroy']]);
+        // 
     }
 
     public function index()
     {
-        $data = Role::has('tenant')->get();
+        $data = Role::get();
         $rows = RoleResource::collection(Role::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
@@ -44,13 +40,13 @@ class RoleController extends Controller
 
     public function show($id)
     {
-        $row = new RoleResource(Role::has('tenant')->findOrFail($id));
+        $row = new RoleResource(Role::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(RoleUpdateRequest $request, $id)
     {
-        $row = Role::createOrUpdate($id, $request->all());
+        $row = Role::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -61,7 +57,7 @@ class RoleController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Role::has('tenant');
+            $row = Role::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -82,7 +78,7 @@ class RoleController extends Controller
     public function active($id)
     {
         try {
-            $row = Role::has('tenant');
+            $row = Role::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -103,7 +99,7 @@ class RoleController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Role::has('tenant');
+            $row = Role::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -124,7 +120,7 @@ class RoleController extends Controller
     public function trash($id)
     {
         try {
-            $row = Role::has('tenant');
+            $row = Role::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -145,7 +141,7 @@ class RoleController extends Controller
     public function restore($id)
     {
         try {
-            $row = Role::has('tenant');
+            $row = Role::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -165,7 +161,7 @@ class RoleController extends Controller
 
     public function export()
     {
-        $data = Role::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Role::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');

@@ -56,6 +56,10 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
             return response()->json(['message' => 'not results found.'], 404);
         };
+
+        if ($exception instanceof \Illuminate\Contracts\Encryption\DecryptException) {
+            return response()->json(['message' => 'not results found.'], 404);
+        };
         
         return parent::render($request, $exception);
     }

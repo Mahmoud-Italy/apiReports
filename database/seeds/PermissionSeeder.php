@@ -22,13 +22,15 @@ class PermissionSeeder extends Seeder
         $this->handle('reviews',        ['view', 'add', 'edit', 'delete']);
         $this->handle('socials',        ['view', 'add', 'edit', 'delete']);
         $this->handle('hotels',         ['view', 'add', 'edit', 'delete']);
-        $this->handle('wikis',          ['view', 'add', 'edit', 'delete']);
         $this->handle('packages',       ['view', 'add', 'edit', 'delete']);
         $this->handle('settings',       ['view', 'add', 'edit', 'delete']);
         $this->handle('categories',     ['view', 'add', 'edit', 'delete']);
         $this->handle('pages',          ['view', 'add', 'edit', 'delete']);
         $this->handle('cruises',        ['view', 'add', 'edit', 'delete']);
         $this->handle('tags',           ['view', 'add', 'edit', 'delete']);
+
+        $this->handle('wikis',          ['view', 'add', 'edit', 'delete']);
+        $this->handle('writers',        ['view', 'add', 'edit', 'delete']);
     }
 
     public function handle($table, $fields)

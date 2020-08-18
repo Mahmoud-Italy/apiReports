@@ -16,11 +16,8 @@ class FaqResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            //'encrypt_id'    => encrypt($this->id),
-            
-            'image'         => ($this->image) ?? NULL,
-            'meta'          => ($this->meta) ?? NULL,
-            'user'          => ($this->user) ?? NULL,
+            'encrypt_id'    => encrypt($this->id),
+            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
 
             'slug'          => $this->slug,
             'title'         => $this->title,

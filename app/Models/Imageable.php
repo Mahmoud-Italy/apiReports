@@ -13,34 +13,29 @@ class Imageable extends Model
         return $this->morphTo();
     }
 
-    public static function uploadFile($file, $belong, $key=0)
+    public static function uploadImage($file)
     {
-        $base64_str   = substr($imagePath, strpos($imagePath, ",")+1);
+        // $fileName = date('Y-m-d-h-i-s').'.'.$file->getClientOriginalExtension();
+        // $file->move(base_path('public/uploads/'), $fileName);
+        // return '/uploads/' . $fileName;
+
+        $base64_str   = substr($file, strpos($file, ",")+1);
         $imageDecoded = base64_decode($base64_str);
-        if(explode(';', $imagePath)[0]) {
-          $type       = explode(';', $imagePath)[0];
-          $type       = explode('/', $type)[1]; // png or jpg etc
-          if ($type == 'svg+xml') {
-            $type='svg';
-          }
+        if(explode(';', $file)[0]) {
+          $fileType   = explode(';', $file)[0];
+          $fileType   = explode('/', $fileType)[1]; // png or jpg etc
         }
-
-        $name         = $belong.time().$key.uniqid();
-        $imageName    = $name.'.'.$type;
-        // AWS 
-        //Storage::disk('s3')->put('multitenacy/'.$this->plural($name).'/'.$imageName, $imageDecoded);
-        Storage::disk('public')->put('uploads/'.$this->plural($name).'/'.$imageName, $imageDecoded);
-
-        return $imageName;
+        $fileName     = date('Y-m-d-h-i-s').'.'.$fileType;
+        Storage::disk('public')->put('uploads/'.$fileName, $imageDecoded);
+        return '/uploads/' . $fileName;
     }
 
     public static function getImagePath($path, $image)
     {
         return request()->root().'/'.$path.'/'.$image;
-        //return 'https://s3.eu-central-1.amazonaws.com/other.projects.storage/multitenacy/'.$path.'/'.$image;
     }
 
-    public function plural($singular = '')
+    public static function plural($singular = '')
     {
         if ( substr($singular, -1) == 'y') {
             return str_replace('y','ies',$singular);

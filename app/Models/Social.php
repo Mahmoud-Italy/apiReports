@@ -3,41 +3,11 @@
 namespace App\Models;
 
 use DB;
-use Str;
-use App\Models\Tag;
-use App\Models\User;
-use App\Models\Domain;
-use App\Models\Tenant;
-use App\Models\Metable;
-use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
 class Social extends Model
 {
     protected $guarded = [];
-
-    public function tenant() {
-        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
-    }
-
-    public function user() {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function meta() {
-        return $this->morphOne(Metable::class, 'metable')
-                    ->select('meta_title', 'meta_keywords', 'meta_description');
-    }
-
-    public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')
-                    ->select('image_url', 'image_alt', 'image_title');
-    }
-
-    public function childs() {
-        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
-    }
-
 
     // fetch Data
     public static function fetchData($value='')
@@ -45,14 +15,10 @@ class Social extends Model
         // this way will fire up speed of the query
         $obj = self::query();
 
-          // get only his tenants
-          $obj->has('tenant');
-
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->where('provider', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -69,8 +35,8 @@ class Social extends Model
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'provider')
+              $obj->orderBy('provider', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
@@ -95,45 +61,10 @@ class Social extends Model
             DB::beginTransaction();
 
               // Row
-              $row              = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id   = Domain::getTenantId();
-              $row->user_id     = auth()->guard('api')->user()->id;
-              $row->parent_id   = $value['parent_id'] ?? NULL;
-              $row->slug        = $value['slug'] ?? NULL;
-              $row->title       = $value['title'] ?? NULL;
-              $row->body        = $value['body'] ?? NULL;
-              $row->color       = $value['color'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
+              $row                = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->provider      = $value['provider'] ?? NULL;
+              $row->provider_url  = $value['provider_url'] ?? NULL;
               $row->save();
-
-
-              // Metas
-              if(isset($value['meta_title'])) {
-                $row->meta()->delete();
-                $row->meta()->create([
-                    'meta_title'       => $value['meta_title'],
-                    'meta_keywords'    => $value['meta_keywords'],
-                    'meta_description' => $value['meta_description']
-                ]);
-              }
-
-
-              // Image
-              if(isset($value['image_url'])) {
-                if($value['image_url'] 
-                  && !Str::contains($value['image_url'], ['s3.eu-central-1.amazonaws.com'])) {
-                    $image = Imageable::uploadImage($value['image_url'], 'social');
-                } else {
-                    $image = $value['image_url'];
-                }
-                $row->image()->delete();
-                $row->image()->create([
-                    'image_url'       => $image ?? NULL,
-                    'image_alt'       => $value['image_alt'] ?? NULL,
-                    'image_title'     => $value['image_title'] ?? NULL
-                ]);
-              }
-
 
             DB::commit();
 

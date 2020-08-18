@@ -113,9 +113,10 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type'   => 'bearer',
             'expires_in'   => auth()->factory()->getTTL() * 60,
-
-            'user'         => new UserResource(User::findOrFail(auth()->guard('api')->user()->id)),
-            'permissions'  => PermissionResource::collection(auth()->user()->getAllPermissions())
+            //
+            'as' => 's',
+            //'user'         => new UserResource(User::findOrFail(auth()->guard('api')->user()->id)),
+            //'permissions'  => PermissionResource::collection(auth()->user()->getAllPermissions())
         ], 200);
     }
 }

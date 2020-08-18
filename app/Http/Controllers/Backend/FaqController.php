@@ -13,20 +13,15 @@ class FaqController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:view_faqs', ['only' => ['index', 'show', 'export']]);
-        // $this->middleware('permission:add_faqs',  ['only' => ['store']]);
-        // $this->middleware('permission:edit_faqs', 
-        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        // $this->middleware('permission:delete_faqs', ['only' => ['destroy']]);
+        //
     }
 
     public function index()
     {
-        $data = Faq::has('tenant')->get();
+        $data = Faq::get();
         $rows = FaqResource::collection(Faq::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
-            'permissions' => $this->permissions('faqs'),
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
         ], 200);
@@ -44,13 +39,13 @@ class FaqController extends Controller
 
     public function show($id)
     {
-        $row = new FaqResource(Faq::has('tenant')->findOrFail($id));
+        $row = new FaqResource(Faq::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(FaqUpdateRequest $request, $id)
     {
-        $row = Faq::createOrUpdate($id, $request->all());
+        $row = Faq::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -61,7 +56,7 @@ class FaqController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Faq::has('tenant');
+            $row = Faq::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -82,7 +77,7 @@ class FaqController extends Controller
     public function active($id)
     {
         try {
-            $row = Faq::has('tenant');
+            $row = Faq::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -103,7 +98,7 @@ class FaqController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Faq::has('tenant');
+            $row = Faq::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -124,7 +119,7 @@ class FaqController extends Controller
     public function trash($id)
     {
         try {
-            $row = Faq::has('tenant');
+            $row = Faq::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -145,7 +140,7 @@ class FaqController extends Controller
     public function restore($id)
     {
         try {
-            $row = Faq::has('tenant');
+            $row = Faq::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -165,7 +160,7 @@ class FaqController extends Controller
 
     public function export()
     {
-        $data = Faq::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Faq::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');

@@ -16,15 +16,11 @@ class SocialResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            //'encrypt_id'    => encrypt($this->id),
+            'encrypt_id'    => encrypt($this->id),
             
-            'image'         => ($this->image) ?? NULL,
-            'meta'          => ($this->meta) ?? NULL,
-            'user'          => ($this->user) ?? NULL,
+            'provider'      => $this->provider,
+            'provider_url'  => $this->provider_url,
 
-            'slug'          => $this->slug,
-            'title'         => $this->title,
-            'body'          => $this->body,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

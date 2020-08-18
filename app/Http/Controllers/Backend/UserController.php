@@ -13,25 +13,17 @@ class UserController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:view_pages', ['only' => ['index', 'show', 'export']]);
-        // $this->middleware('permission:add_pages',  ['only' => ['store']]);
-        // $this->middleware('permission:edit_pages', 
-        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        // $this->middleware('permission:delete_pages', ['only' => ['destroy']]);
+        //
     }
 
     public function index()
     {
-        $data = User::has('tenant')->get();
+        $data = User::get();
         $rows = UserResource::collection(User::fetchData(request()->all()));
         return response()->json([
-            'all'       => count($data),
-            'active'    => count($data->where('status', true)->where('trash', false)),
-            'inactive'  => count($data->where('status', false)->where('trash', false)), 
-            'trash'     => count($data->where('trash', true)),
-
-            'rows'      => $rows,
-            'paginate'  => $this->paginate($rows)
+            'statusBar'   => $this->statusBar($data),
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 
@@ -47,13 +39,13 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $row = new UserResource(User::has('tenant')->findOrFail($id));
+        $row = new UserResource(User::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(UserUpdateRequest $request, $id)
     {
-        $row = User::createOrUpdate($id, $request->all());
+        $row = User::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -64,7 +56,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $row = User::has('tenant');
+            $row = User::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -85,7 +77,7 @@ class UserController extends Controller
     public function active($id)
     {
         try {
-            $row = User::has('tenant');
+            $row = User::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -106,7 +98,7 @@ class UserController extends Controller
     public function inactive($id)
     {
         try {
-            $row = User::has('tenant');
+            $row = User::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -127,7 +119,7 @@ class UserController extends Controller
     public function trash($id)
     {
         try {
-            $row = User::has('tenant');
+            $row = User::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -148,7 +140,7 @@ class UserController extends Controller
     public function restore($id)
     {
         try {
-            $row = User::has('tenant');
+            $row = User::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -168,7 +160,7 @@ class UserController extends Controller
 
     public function export()
     {
-        $data = User::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = User::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');

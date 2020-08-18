@@ -22,43 +22,30 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
 
 
-  /** Backend **/
-  $router->group(['prefix' => 'dashboard', 'namespace' => 'Backend'], function($router) use ($app) {
-
-    # Auth
-    $app->authResource('auth', 'AuthController');
-    
-    # Navigation
-    //$app->apiResource('/', 'AppController');
-    $app->apiResource('articles', 'ArticleController');
-    $app->apiResource('categories', 'CategoryController');
-    $app->apiResource('cruises', 'CruiseController');
-    $app->apiResource('destinations', 'DestinationController');
-    $app->apiResource('medias', 'MediaController');
-    $app->apiResource('logs', 'LogController');
-    $app->apiResource('packageTypes', 'PackageTypeController');
-    $app->apiResource('packages', 'PackageController');
-    $app->apiResource('pages', 'PageController');
-    $app->apiResource('tags', 'TagController');
-    $app->apiResource('users', 'UserController');
-    $app->apiResource('wikis', 'WikiController');
-    $app->apiResource('writers', 'WriterController');
-    //$app->apiResource('appsettings', 'AppSettingController');
-    $app->apiResource('apps', 'AppController');
-    
-
-        # App Settings
-        $app->apiResource('accommodations', 'AccommodationController');
-        $app->apiResource('faqs', 'FaqWriterController');
-        $app->apiResource('hotels', 'HotelController');
-        $app->apiResource('roles', 'RoleController');
-        $app->apiResource('regions', 'RegionController');
-        $app->apiResource('reviews', 'ReviewController');
-        $app->apiResource('sliders', 'SliderController');
+    /** Backend **/
+    $router->group(['prefix' => 'dashboard', 'namespace' => 'Backend'], function($router) use ($app) {
+        $app->authResource('auth', 'AuthController');
+        
+        $app->exploreResource('explore', 'ExploreController');
+        $app->apiResource('home', 'SettingController');
+        $app->apiResource('accreditations', 'AccreditationController');
+        $app->apiResource('programs', 'ProgramController');
+        $app->apiResource('sectors', 'SectorController');
+        $app->apiResource('products', 'ProductController');
+        $app->apiResource('memberships', 'MembershipController');
+        $app->apiResource('about', 'SettingController');
+        $app->apiResource('contacts', 'SettingController');
+        $app->apiResource('inbox', 'InboxController');
+        $app->apiResource('media', 'MediaController');
+        $app->apiResource('trainings', 'TrainingController');
+        $app->apiResource('members', 'MemberController');
+        $app->apiResource('users', 'UserController');
+        $app->apiResource('faqs', 'FaqController');
+        $app->apiResource('searchs', 'SearchController');
+        $app->apiResource('privacy', 'PrivacyController');
+        $app->apiResource('events', 'SettingController');
+        $app->apiResource('online', 'OnlineController');
         $app->apiResource('socials', 'SocialController');
-        $app->apiResource('tenants', 'TenantController');
-        $app->apiResource('updates', 'UpdateController');
-    
     });
 
 
@@ -69,7 +56,6 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
 
     /** Frontend **/
     $router->group(['namespace' => 'Frontend'], function($router) use ($app) {
-
         # Auth
         $app->authResource('auth', 'AuthController');
 
@@ -77,7 +63,6 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('cache/clear', function(){
             Cache::flush();
         });
-
     });
 
 });

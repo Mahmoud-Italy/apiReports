@@ -17,7 +17,8 @@ class UserResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            'image'         => ($this->image) ? $this->image->url : NULL,
+            
+            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             
             'name'          => $this->name,
             'email'         => $this->email,

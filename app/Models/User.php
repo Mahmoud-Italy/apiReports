@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use DB;
-use App\Models\User;
-use App\Models\Domain;
-use App\Models\Tenant;
+use Carbon\Carbon;
+use App\Models\Imageable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -24,7 +23,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'first_name','last_name','country_id','email',
     ];
 
     /**
@@ -45,11 +44,6 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-
-    public function tenant() {
-        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
     }
 
     public function image() {
@@ -113,7 +107,13 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
               $row->save();
 
               // role
-              $row->assignRole($value['role']); // assign role
+              if(isset($value['base64Image'])) {
+                if($value['base64Image']) {
+                  $image = Imageable::uploadImage($value['base64Image']);
+                  $row->image()->delete();
+                  $row->image()->create(['url' => $image]);
+                }
+              }
 
             DB::commit();
 
@@ -122,5 +122,47 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
             DB::rollback();
             return $e->getMessage();
         }
+    }
+
+
+    // fetch Period
+    public static function fetchPeriod($header, $days)
+    {
+        $operator = '-';
+        $percentage = '0%';
+        $arrow = 'ti-arrow-down';
+
+        // get Period Day
+        $obj = self::fetchPeriodDay($header, $days);
+
+        // find percentage & arrow
+        if($days != 'infinity') {
+            $obj2 = self::fetchPeriodDay($header, $days);
+            if($obj >= $obj2) { $operator = '+'; $arrow = 'ti-arrow-up'; } 
+            else { $operator = '-'; $arrow = 'ti-arrow-down'; }
+
+            $diff = 0;
+            if($obj > 0 && $obj2) { $diff = $obj / $obj2 * 100; }
+            $percentage = $operator.''.$diff.'%';
+        }
+
+        $data = ['total'=>$obj, 'percentage'=>$percentage, 'arrow'=>$arrow];
+        return $data;
+        
+    }
+
+    public static function fetchPeriodDay($header, $days)
+    {
+        $obj = self::where('id','!=', 0)->where('role_id', 0);
+
+            // Today & else = Yesterday, 28 Days, 90 Days , 180 Days
+            if($days == 0) {
+                $obj = $obj->whereDate('created_at', Carbon::now());
+            } else if ($days != 0 && $days != 'infinity') {
+                $obj = $obj->whereDate('created_at', '>=', Carbon::now()->subDay($days));
+            } 
+
+        $obj = $obj->count();
+        return $obj;
     }
 }

@@ -16,14 +16,14 @@ class SettingResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'encrypt_id'    => encrypt($this->id),
-            'image'         => ($this->image) ? $this->image->url : NULL,
+            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'title'         => $this->title,
 
-            // 'title'      => $this->title,
-            // 'body'       => $this->body,
-
-            'dateForHumans' => $this->created_at->diffForHumans(),
-            'timestamp'     => $this->created_at
+            'body1'         => $this->body1,
+            'body2'         => $this->body2,
+            'body3'         => $this->body3,
+            'body4'         => $this->body4,
+            'body5'         => $this->body5,
         ];
     }
 }

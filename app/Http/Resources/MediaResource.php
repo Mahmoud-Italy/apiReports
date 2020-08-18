@@ -18,14 +18,8 @@ class MediaResource extends JsonResource
             'id'            => $this->id,
             //'encrypt_id'    => encrypt($this->id),
             
-            'image'         => ($this->image) ?? NULL,
-            'meta'          => ($this->meta) ?? NULL,
-            'user'          => ($this->user) ?? NULL,
-
-            'slug'          => $this->slug,
-            'title'         => $this->title,
-            'body'          => $this->body,
-
+            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
             'created_at'    => ($this->created_at == $this->updated_at) 

@@ -13,16 +13,9 @@ class Media extends Model
 {
     protected $guarded = [];
 
-    public function tenant() {
-        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
-    }
-
-    public function user() {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('image_url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('url');
     }
 
 
@@ -32,9 +25,6 @@ class Media extends Model
     {
         // this way will fire up speed of the query
         $obj = self::query();
-
-          // get only his tenants
-          $obj->has('tenant');
 
           // search for multiple columns..
           if(isset($value['search'])) {
@@ -83,9 +73,13 @@ class Media extends Model
               $row->save();
 
               // image
-              $image = Image::uploadImage($value['file'], 'media');
-              $row->image()->delete();
-              $row->image()->create(['image_url' => $image]);
+              if(isset($value['base64Image'])) {
+                if($value['base64Image']) {
+                  $image = Imageable::uploadImage($value['base64Image']);
+                  $row->image()->delete();
+                  $row->image()->create(['url' => $image]);
+                }
+              }
 
             DB::commit();
 

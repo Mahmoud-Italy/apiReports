@@ -13,11 +13,7 @@ class MediaController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:view_medias', ['only' => ['index', 'show', 'export']]);
-        // $this->middleware('permission:add_medias',  ['only' => ['store']]);
-        // $this->middleware('permission:edit_medias', 
-        //                         ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
-        // $this->middleware('permission:delete_medias', ['only' => ['destroy']]);
+        // 
     }
 
     public function index()
@@ -38,13 +34,13 @@ class MediaController extends Controller
 
     public function show($id)
     {
-        $row = new MediaResource(Media::has('tenant')->findOrFail($id));
+        $row = new MediaResource(Media::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(MediaUpdateRequest $request, $id)
     {
-        $row = Media::createOrUpdate($id, $request->all());
+        $row = Media::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -55,7 +51,7 @@ class MediaController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Media::has('tenant');
+            $row = Media::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -76,7 +72,7 @@ class MediaController extends Controller
     public function active($id)
     {
         try {
-            $row = Media::has('tenant');
+            $row = Media::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -97,7 +93,7 @@ class MediaController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Media::has('tenant');
+            $row = Media::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -118,7 +114,7 @@ class MediaController extends Controller
     public function trash($id)
     {
         try {
-            $row = Media::has('tenant');
+            $row = Media::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -139,7 +135,7 @@ class MediaController extends Controller
     public function restore($id)
     {
         try {
-            $row = Media::has('tenant');
+            $row = Media::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -159,7 +155,7 @@ class MediaController extends Controller
 
     public function export()
     {
-        $data = Media::has('tenant')->where(['status' => true, 'trash' => false]);
+        $data = Media::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
