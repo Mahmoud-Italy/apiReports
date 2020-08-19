@@ -21,14 +21,12 @@ class Inbox extends Model
         // this way will fire up speed of the query
         $obj = self::query();
 
-          // get only his tenants
-          $obj->has('tenant');
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->where('name', 'like', '%'.$value['search'].'%');
+                $q->orWhere('email', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -45,8 +43,8 @@ class Inbox extends Model
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'name')
+              $obj->orderBy('name', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
@@ -72,20 +70,19 @@ class Inbox extends Model
 
               // Row
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->slug        = $value['slug'] ?? NULL;
-              $row->title       = $value['title'] ?? NULL;
+              $row->name        = $value['name'] ?? NULL;
+              $row->email       = $value['email'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
               $row->save();
 
               // Image
-              if(isset($value['image'])) {
-                if($value['image']) {
-                    $image = Imageable::uploadImage($value['image'], 'faq');
-                    $row->image()->delete();
-                    $row->image()->create(['url' => $image]);
-                }
-              }
+              // if(isset($value['image'])) {
+              //   if($value['image']) {
+              //       $image = Imageable::uploadImage($value['image']);
+              //       $row->image()->delete();
+              //       $row->image()->create(['url' => $image]);
+              //   }
+              // }
 
 
             DB::commit();

@@ -13,13 +13,14 @@ class CreateInboxsTable extends Migration
      */
     public function up()
     {
-        Schema::create('inbox', function (Blueprint $table) {
+        Schema::create('inboxes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('subject')->nullable();
             $table->longText('body')->nullable();
-            $table->boolean('seen')->default(false);
+            $table->boolean('status')->default(false);
+            $table->boolean('trash')->default(false);
             $table->timestamps();
         });
     }

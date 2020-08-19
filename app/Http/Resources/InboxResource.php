@@ -18,8 +18,8 @@ class InboxResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             
-            'slug'          => $this->slug,
-            'title'         => $this->title,
+            'name'          => $this->name,
+            'email'         => $this->email,
             'body'          => $this->body,
 
             // Dates
@@ -37,8 +37,6 @@ class InboxResource extends JsonResource
 
 
             // Status & Visibility
-            'has_faq'       => (boolean)$this->has_faq,
-            'has_training'  => (boolean)$this->has_training,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false
