@@ -18,8 +18,13 @@ class MediaController extends Controller
 
     public function index()
     {
+        $fileSize = Media::getFileSize();
         $rows = MediaResource::collection(Media::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        return response()->json([
+                'fileSize'  => $fileSize,
+                'rows'      => $rows,
+                'paginate'  => $this->paginate($rows)
+            ], 200);
     }
 
     public function store(MediaStoreRequest $request)

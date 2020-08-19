@@ -14,6 +14,50 @@ class TrainingResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'                 => $this->id,
+            'encrypt_id'         => encrypt($this->id),
+            'image'              => ($this->image) ? request()->root() . $this->image->url : NULL,
+
+            'passport_file'      => ($this->pdf1) ? request()->root() . $this->pdf1->url : NULL,
+            'passport_size_file' => ($this->pdf2) ? request()->root() . $this->pdf2->url : NULL,
+            'occupation_file'    => ($this->pdf3) ? request()->root() . $this->pdf3->url : NULL,
+            'detailed_resume'    => ($this->pdf4) ? request()->root() . $this->pdf4->url : NULL,
+            'hr_letter_file'     => ($this->pdf5) ? request()->root() . $this->pdf5->url : NULL,
+
+            'name'               => $this->first_name. ' '.$this->last_name,
+            'first_name'         => $this->first_name,
+            'middle_name'        => $this->middle_name,
+            'last_name'          => $this->last_name,
+            'full_name'          => $this->full_name,
+            'nationality'        => $this->nationality,
+            'residential_address'=> $this->residential_address,
+            'telephone_no'       => $this->telephone_no,
+            'email_Address'      => $this->email_Address,
+            'video_url'          => $this->video_url,
+
+            'courses'            => $this->courses,
+            'languages'          => $this->languages,
+            'qualifcations'      => $this->qualifcations,
+
+            // Dates
+            'dateForHumans' => $this->created_at->diffForHumans(),
+            'created_at'    => ($this->created_at == $this->updated_at) 
+                                ? 'Created <br/>'. $this->created_at->diffForHumans()
+                                : NULL,
+            'updated_at'    => ($this->created_at != $this->updated_at) 
+                                ? 'Updated <br/>'. $this->updated_at->diffForHumans()
+                                : NULL,
+            'deleted_at'    => ($this->updated_at && $this->trash) 
+                                ? 'Deleted <br/>'. $this->updated_at->diffForHumans()
+                                : NULL,
+            'timestamp'     => $this->created_at,
+
+
+            // Status & Visibility
+            'status'        => (boolean)$this->status,
+            'trash'         => (boolean)$this->trash,
+            'loading'       => false
+        ];
     }
 }

@@ -19,7 +19,9 @@ class SectorResource extends JsonResource
             'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
 
-            'parent'        => ($this->parent) ? $this->parent->title : NULL,
+            'childs'        => count($this->childs),
+
+            'parent'        => ($this->parent) ? $this->parent->title : 'No Parent',
 
             'program_id'    => $this->program_id,
             'parent_id'     => $this->parent_id,
@@ -29,6 +31,7 @@ class SectorResource extends JsonResource
 
             // total packages
             'programs'      => $this->programs->count(),
+            //'sub'           => $this->sub->count(),
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

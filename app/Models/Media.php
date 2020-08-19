@@ -3,9 +3,6 @@
 namespace App\Models;
 
 use DB;
-use App\Models\User;
-use App\Models\Domain;
-use App\Models\Tenant;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -66,18 +63,16 @@ class Media extends Model
 
               // Row
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id   = Domain::getTenantId();
-              $row->user_id     = auth()->guard('api')->user()->id;
-              $row->mime_type   = \File::mimeType($value['file']);
-              $row->size        = $this->filesize_formatted($value['file']);
+              $row->mime_type   = self::mimeType($value['file']);
+              $row->size        = self::filesize_formatted($value['file']);
               $row->save();
 
-              // image
-              if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
-                  $image = Imageable::uploadImage($value['base64Image']);
+              // file
+              if(isset($value['file'])) {
+                if($value['file']) {
+                  $file = Imageable::uploadImage($value['file']);
                   $row->image()->delete();
-                  $row->image()->create(['url' => $image]);
+                  $row->image()->create(['url' => $file]);
                 }
               }
 
@@ -90,10 +85,42 @@ class Media extends Model
         }
     }
 
-
-    public function filesize_formatted($path)
+    public static function mimeType($file='')
     {
-        $size = filesize($path);
+        $base64_str   = substr($file, strpos($file, ",")+1);
+        $imageDecoded = base64_decode($base64_str);
+        if(explode(';', $file)[0]) {
+          $fileType   = explode(';', $file)[0];
+          $fileType   = explode(':', $fileType)[1];
+        }
+        return $fileType;
+    }
+    public static function filesize_formatted($path)
+    {
+        return '512 KB';
+        //$size  = filesize($path);
+        //$units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        //$power = $size > 0 ? floor(log($size, 1024)) : 0;
+        //return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+    }
+
+    public static function getFileSize($value='')
+    {
+        $size = [];
+        $rows = self::all();
+        foreach ($rows as $row) {
+            $type = explode(' ',$row->size)[1];
+                if($type == 'KB') {
+                    $size[] = explode(' ',$row->size)[0] * 1000;
+                } else if ($type == 'MB') {
+                    $size[] = explode(' ',$row->size)[0] * 1000000;
+                }
+        }
+        return self::calculate_size(array_sum($size));
+    }
+
+    public static function calculate_size($size='')
+    {
         $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
         $power = $size > 0 ? floor(log($size, 1024)) : 0;
         return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];

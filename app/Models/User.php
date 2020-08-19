@@ -47,7 +47,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     }
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable');
+        return $this->morphOne(Imageable::class, 'imageable')->select('url');
     }
 
     public static function fetchData($value='')
@@ -55,22 +55,13 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         // this way will fire up speed of the query
         $obj = self::query();
 
-            // get only his tenants
-            $obj->has('tenant');
-
-            if(isset($value['roleName']) && $value['roleName']) {
-                if($value['roleName'] == 'Account') {
-                    $obj->getRoleNames()[0] == 'Member';
-                } else if ($value['roleName'] == 'Staff') {
-                    $obj->getRoleNames()[0] != 'Member';
-                }
-            }
+          $obj->whereNULL('role_id');
 
             if(isset($value['search']) && $value['search']) {
                 $obj->where(function($q){
-                    $q->where('name', 'like','%'.$value['search'].'%');
+                    $q->where('first_name', 'like','%'.$value['search'].'%');
+                    $q->where('last_name', 'like','%'.$value['search'].'%');
                     $q->orWhere('email', 'like', '%'.$value['search'].'%');
-                    $q->orWhere('mobile', $value['search']);
                     $q->orWhere('id', $value['search']);
                 });
             }
@@ -94,16 +85,16 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id      = Domain::getTenantId();
-              $row->name           = $value['name'] ?? NULL;
+              $row->first_name     = $value['first_name'] ?? NULL;
+              $row->last_name      = $value['last_name'] ?? NULL;
               $row->email          = $value['email'] ?? NULL;
+              $row->country_id     = $value['country_id'] ?? NULL;
 
               if(isset($value['password']) && $value['password']) {
                   $plainPassword   = $value['password'];
                   $row->password   = app('hash')->make($plainPassword);
               }
 
-              $row->status         = $value['status'] ?? false;
               $row->save();
 
               // role
@@ -153,7 +144,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
     public static function fetchPeriodDay($header, $days)
     {
-        $obj = self::where('id','!=', 0)->where('role_id', 0);
+        $obj = self::whereNULL('role_id');
 
             // Today & else = Yesterday, 28 Days, 90 Days , 180 Days
             if($days == 0) {

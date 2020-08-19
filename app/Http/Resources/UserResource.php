@@ -20,10 +20,14 @@ class UserResource extends JsonResource
             
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             
-            'name'          => $this->name,
+            'first_name'    => $this->first_name,
+            'last_name'     => $this->last_name,
+            'name'          => $this->first_name.' '.$this->last_name,
             'email'         => $this->email,
+            'country_id'    => $this->country_id,
+            'country'       => 'Egypt',
 
-            'role'          => $this->roles()->first()->name,
+            'role_id'       => $this->role_id,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

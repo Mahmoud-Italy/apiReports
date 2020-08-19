@@ -7,9 +7,9 @@ use App\Models\Training;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\Sector;
-use App\Models\ProgramList;
+use App\Models\Product;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProgramListResource;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\SectorResource;
 use Illuminate\Http\Request;
 
@@ -78,7 +78,7 @@ class ExploreController extends Controller
    public function topSectors()
    {
       $xaxis   = $series = [];
-      $data    = Sector::latest()->where(['status'=>true, 'trash'=>false])->paginate(5);
+      $data    = Sector::whereNOTNULL('parent_id')->latest()->where(['status'=>true, 'trash'=>false])->paginate(5);
       $sectors = SectorResource::collection($data);
       foreach($sectors as $sector) {
          $xaxis[]  = $sector->title;
@@ -90,8 +90,8 @@ class ExploreController extends Controller
    // recentPrograms
    public function recentPrograms()
    {
-      $data = ProgramList::latest()->where(['status'=>true, 'trash'=>false])->paginate(5);
-      $row  = ProgramListResource::collection($data);
+      $data = Product::latest()->where(['status'=>true, 'trash'=>false])->paginate(10);
+      $row  = ProductResource::collection($data);
       return response()->json(['rows' => $row], 200);
    }
 }

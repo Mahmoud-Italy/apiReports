@@ -16,10 +16,16 @@ class SectorController extends Controller
         //
     }
 
-    public function index($id)
+    public function index()
     {
-        $data = Sector::where('program_id', decrypt($id))->get();
-        $rows = SectorResource::collection(Sector::fetchData(request()->all(), decrypt($id)));
+        $data = Sector::where('program_id', decrypt(request('program_id')));
+        if(request('parent_id') == 1) {
+            $data->whereNULL('parent_id');
+        } else {
+            $data->Where('parent_id', decrypt(request('parent_id')));
+        }
+        $data = $data->get();
+        $rows = SectorResource::collection(Sector::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,

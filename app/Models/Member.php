@@ -5,6 +5,9 @@ namespace App\Models;
 use DB;
 use Carbon\Carbon;
 use App\Models\Imageable;
+use App\Models\MemberCourse;
+use App\Models\MemberLanguage;
+use App\Models\MemberQualification;
 use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
@@ -12,7 +15,35 @@ class Member extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 0)->select('url');
+    }
+    public function file1() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 1)->select('url');
+    }
+    public function file2() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 2)->select('url');
+    }
+    public function file3() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 3)->select('url');
+    }
+    public function file4() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 4)->select('url');
+    }
+    public function file5() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 5)->select('url');
+    }
+
+    public function courses() {
+       return $this->hasMany(MemberCourse::class, 'member_id')
+                  ->select('id','program','institute','duration','date');
+    }
+    public function languages() {
+       return $this->hasMany(MemberLanguage::class, 'member_id')
+                  ->select('id','language','level');
+    }
+    public function qualifcations() {
+       return $this->hasMany(MemberQualification::class, 'member_id')
+                  ->select('id', 'educational', 'univeristy', 'grade', 'year');
     }
 
 
@@ -22,14 +53,14 @@ class Member extends Model
         // this way will fire up speed of the query
         $obj = self::query();
 
-          // get only his tenants
-          $obj->has('tenant');
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('slug', 'like', '%'.$value['search'].'%');
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->where('first_name', 'like', '%'.$value['search'].'%');
+                $q->orWhere('middle_name', 'like', '%'.$value['search'].'%');
+                $q->orWhere('last_name', 'like', '%'.$value['search'].'%');
+                $q->orWhere('email', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -72,12 +103,55 @@ class Member extends Model
             DB::beginTransaction();
 
               // Row
-              $row              = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->slug        = $value['slug'] ?? NULL;
-              $row->title       = $value['title'] ?? NULL;
-              $row->body        = $value['body'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
+              $row                      = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->first_name          = $value['first_name'] ?? NULL;
+              $row->middle_name         = $value['middle_name'] ?? NULL;
+              $row->last_name           = $value['last_name'] ?? NULL;
+              $row->full_name           = $value['full_name'] ?? NULL;
+              $row->nationality         = $value['nationality'] ?? NULL;
+              $row->residential_address = $value['residential_address'] ?? NULL;
+              $row->telephone_no        = $value['telephone_no'] ?? NULL;
+              $row->email_Address       = $value['email_Address'] ?? NULL;
+              $row->video_url           = $value['video_url'] ?? NULL;
               $row->save();
+
+              // files
+              if(isset($value['passport_file'])) {
+                if($value['passport_file']) {
+                  $file1 = Imageable::uploadImage($value['passport_file']);
+                  $row->file1()->delete();
+                  $row->file1()->create(['url' => $file1, 'is_pdf' => 1]);
+                }
+              }
+              if(isset($value['passport_size_file'])) {
+                if($value['passport_size_file']) {
+                  $file2 = Imageable::uploadImage($value['passport_size_file']);
+                  $row->file2()->delete();
+                  $row->file2()->create(['url' => $file2, 'is_pdf' => 2]);
+                }
+              }
+              if(isset($value['occupation_file'])) {
+                if($value['passport_file']) {
+                  $file3 = Imageable::uploadImage($value['occupation_file']);
+                  $row->file3()->delete();
+                  $row->file3()->create(['url' => $file3, 'is_pdf' => 3]);
+                }
+              }
+              if(isset($value['detailed_resume'])) {
+                if($value['detailed_resume']) {
+                  $file4 = Imageable::uploadImage($value['detailed_resume']);
+                  $row->file4()->delete();
+                  $row->file4()->create(['url' => $file4, 'is_pdf' => 4]);
+                }
+              }
+              if(isset($value['hr_letter_file'])) {
+                if($value['hr_letter_file']) {
+                  $file5 = Imageable::uploadImage($value['hr_letter_file']);
+                  $row->file5()->delete();
+                  $row->file5()->create(['url' => $file5, 'is_pdf' => 5]);
+                }
+              }
+             
 
               // Image
               if(isset($value['base64Image'])) {
@@ -85,6 +159,41 @@ class Member extends Model
                   $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);
+                }
+              }
+
+              if(isset($value['courses']) && count($value['courses'])) {
+                $row->courses()->delete();
+                foreach ($value['courses'] as $course) {
+                   $row->courses()->create([
+                      'program'   => $course['program'] ?? NULL,
+                      'institute' => $course['institute'] ?? NULL,
+                      'duration'  => $course['duration'] ?? NULL,
+                      'date'      => $course['date'] ?? NULL
+                    ]);
+                }
+              }
+
+
+              if(isset($value['languages']) && count($value['languages'])) {
+                $row->languages()->delete();
+                foreach ($value['languages'] as $language) {
+                   $row->languages()->create([
+                      'language'   => $language['language'] ?? NULL,
+                      'level'      => $language['level'] ?? NULL
+                    ]);
+                }
+              }
+
+              if(isset($value['qualifcations']) && count($value['qualifcations'])) {
+                $row->qualifcations()->delete();
+                foreach ($value['qualifcations'] as $qualifcation) {
+                   $row->qualifcations()->create([
+                      'educational'   => $qualifcation['educational'] ?? NULL,
+                      'univeristy'    => $qualifcation['univeristy'] ?? NULL,
+                      'grade'         => $qualifcation['grade'] ?? NULL,
+                      'year'          => $qualifcation['year'] ?? NULL
+                    ]);
                 }
               }
 

@@ -19,6 +19,8 @@ class MediaResource extends JsonResource
             //'encrypt_id'    => encrypt($this->id),
             
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'mime_type'     => $this->mime_type,
+            'size'          => $this->size,
             
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
@@ -35,8 +37,6 @@ class MediaResource extends JsonResource
 
 
             // Status & Visibility
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
             'loading'       => false
         ];
     }

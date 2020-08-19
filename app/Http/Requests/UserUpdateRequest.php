@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Urameshibr\Requests\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -23,11 +24,11 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameter('setting')->id;
+        $id = request('id');
 
         return [
             'image' => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'email'   => 'unique:users,email,' . $id . ',id,tenant_id,' . $tenant_id
+            'email' => 'required|unique:users,email,' . $id
         ];
     }
 

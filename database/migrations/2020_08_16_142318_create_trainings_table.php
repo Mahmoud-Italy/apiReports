@@ -23,14 +23,9 @@ class CreateTrainingsTable extends Migration
             $table->string('residential_address')->nullable();
             $table->string('telephone_no')->nullable();
             $table->string('email_Address')->nullable();
-            $table->string('passport_file')->nullable();
-            $table->string('passport_size_file')->nullable();
-            $table->string('occupation_file')->nullable();
-            $table->string('detailed_resume')->nullable();
-            $table->string('hr_letter_file')->nullable();
             $table->string('video_url')->nullable();
             
-            $table->boolean('seen')->default(false);
+            $table->boolean('status')->default(false);
             $table->boolean('trash')->default(false);
             $table->timestamps();
         });

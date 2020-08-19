@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class ProgramListStoreRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class ProgramListStoreRequest extends FormRequest
      */
     public function rules()
     {
-
+        $id  = decrypt(request('id'));
+        
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:program_lists,slug',
-            'title'  => 'required'
+            'slug'   => 'required|unique:products,slug,' . $id,
         ];
     }
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\ProgramList;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProgramListUpdateRequest;
-use App\Http\Requests\ProgramListStoreRequest;
-use App\Http\Resources\ProgramListResource;
+use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -18,8 +18,8 @@ class ProductController extends Controller
 
     public function index($id='')
     {
-        $data  = ProgramList::where('sector_id', decrypt($id))->get();
-        $rows  = ProgramListResource::collection(ProgramList::fetchData(request()->all(), decrypt($id)));
+        $data  = Product::where('sector_id', decrypt(request('sector_id')))->get();
+        $rows  = ProductResource::collection(Product::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
@@ -27,10 +27,9 @@ class ProductController extends Controller
         ], 200);
     }
 
-    // ProgramStoreRequest
-    public function store(ProgramStoreUpdateRequest $request)
+    public function store(ProductStoreRequest $request)
     {
-        $row = ProgramList::createOrUpdate(NULL, $request->all());
+        $row = Product::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -40,14 +39,13 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $row = new ProgramListResource(ProgramList::findOrFail(decrypt($id)));
+        $row = new ProductResource(Product::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
-    // ProgramUpdateRequest
-    public function update(ProgramListUpdateRequest $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
-        $row = ProgramList::createOrUpdate(decrypt($id), $request->all());
+        $row = Product::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -58,7 +56,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
-            $row = ProgramList::query();
+            $row = Product::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -79,7 +77,7 @@ class ProductController extends Controller
     public function active($id)
     {
         try {
-            $row = ProgramList::query();
+            $row = Product::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -100,7 +98,7 @@ class ProductController extends Controller
     public function inactive($id)
     {
         try {
-            $row = ProgramList::query();
+            $row = Product::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -121,7 +119,7 @@ class ProductController extends Controller
     public function trash($id)
     {
         try {
-            $row = ProgramList::query();
+            $row = Product::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -142,7 +140,7 @@ class ProductController extends Controller
     public function restore($id)
     {
         try {
-            $row = ProgramList::query();
+            $row = Product::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -162,7 +160,7 @@ class ProductController extends Controller
 
     public function export()
     {
-        $data = ProgramList::where(['status' => true, 'trash' => false]);
+        $data = Product::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -177,6 +175,6 @@ class ProductController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => ProgramListResource::collection($data)], 200);
+        return response()->json(['rows' => ProductResource::collection($data)], 200);
     }
 }

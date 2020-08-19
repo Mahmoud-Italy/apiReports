@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Carbon\Carbon;
 use App\Helpers\helper;
 use Illuminate\Database\Eloquent\Model;
@@ -123,13 +124,13 @@ class Visitor extends Model
 
     public static function postViewsWeekly($header)
     {
-        $sun     = self::viewsPerWeek('01');
-        $mon     = self::viewsPerWeek('02');
-        $thu     = self::viewsPerWeek('03');
-        $wed     = self::viewsPerWeek('04');
-        $tue     = self::viewsPerWeek('05');
-        $fri     = self::viewsPerWeek('06');
-        $sat     = self::viewsPerWeek('07');
+        $sun     = self::viewsPerWeek('00');
+        $mon     = self::viewsPerWeek('01');
+        $thu     = self::viewsPerWeek('02');
+        $wed     = self::viewsPerWeek('03');
+        $tue     = self::viewsPerWeek('04');
+        $fri     = self::viewsPerWeek('05');
+        $sat     = self::viewsPerWeek('06');
 
         $series  = [$sun, $mon, $thu, $wed, $tue, $fri, $sat];
         $xaxis   = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursady', 'Friday', 'Saturday'];

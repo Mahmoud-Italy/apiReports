@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $data = User::get();
+        $data = User::whereNULL('role_id')->get();
         $rows = UserResource::collection(User::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProgramListResource extends JsonResource
+class ProductResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,8 @@ class ProgramListResource extends JsonResource
             'encrypt_id'    => encrypt($this->id),
             
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
-            'sector'        => ($this->sector) ?? NULL,
+            'sector'        => ($this->sector) ? $this->sector->title : NULL,
+            'sector_id'     => ($this->sector) ? encrypt($this->sector->id) : NULL,
 
             'slug'          => $this->slug,
             'title'         => $this->title,

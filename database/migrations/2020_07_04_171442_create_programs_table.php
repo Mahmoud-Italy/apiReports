@@ -24,7 +24,7 @@ class CreateProgramsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('program_lists', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('sector_id')->unsigned()->nullable();
             $table->string('slug')->unique()->nullable();

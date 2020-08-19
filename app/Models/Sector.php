@@ -4,7 +4,7 @@ namespace App\Models;
 
 use DB;
 use Str;
-use App\Models\ProgramList;
+use App\Models\Product;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,20 +17,27 @@ class Sector extends Model
     }
 
     public function programs() {
-        return $this->hasMany(ProgramList::class, 'sector_id', 'id'); 
+        return $this->hasMany(Product::class, 'sector_id', 'id'); 
     }
 
     public function childs() {
-        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id')->select('title'); 
+        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(__NAMESPACE__.'\\'.class_basename(new self),'parent_id')->select('title');
     }
 
     // fetch Data
-    public static function fetchData($value='', $id='')
+    public static function fetchData($value='')
     {
         // this way will fire up speed of the query
         $obj = self::query();
 
-          $obj->where('program_id', $id);
+          if(isset($value['program_id']) && $value['program_id']) {
+            $obj->where('program_id', decrypt($value['program_id']));
+          }
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -39,6 +46,16 @@ class Sector extends Model
                 $q->orWhere('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
+          }
+
+          if(isset($value['parent_id'])) {
+            if($value['parent_id'] == 1) {
+               $obj->whereNULL('parent_id');
+            } else if($value['parent_id'] != 1) {
+                $obj->whereNOTNULL('parent_id');
+            } else {
+                $obj->whereNULL('parent_id');
+            }
           }
 
           // status
@@ -80,8 +97,8 @@ class Sector extends Model
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->parent_id      = (isset($value['program_id']) && $value['program_id'])
-                                        ? $value['parent_id'] 
+              $row->parent_id      = (isset($value['parent_id']) && $value['parent_id'] != 1)
+                                        ? decrypt($value['parent_id'])
                                         : NULL;
               $row->program_id     = (isset($value['program_id']) && $value['program_id']) 
                                       ? decrypt($value['program_id']) 
@@ -107,7 +124,7 @@ class Sector extends Model
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return $e->getMessage();
+            return $e;
         }
     }
 

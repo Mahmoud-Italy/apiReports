@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Anik\Form\FormRequest;
+use Urameshibr\Requests\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class PrivacyUpdateRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class PrivacyUpdateRequest extends FormRequest
      *
      * @return bool
      */
-    protected function authorize()
+    public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,15 @@ class PrivacyUpdateRequest extends FormRequest
      *
      * @return array
      */
-    protected function rules()
+    public function rules()
     {
         return [
             //
         ];
+    }
+
+    protected function formatErrors (Validator $validator)
+    {
+        return ['message' => $validator->errors()->first()];
     }
 }

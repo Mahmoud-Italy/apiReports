@@ -7,7 +7,7 @@ use App\Models\Sector;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
-class ProgramList extends Model
+class Product extends Model
 {
     protected $guarded = [];
 
@@ -16,17 +16,19 @@ class ProgramList extends Model
     }
 
     public function sector() {
-        return $this->hasMany(Sector::class, 'sector_id');
+        return $this->belongsTo(Sector::class, 'sector_id')->select('id','title');
     }
 
 
     // fetchData
-    public static function fetchData($value='', $id)
+    public static function fetchData($value='')
     {
         // this way will fire up speed of the query
         $obj = self::query();
 
-          $obj->where('sector_id', $id);
+          if(isset($value['sector_id']) && $value['sector_id']) {
+            $obj->where('sector_id', decrypt($value['sector_id']));
+          }
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -76,10 +78,10 @@ class ProgramList extends Model
 
               // Row
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->sector_id     = decrypt($value['sector_id']) ?? NULL;
               $row->slug          = $value['slug'] ?? NULL;
               $row->title         = $value['title'] ?? NULL;
               $row->body          = $value['body'] ?? NULL;
-              $row->has_sectors   = (boolean)$value['has_sectors'] ?? false;
               $row->status        = (boolean)$value['status'] ?? false;
               $row->save();
 

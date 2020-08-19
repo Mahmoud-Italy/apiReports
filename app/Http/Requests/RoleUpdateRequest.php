@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Urameshibr\Requests\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class RoleUpdateRequest extends FormRequest
 {
@@ -23,11 +24,9 @@ class RoleUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameter('setting')->id;
 
         return [
             // 'image' => 'mimes:jpeg,jpg,png,gif|max:10000, // max 10MB
-            'name'   => 'unique:roles,name,' . $id . ',id,tenant_id,' . $tenant_id
         ];
     }
 

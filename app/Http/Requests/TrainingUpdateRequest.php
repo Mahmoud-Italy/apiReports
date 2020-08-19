@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Anik\Form\FormRequest;
+use Urameshibr\Requests\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class TrainingUpdateRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class TrainingUpdateRequest extends FormRequest
      *
      * @return bool
      */
-    protected function authorize()
+    public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,21 @@ class TrainingUpdateRequest extends FormRequest
      *
      * @return array
      */
-    protected function rules()
+    public function rules()
     {
         return [
-            //
+            'first_name'          => 'required|string',
+            'middle_name'         => 'required|string',
+            'last_name'           => 'required|string',
+            'nationality'         => 'required|string',
+            'residential_address' => 'required|string',
+            'telephone_no'        => 'required',
+            'email_Address'       => 'required|email'
         ];
+    }
+
+    protected function formatErrors (Validator $validator)
+    {
+        return ['message' => $validator->errors()->first()];
     }
 }

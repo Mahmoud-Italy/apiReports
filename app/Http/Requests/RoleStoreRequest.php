@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Domain;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -25,11 +24,9 @@ class RoleStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $tenant_id = Domain::getTenantId();
 
         return [
             // 'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'name'   => 'unique:roles,slug,NULL,id,tenant_id,' . $tenant_id
         ];
     }
 
