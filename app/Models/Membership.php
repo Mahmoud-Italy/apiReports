@@ -21,8 +21,6 @@ class Membership extends Model
         // this way will fire up speed of the query
         $obj = self::query();
 
-          // get only his tenants
-          $obj->has('tenant');
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
