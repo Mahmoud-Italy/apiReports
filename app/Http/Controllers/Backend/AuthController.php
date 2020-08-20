@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthStoreRequest;
 use App\Http\Resources\UserResource;
-use App\Http\Resources\PermissionResource;
 
 class AuthController extends Controller
 {
@@ -58,9 +57,7 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        $user = User::findOrFail(auth()->guard('api')->user()->id);
-        if($user->getRoleNames()[0] == 'Member') {
+        if(auth()->guard('api')->user()->role_id == 0) {
             auth()->logout();
             return response()->json(['error' => 'Access denied'], 403);
         }
@@ -114,8 +111,7 @@ class AuthController extends Controller
             'token_type'   => 'bearer',
             'expires_in'   => auth()->factory()->getTTL() * 60,
             //
-            'as' => 's',
-            //'user'         => new UserResource(User::findOrFail(auth()->guard('api')->user()->id)),
+            'user'         => new UserResource(User::findOrFail(auth()->guard('api')->user()->id)),
             //'permissions'  => PermissionResource::collection(auth()->user()->getAllPermissions())
         ], 200);
     }
