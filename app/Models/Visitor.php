@@ -15,10 +15,10 @@ class Visitor extends Model
     public static function saveAsVisitor()
     {
         try {
-            $row              = new self;
+            $row             = new self;
             $row->ip         = request()->ip();
             $row->at_date    = date('Y-m-d');
-            $row->country    = helper::ip_info(request()->ip())['country'];
+            $row->country    = 'Egypt';
             $row->user_agent = request()->header('User-Agent');
             $row->save();
         } catch (\Exception $e) {}

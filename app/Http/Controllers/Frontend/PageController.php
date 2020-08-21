@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Model\Visitor;
 use App\Models\Page;
 use App\Models\Inbox;
 use App\Models\Setting;
@@ -29,6 +30,10 @@ class PageController extends Controller
 
     public function home()
     {
+        try {
+            Visitor::saveAsVisitor();
+        } catch (Exception $e) { }
+        
         $row = new HomeResource(Setting::findOrFail(1));
         return response()->json(['row' => $row], 200);
     }
