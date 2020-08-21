@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\User;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\PageUpdateRequest;
+use App\Http\Requests\PageStoreRequest;
+use App\Http\Resources\PageResource;
 
-class UserController extends Controller
+class PageController extends Controller
 {
     function __construct()
     {
@@ -18,8 +18,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $data = User::where('role_id', false)->get();
-        $rows = UserResource::collection(User::fetchData(request()->all()));
+        $data = Page::get();
+        $rows = PageResource::collection(Page::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
@@ -27,9 +27,9 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function store(UserStoreRequest $request)
+    public function store(PageStoreRequest $request)
     {
-        $row = User::createOrUpdate(NULL, $request->all());
+        $row = Page::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -39,13 +39,13 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $row = new UserResource(User::findOrFail(decrypt($id)));
+        $row = new PageResource(Page::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(UserUpdateRequest $request, $id)
+    public function update(PageUpdateRequest $request, $id)
     {
-        $row = User::createOrUpdate(decrypt($id), $request->all());
+        $row = Page::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -56,7 +56,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $row = User::query();
+            $row = Page::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -77,7 +77,7 @@ class UserController extends Controller
     public function active($id)
     {
         try {
-            $row = User::query();
+            $row = Page::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -98,7 +98,7 @@ class UserController extends Controller
     public function inactive($id)
     {
         try {
-            $row = User::query();
+            $row = Page::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -119,7 +119,7 @@ class UserController extends Controller
     public function trash($id)
     {
         try {
-            $row = User::query();
+            $row = Page::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -140,7 +140,7 @@ class UserController extends Controller
     public function restore($id)
     {
         try {
-            $row = User::query();
+            $row = Page::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -160,7 +160,7 @@ class UserController extends Controller
 
     public function export()
     {
-        $data = User::where(['status' => true, 'trash' => false]);
+        $data = Page::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -175,6 +175,6 @@ class UserController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => UserResource::collection($data)], 200);
+        return response()->json(['rows' => PageResource::collection($data)], 200);
     }
 }

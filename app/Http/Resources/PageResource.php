@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class PageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,14 +17,12 @@ class UserResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             
-            'first_name'    => $this->first_name,
-            'last_name'     => $this->last_name,
-            'name'          => $this->first_name.' '.$this->last_name,
-            'email'         => $this->email,
-            'country'       => $this->country,
-            'role_id'       => $this->role_id,
+            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+
+            'slug'          => $this->slug,
+            'title'         => $this->title,
+            'body'          => $this->body,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

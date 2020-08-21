@@ -6,19 +6,13 @@ use DB;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class Page extends Model
 {
     protected $guarded = [];
 
-
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', false)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('url');
     }
-
-    public function pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', true)->select('url');
-    }
-
 
     // fetchData
     public static function fetchData($value='')
@@ -55,7 +49,7 @@ class About extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('id', 'ASC');
+            $obj->orderBy('id', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -78,8 +72,6 @@ class About extends Model
               $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
               $row->body          = $value['body'] ?? NULL;
-              $row->has_profile   = (boolean)$value['has_profile'] ?? false;
-              $row->status        = (boolean)$value['status'] ?? false;
               $row->save();
 
               // Image
@@ -91,14 +83,6 @@ class About extends Model
                 }
               }
 
-              if(isset($value['base64File'])) {
-                if($value['base64File']) {
-                  $pdf = Imageable::uploadImage($value['base64File']);
-                  $row->pdf()->delete();
-                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => true]);
-                }
-              }
-
             DB::commit();
 
             return true;
@@ -107,5 +91,4 @@ class About extends Model
             return $e;
         }
     }
-
 }

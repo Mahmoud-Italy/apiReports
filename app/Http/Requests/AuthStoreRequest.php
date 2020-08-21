@@ -24,10 +24,12 @@ class AuthStoreRequest extends FormRequest
      */
     public function rules()
     {
+        $status = 1;
         return [
-            'name'         => 'required|string',
-            'email'        => 'required|email|unique:users',
-            'password'     => 'required|confirmed',
+            'first_name'   => 'required|string',
+            'last_name'    => 'required|string',
+            'email'        => 'required|email|unique:users,email,NULL,id,status,' . $status,
+            'password'     => 'required',
         ];
     }
 

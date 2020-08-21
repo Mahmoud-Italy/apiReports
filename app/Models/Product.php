@@ -79,7 +79,7 @@ class Product extends Model
               // Row
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
               $row->sector_id     = decrypt($value['sector_id']) ?? NULL;
-              $row->slug          = $value['slug'] ?? NULL;
+              $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
               $row->body          = $value['body'] ?? NULL;
               $row->status        = (boolean)$value['status'] ?? false;

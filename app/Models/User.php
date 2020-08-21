@@ -23,7 +23,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name','country_id','email',
+        'first_name','last_name','country','email',
     ];
 
     /**
@@ -55,7 +55,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         // this way will fire up speed of the query
         $obj = self::query();
 
-          $obj->whereNULL('role_id');
+          $obj->where('role_id', false);
 
             if(isset($value['search']) && $value['search']) {
                 $obj->where(function($q){
@@ -88,7 +88,8 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
               $row->first_name     = $value['first_name'] ?? NULL;
               $row->last_name      = $value['last_name'] ?? NULL;
               $row->email          = $value['email'] ?? NULL;
-              $row->country_id     = $value['country_id'] ?? NULL;
+              $row->country        = $value['country'] ?? NULL;
+              $row->role_id        = 0;
 
               if(isset($value['password']) && $value['password']) {
                   $plainPassword   = $value['password'];
@@ -144,7 +145,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
     public static function fetchPeriodDay($header, $days)
     {
-        $obj = self::whereNULL('role_id');
+        $obj = self::where('role_id', false);
 
             // Today & else = Yesterday, 28 Days, 90 Days , 180 Days
             if($days == 0) {

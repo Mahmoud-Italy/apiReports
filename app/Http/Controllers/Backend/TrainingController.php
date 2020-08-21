@@ -39,7 +39,7 @@ class TrainingController extends Controller
 
     public function show($id)
     {
-        $row = new TrainingResource(Training::findOrFail($id));
+        $row = new TrainingResource(Training::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 

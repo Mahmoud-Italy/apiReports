@@ -24,12 +24,11 @@ class FaqUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id        = request('id');
-        $tenant_id = Domain::getTenantId();
+        $id = decrypt(request('id'));
         
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:destinations,slug,' . $id . ',id,tenant_id,' . $tenant_id
+            'slug'   => 'required|unique:faqs,slug,' . $id
         ];
     }
 

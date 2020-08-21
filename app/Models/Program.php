@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use App\Models\Sector;
 use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,12 @@ class Program extends Model
 
     public function image() {
         return $this->morphOne(Imageable::class, 'imageable')->select('url');
+    }
+
+    public function sectors() {
+        return $this->hasMany(Sector::class, 'program_id')
+                    ->whereNULL('parent_id')
+                    ->where(['status' => true, 'trash' => false]);
     }
 
 
@@ -70,7 +77,7 @@ class Program extends Model
 
               // Row
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->slug          = $value['slug'] ?? NULL;
+              $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
               $row->body          = $value['body'] ?? NULL;
               $row->has_sectors   = (boolean)$value['has_sectors'] ?? false;

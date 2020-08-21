@@ -38,7 +38,7 @@ class MemberResource extends JsonResource
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,
-            'qualifcations'      => $this->qualifcations,
+            'qualifications'      => $this->qualifcations,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

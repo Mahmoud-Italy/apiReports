@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class InboxStoreRequest extends FormRequest
+class SubscriberUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,10 @@ class InboxStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $id        = request('id');
+        $id  = request('id');
         
         return [
-            'name'  => 'required|string',
-            'email' => 'required|email',
-            'body'  => 'required'
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
         ];
     }
 

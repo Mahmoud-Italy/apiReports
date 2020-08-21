@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Urameshibr\Requests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class InboxStoreRequest extends FormRequest
+class ResetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,10 @@ class InboxStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $id        = request('id');
-        
+        $token = request('token');
         return [
-            'name'  => 'required|string',
-            'email' => 'required|email',
-            'body'  => 'required'
+            'email'        => 'required|email|exists:password_resets,email,token,' . $token,
+            'new_password' => 'required|confirmed',
         ];
     }
 

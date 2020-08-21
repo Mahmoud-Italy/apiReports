@@ -3,21 +3,12 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class Subscriber extends Model
 {
     protected $guarded = [];
-
-
-    public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', false)->select('url');
-    }
-
-    public function pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', true)->select('url');
-    }
+    protected $table = 'newsletters';
 
 
     // fetchData
@@ -26,12 +17,10 @@ class About extends Model
         // this way will fire up speed of the query
         $obj = self::query();
 
-          
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('title', 'like', '%'.$value['search'].'%');
-                $q->orWhere('body', 'like', '%'.$value['search'].'%');
+                $q->where('email', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -48,8 +37,8 @@ class About extends Model
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'email')
+              $obj->orderBy('email', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
@@ -75,29 +64,10 @@ class About extends Model
 
               // Row
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->slug          = strtolower($value['slug']) ?? NULL;
-              $row->title         = $value['title'] ?? NULL;
-              $row->body          = $value['body'] ?? NULL;
-              $row->has_profile   = (boolean)$value['has_profile'] ?? false;
-              $row->status        = (boolean)$value['status'] ?? false;
+              $row->email         = $value['email'] ?? NULL;
+              $row->status        = true;
               $row->save();
 
-              // Image
-              if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
-                  $image = Imageable::uploadImage($value['base64Image']);
-                  $row->image()->delete();
-                  $row->image()->create(['url' => $image]);
-                }
-              }
-
-              if(isset($value['base64File'])) {
-                if($value['base64File']) {
-                  $pdf = Imageable::uploadImage($value['base64File']);
-                  $row->pdf()->delete();
-                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => true]);
-                }
-              }
 
             DB::commit();
 

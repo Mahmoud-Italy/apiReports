@@ -24,11 +24,10 @@ class FaqStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $tenant_id = Domain::getTenantId();
 
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:destinations,slug,NULL,id,tenant_id,' . $tenant_id
+            'slug'   => 'required|unique:faqs'
         ];
     }
 
