@@ -4,7 +4,7 @@ namespace App\Models;
 
 use DB;
 use Carbon\Carbon;
-use App\Helpers\helper;
+use App\Helpers\Geo;
 use Illuminate\Database\Eloquent\Model;
 
 class Visitor extends Model
@@ -18,7 +18,7 @@ class Visitor extends Model
             $row             = new self;
             $row->ip         = request()->ip();
             $row->at_date    = date('Y-m-d');
-            $row->country    = 'Egypt';
+            $row->country    = Geo::ip_info(request()->ip());
             $row->user_agent = request()->header('User-Agent');
             $row->save();
         } catch (\Exception $e) {}

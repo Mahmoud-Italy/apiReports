@@ -38,7 +38,7 @@ class AboutResource extends JsonResource
 
 
             // Status & Visibility
-            'has_profile'   => (boolean)$this->has_profile,
+            'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false

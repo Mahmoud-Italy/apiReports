@@ -37,6 +37,7 @@ class AccreditationResource extends JsonResource
 
 
             // Status & Visibility
+            'sort'          => (int)$this->sort,
             'has_faq'       => (boolean)$this->has_faq,
             'has_training'  => (boolean)$this->has_training,
             'status'        => (boolean)$this->status,

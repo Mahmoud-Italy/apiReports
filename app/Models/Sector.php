@@ -17,7 +17,7 @@ class Sector extends Model
     }
 
     public function programs() {
-        return $this->hasMany(Product::class, 'sector_id', 'id'); 
+        return $this->hasMany(Product::class, 'sector_id'); 
     }
 
     public function childs() {
@@ -77,7 +77,7 @@ class Sector extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('id', 'ASC');
+            $obj->orderBy('sort', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -97,15 +97,17 @@ class Sector extends Model
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->parent_id      = (isset($value['parent_id']) && $value['parent_id'] != 1)
-                                        ? decrypt($value['parent_id'])
-                                        : NULL;
+              // $row->parent_id      = (isset($value['parent_id']) && $value['parent_id'] != 1)
+              //                           ? decrypt($value['parent_id'])
+              //                           : NULL;
+              $row->parent_id      = NULL;
               $row->program_id     = (isset($value['program_id']) && $value['program_id']) 
                                       ? decrypt($value['program_id']) 
                                       : NULL;
               $row->slug           = strtolower($value['slug']) ?? NULL;
               $row->title          = $value['title'] ?? NULL;
               $row->body           = $value['body'] ?? NULL;
+              $row->sort           = (int)$value['sort'] ?? 0;
               $row->status         = (boolean)$value['status'] ?? false;
               $row->save();
 

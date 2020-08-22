@@ -78,7 +78,7 @@ class ExploreController extends Controller
    public function topSectors()
    {
       $xaxis   = $series = [];
-      $data    = Sector::whereNOTNULL('parent_id')->latest()->where(['status'=>true, 'trash'=>false])->paginate(5);
+      $data    = Sector::whereNULL('parent_id')->where(['status'=>true,'trash'=>false])->paginate(5);
       $sectors = SectorResource::collection($data);
       foreach($sectors as $sector) {
          $xaxis[]  = $sector->title;

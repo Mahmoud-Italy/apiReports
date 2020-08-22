@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Model\Visitor;
+use App\Models\Visitor;
 use App\Models\Page;
 use App\Models\Inbox;
 use App\Models\Setting;

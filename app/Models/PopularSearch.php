@@ -50,7 +50,7 @@ class PopularSearch extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('id', 'DESC');
+            $obj->orderBy('sort', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -73,7 +73,8 @@ class PopularSearch extends Model
               $row->slug        = strtolower($value['slug']) ?? NULL;
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
-              $row->status      = $value['status'] ?? false;
+              $row->sort        = (int)$value['sort'] ?? 0;
+              $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
 
               // Image

@@ -37,6 +37,7 @@ class SocialResource extends JsonResource
 
 
             // Status & Visibility
+            'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false

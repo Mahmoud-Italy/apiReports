@@ -50,7 +50,7 @@ class Faq extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('id', 'ASC');
+            $obj->orderBy('sort', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -73,6 +73,7 @@ class Faq extends Model
               $row->slug        = strtolower($value['slug']) ?? NULL;
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
+              $row->sort        = (int)$value['sort'] ?? 0;
               $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
 

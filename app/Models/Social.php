@@ -42,7 +42,7 @@ class Social extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('id', 'DESC');
+            $obj->orderBy('sort', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -64,6 +64,7 @@ class Social extends Model
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
               $row->provider      = $value['provider'] ?? NULL;
               $row->provider_url  = $value['provider_url'] ?? NULL;
+              $row->sort          = (int)$value['sort'] ?? 0;
               $row->save();
 
             DB::commit();

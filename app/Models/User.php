@@ -65,6 +65,16 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
                     $q->orWhere('id', $value['search']);
                 });
             }
+
+            // status
+          if(isset($value['status']) && $value['status']) {
+              if($value['status'] == 'seen')
+                  $obj->where(['status' => true, 'trash' => false]);
+              else if ($value['status'] == 'unseen')
+                  $obj->where(['status' => false, 'trash' => false]);
+              else if ($value['status'] == 'trash')
+                  $obj->where('trash', true);
+          }
             
             if(isset($value['order']) && $value['order']) {
                 $obj->orderBy('id', $value['order']);

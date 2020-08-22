@@ -40,6 +40,7 @@ class UserController extends Controller
     public function show($id)
     {
         $row = new UserResource(User::findOrFail(decrypt($id)));
+        $this->active(decrypt($id));
         return response()->json(['row' => $row], 200);
     }
 

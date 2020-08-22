@@ -39,6 +39,7 @@ class ProgramResource extends JsonResource
 
 
             // Status & Visibility
+            'sort'          => (int)$this->sort,
             'has_sectors'   => (boolean)$this->has_sectors,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,

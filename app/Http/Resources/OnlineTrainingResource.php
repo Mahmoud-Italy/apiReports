@@ -38,6 +38,7 @@ class OnlineTrainingResource extends JsonResource
 
 
             // Status & Visibility
+            'sort'          => (int)$this->sort,
             'has_member'    => (boolean)$this->has_member,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,

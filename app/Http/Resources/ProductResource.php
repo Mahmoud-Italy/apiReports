@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
 
             'slug'          => $this->slug,
             'title'         => $this->title,
+            'subtitle'      => $this->subtitle,
             'body'          => $this->body,
 
             // Dates
@@ -41,7 +42,7 @@ class ProductResource extends JsonResource
 
 
             // Status & Visibility
-            'has_sectors'   => (boolean)$this->has_sectors,
+            'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false

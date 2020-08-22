@@ -33,9 +33,9 @@ class Inbox extends Model
 
           // status
           if(isset($value['status']) && $value['status']) {
-              if($value['status'] == 'active')
+              if($value['status'] == 'seen')
                   $obj->where(['status' => true, 'trash' => false]);
-              else if ($value['status'] == 'inactive')
+              else if ($value['status'] == 'unseen')
                   $obj->where(['status' => false, 'trash' => false]);
               else if ($value['status'] == 'trash')
                   $obj->where('trash', true);

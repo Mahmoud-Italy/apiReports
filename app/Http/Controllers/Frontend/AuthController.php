@@ -92,7 +92,7 @@ class AuthController extends Controller
             auth()->logout();
             return response()->json(['error' => 'Access denied'], 403);
         }
-        if(auth()->guard('api')->user()->status == 0) {
+        if(auth()->guard('api')->user()->active == 0) {
             auth()->logout();
             return response()->json(['error' => 'Please verifiy your account'], 403);
         }

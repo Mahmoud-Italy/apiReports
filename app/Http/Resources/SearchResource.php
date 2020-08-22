@@ -39,7 +39,7 @@ class SearchResource extends JsonResource
 
 
             // Status & Visibility
-            'has_sectors'   => (boolean)$this->has_sectors,
+            'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false

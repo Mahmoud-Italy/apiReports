@@ -39,7 +39,8 @@ class MembershipResource extends JsonResource
 
 
             // Status & Visibility
-            'has_sectors'   => (boolean)$this->has_sectors,
+            'sort'          => (int)$this->sort,
+            'has_member'    => (boolean)$this->has_member,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false
