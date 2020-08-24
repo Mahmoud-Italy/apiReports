@@ -58,7 +58,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     /** Frontend **/
     $router->group(['namespace' => 'Frontend'], function($router) use ($app) {
         $app->authResource('auth', 'AuthController');
-        $router->get('countries', 'AppController@fetchCountries');
+        $router->get('countries', 'AppController@countries');
         $router->get('home', 'PageController@home');
         $router->get('popularSearch', 'AppController@popular');
         $router->get('popularSearch/search', 'AppController@search');

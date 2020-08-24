@@ -16,7 +16,7 @@ use App\Models\Membership;
 use App\Models\Accreditation;
 use App\Models\OnlineTraining;
 use App\Models\PopularSearch;
-use \App\Helpers\Countries;
+use App\Helpers\Countries;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Frontend\FaqResource;
@@ -39,15 +39,10 @@ use App\Http\Requests\TrainingStoreRequest;
 
 class AppController extends Controller
 {
-    public function fetchCountries()
+    public function countries()
     {
-        try {
-            $rows = Countries::fetchCountries();
-            return response()->json(['rows' => $rows], 200);
-        } catch (\Exception $e) {
-            dd($e);
-        }
-        
+        $rows = Countries::fetchCountries();
+        return response()->json(['rows' => $rows], 200);
     }
 
     # Popular Searchs
