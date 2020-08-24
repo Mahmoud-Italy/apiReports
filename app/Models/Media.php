@@ -70,7 +70,7 @@ class Media extends Model
 
               // file
               if(isset($value['file'])) {
-                  if($value['file'] && !Str::contains($value['file'], ['uploads'])) {
+                  if($value['file'] && !Str::contains($value['file'], ['uploads','false'])) {
                   $file = Imageable::uploadImage($value['file']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $file]);

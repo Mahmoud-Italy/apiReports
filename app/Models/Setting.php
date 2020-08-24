@@ -77,7 +77,7 @@ class Setting extends Model
 
               // Image
               if(isset($value['base64Image'])) {
-                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads', 'false'])) {
+                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads','false'])) {
                   $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);
@@ -90,7 +90,7 @@ class Setting extends Model
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return $e;
+            return $e->getMessage();
         }
     }
 
