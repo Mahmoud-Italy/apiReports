@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) 
                                     ? request()->root() . $this->image->url 
-                                    : request()->root() . '/uplodas/default_avatar.png',
+                                    : request()->root() . '/uploads/default_avatar.png',
             
             'first_name'    => $this->first_name,
             'last_name'     => $this->last_name,
