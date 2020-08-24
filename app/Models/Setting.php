@@ -24,7 +24,7 @@ class Setting extends Model
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->orWhere('title', 'like', '%'.$value['search'].'%');
+                $q->where('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -90,7 +90,7 @@ class Setting extends Model
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return $e->getMessage();
+            return $e;
         }
     }
 
