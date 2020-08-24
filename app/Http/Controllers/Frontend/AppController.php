@@ -30,6 +30,7 @@ use App\Http\Resources\Frontend\AboutResource;
 use App\Http\Resources\Frontend\ProductResource;
 use App\Http\Resources\Frontend\ProductDetailResource;
 use App\Http\Resources\Frontend\SubSectorResource;
+use App\Http\Resources\Frontend\SectorResource;
 use App\Http\Resources\Frontend\SectorProductsResource;
 use App\Http\Resources\Frontend\PopularSearchResource;
 use App\Http\Requests\NewsletterStoreRequest;
@@ -118,13 +119,19 @@ class AppController extends Controller
     {
         $page = Sector::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row  = new SectorProductsResource(Sector::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        $sectors = SectorResource::collection(
+                        Sector::where(['status' => true, 'trash' => false])->paginate(10));
+        return response()->json(['row' => $row, 'sectors' => $sectors], 200);
     }
     public function showProducts($slug)
     {
         $page = Product::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row  = new ProductDetailResource(Product::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        $related = ProductResource::collection(
+                        Product::where(['status' => true, 'trash' => false])
+                                ->where('sector_id', $page->sector_id)
+                                ->paginate(10));
+        return response()->json(['row' => $row, 'related' => $related], 200);
     }
 
 

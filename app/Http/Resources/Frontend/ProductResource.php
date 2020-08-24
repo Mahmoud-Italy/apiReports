@@ -19,6 +19,8 @@ class ProductResource extends JsonResource
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             'slug'          => $this->slug,
             'title'         => $this->title,
+            'subtitle'      => $this->subtitle,
+            'body'          => $this->body
         ];
     }
 }

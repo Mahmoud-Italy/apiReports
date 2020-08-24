@@ -20,7 +20,7 @@ class SectorResource extends JsonResource
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
-            'childs'        => count($this->childs)
+            //'childs'        => count($this->childs)
         ];
     }
 }
