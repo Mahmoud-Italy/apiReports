@@ -5,12 +5,13 @@ class Countries
 {
     public static function fetchCountries()
     {
-        $arr = [];
-        $arr = self::allCountries();
-        $myCollection = collect($arr)->map(function($row) {
-            return (object) $row;
-        });
-        return $myCollection;
+        // $arr = [];
+        // $arr = self::allCountries();
+        // $myCollection = collect($arr)->map(function($row) {
+        //     return (object) $row;
+        // });
+        // return $myCollection;
+        return "fetch";
     }
 
     public static function allCountries()
