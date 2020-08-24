@@ -17,7 +17,9 @@ class UserResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'image'         => ($this->image) 
+                                    ? request()->root() . $this->image->url 
+                                    : request()->root() . '/uplodas/default_avatar.png',
             
             'first_name'    => $this->first_name,
             'last_name'     => $this->last_name,

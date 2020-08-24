@@ -171,7 +171,7 @@ class AuthController extends Controller
             PasswordReset::where('email', $request->email)->delete();
         }
 
-        $token = encrypt($request->email);
+        $token = $isExist->id.mt_rand(100000,999999);
         $row = PasswordReset::create(['email' => $request->email, 'token' => $token]);
             
             // Send Email
