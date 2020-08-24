@@ -30,6 +30,6 @@ class VerifyMailable extends Mailable
     {
         return $this->view('emails.verify')
                     ->from('no-reply@aips.com', 'No Reply')
-                    ->subject('Veirfy your account.');
+                    ->subject('Verify your account.');
     }
 }
