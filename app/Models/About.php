@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DB;
 use App\Models\Imageable;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class About extends Model
@@ -84,20 +85,20 @@ class About extends Model
 
               // Image
               if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
+                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads'])) {
                   $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);
                 }
               }
 
-              if(isset($value['base64File'])) {
-                if($value['base64File']) {
-                  $pdf = Imageable::uploadImage($value['base64File']);
-                  $row->pdf()->delete();
-                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => true]);
-                }
-              }
+              // if(isset($value['base64File'])) {
+              //   if($value['base64File']) {
+              //     $pdf = Imageable::uploadImage($value['base64File']);
+              //     $row->pdf()->delete();
+              //     $row->pdf()->create(['url' => $pdf, 'is_pdf' => true]);
+              //   }
+              // }
 
             DB::commit();
 

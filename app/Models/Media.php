@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DB;
 use App\Models\Imageable;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
@@ -69,7 +70,7 @@ class Media extends Model
 
               // file
               if(isset($value['file'])) {
-                if($value['file']) {
+                  if($value['file'] && !Str::contains($value['file'], ['uploads'])) {
                   $file = Imageable::uploadImage($value['file']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $file]);
@@ -97,11 +98,7 @@ class Media extends Model
     }
     public static function filesize_formatted($path)
     {
-        return '512 KB';
-        //$size  = filesize($path);
-        //$units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-        //$power = $size > 0 ? floor(log($size, 1024)) : 0;
-        //return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+        return getimagesize($path) ?? '512 KB';
     }
 
     public static function getFileSize($value='')

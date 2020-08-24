@@ -17,7 +17,7 @@ class PopularSearchResource extends JsonResource
         return [
             'id'         => $this->id,
             'title'      => $this->title,
-            'url'        => ''
+            'slug'       => $this->slug
         ];
     }
 }

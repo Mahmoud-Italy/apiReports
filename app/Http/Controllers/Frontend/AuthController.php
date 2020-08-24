@@ -10,7 +10,7 @@ use App\Http\Requests\AuthStoreRequest;
 use App\Http\Requests\ForgetRequest;
 use App\Http\Requests\ResetRequest;
 use App\Http\Resources\UserResource;
-
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -49,8 +49,10 @@ class AuthController extends Controller
                 $user->verification = $user->id.mt_rand(100000,999999);
                 $user->save();
 
-            // send him activition code
-
+                // Send Email
+                try {
+                    Mail::to($user->email)->send(new VerifyMailable($user));
+                } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
         } catch (\Exception $e) {
@@ -71,6 +73,12 @@ class AuthController extends Controller
             $row->status = true;
             $row->save();
             return response()->json(['message' => ''], 200);
+
+            // Send Email
+            try {
+                Mail::to($row->email)->send(new WelcomeMailable($row));
+            } catch (\Exception $e) { }
+
         } else {
             return response()->json(['message' => 'Invalid Verification Code!'], 409);
         }
@@ -161,8 +169,14 @@ class AuthController extends Controller
 
         $token = encrypt($request->email);
         $row = PasswordReset::create(['email' => $request->email, 'token' => $token]);
+            
+            // Send Email
+            try {
+                Mail::to($request->email)->send(new WelcomeMailable($row));
+            } catch (\Exception $e) { }
+
         if($row) {
-            return response()->json(['message' => '', 'email'=>$request->email, 'token'=>$token], 201);
+            return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to find email, ' . $row], 500);
         }
@@ -175,6 +189,11 @@ class AuthController extends Controller
         $row->password = app('hash')->make($plainPassword);
         $row->save();
         PasswordReset::where('email', $request->email)->delete();
+
+            // Send Email
+            try {
+                Mail::to($row->email)->send(new ResetMailable($row));
+            } catch (\Exception $e) { }
 
         if($row) {
             return response()->json(['message' => ''], 200);

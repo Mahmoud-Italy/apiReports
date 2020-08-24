@@ -15,10 +15,6 @@ class Imageable extends Model
 
     public static function uploadImage($file)
     {
-        // $fileName = date('Y-m-d-h-i-s').'.'.$file->getClientOriginalExtension();
-        // $file->move(base_path('public/uploads/'), $fileName);
-        // return '/uploads/' . $fileName;
-
         $base64_str   = substr($file, strpos($file, ",")+1);
         $imageDecoded = base64_decode($base64_str);
         if(explode(';', $file)[0]) {

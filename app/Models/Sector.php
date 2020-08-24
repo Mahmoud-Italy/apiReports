@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use DB;
-use Str;
 use App\Models\Product;
 use App\Models\Imageable;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Sector extends Model
@@ -113,7 +113,7 @@ class Sector extends Model
 
 
               if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
+                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads'])) {
                   $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);

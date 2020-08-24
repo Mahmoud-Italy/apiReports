@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use DB;
-use File;
 use App\Models\Imageable;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
@@ -77,10 +77,9 @@ class Setting extends Model
 
               // Image
               if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
+                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads'])) {
                   $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
-                  //\File::delete($row->image->url);
                   $row->image()->create(['url' => $image]);
                 }
               }

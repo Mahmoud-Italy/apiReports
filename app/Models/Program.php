@@ -5,6 +5,7 @@ namespace App\Models;
 use DB;
 use App\Models\Sector;
 use App\Models\Imageable;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
@@ -87,7 +88,7 @@ class Program extends Model
 
               // Image
               if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
+                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads'])) {
                   $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);
