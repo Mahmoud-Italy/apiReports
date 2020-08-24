@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\User;
 use App\Models\PasswordReset;
+use App\Mail\VerifyMailable;
+use App\Mail\WelcomeMailable;
+use App\Mail\ForgetMailable;
+use App\Mail\ResetMailable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthStoreRequest;
@@ -172,7 +176,7 @@ class AuthController extends Controller
             
             // Send Email
             try {
-                Mail::to($request->email)->send(new WelcomeMailable($row));
+                Mail::to($request->email)->send(new ForgetMailable($row));
             } catch (\Exception $e) { }
 
         if($row) {
