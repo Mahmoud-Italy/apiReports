@@ -42,7 +42,7 @@ class AppController extends Controller
     public function countries()
     {
         try {
-            $rows = App\Helpers\Countries::fetchCountries();
+            $rows = \App\Helpers\Countries::fetchCountries();
             return response()->json(['rows' => $rows], 200);
         } catch (\Exception $e) {
             dd($e);
