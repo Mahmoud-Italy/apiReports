@@ -41,7 +41,7 @@ class AppController extends Controller
 {
     public function countries()
     {
-        return custome('ali');
+        dd(custome('ali'));
         //$rows = Countries::fetchCountries();
         //return response()->json(['rows' => $rows], 200);
     }
