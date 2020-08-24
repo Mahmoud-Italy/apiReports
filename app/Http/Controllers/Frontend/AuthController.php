@@ -70,7 +70,7 @@ class AuthController extends Controller
         $row = User::where('verification', request('verification'))->first();
         if($row) {
             $row->verification = NULL;
-            $row->status = true;
+            $row->active = true;
             $row->save();
             return response()->json(['message' => ''], 200);
 
