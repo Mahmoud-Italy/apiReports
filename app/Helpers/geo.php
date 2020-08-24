@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers;
 
-class Geo 
+class Geo
 {
 
   public static function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) 

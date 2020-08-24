@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers;
 
-class Countries 
+class Countries
 {
     public static function fetchCountries()
     {
