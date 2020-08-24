@@ -26,6 +26,7 @@ class ProductResource extends JsonResource
             'title'         => $this->title,
             'subtitle'      => $this->subtitle,
             'body'          => $this->body,
+            'short_body'    => $this->short_body,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
