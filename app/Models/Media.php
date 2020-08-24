@@ -98,7 +98,8 @@ class Media extends Model
     }
     public static function filesize_formatted($path)
     {
-        return getimagesize($path) ?? '512 KB';
+        //return getimagesize($path) ?? '512 KB';
+      return '512 KB';
     }
 
     public static function getFileSize($value='')

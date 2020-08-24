@@ -83,6 +83,7 @@ class Product extends Model
               $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
               $row->subtitle      = $value['subtitle'] ?? NULL;
+              $row->short_body    = $value['short_body'] ?? NULL;
               $row->body          = $value['body'] ?? NULL;
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->status        = (boolean)$value['status'] ?? false;
