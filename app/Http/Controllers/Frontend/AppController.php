@@ -39,7 +39,7 @@ use App\Http\Requests\TrainingStoreRequest;
 
 class AppController extends Controller
 {
-    public function countries()
+    public function fetchCountries()
     {
         try {
             $rows = Countries::fetchCountries();
