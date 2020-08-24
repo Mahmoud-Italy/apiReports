@@ -27,3 +27,8 @@ if (!function_exists('public_path'))
         return base_path('public') . ($path ? '/' . $path : $path);
     }
 }
+
+public function custome($name)
+{
+    return $name;
+}
