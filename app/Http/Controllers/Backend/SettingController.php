@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SettingUpdateRequest;
 use App\Http\Resources\SettingResource;
 
 class SettingController extends Controller
@@ -30,7 +31,7 @@ class SettingController extends Controller
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(SettingUpdateRequest $request, $id)
     {
         $row = Setting::createOrUpdate($id, $request->all());
         if($row === true) {

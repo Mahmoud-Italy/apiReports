@@ -29,7 +29,7 @@ class SettingUpdateRequest extends FormRequest
         return [
             'id' => 'required|unique:settings,id,' . $id,
             // 'title' => 'required',
-            // 'image' => 'required|mimes:jpeg,jpg,png,gif|max:10000, // max 10MB
+            //'base64Image' => 'dimensions:min_width=1250,min_height=50|mimes:png,gif|max:10000', // max 10MB
         ];
     }
 
