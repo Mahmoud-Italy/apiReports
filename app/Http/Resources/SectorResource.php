@@ -28,6 +28,8 @@ class SectorResource extends JsonResource
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
 
             // total packages
             'programs'      => $this->programs->count(),

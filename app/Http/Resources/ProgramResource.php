@@ -23,6 +23,8 @@ class ProgramResource extends JsonResource
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

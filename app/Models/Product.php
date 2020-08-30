@@ -85,6 +85,15 @@ class Product extends Model
               $row->subtitle      = $value['subtitle'] ?? NULL;
               $row->short_body    = $value['short_body'] ?? NULL;
               $row->body          = $value['body'] ?? NULL;
+
+              $row->bgTitle       = $value['bgTitle'] ?? NULL;
+              $row->bgColor       = $value['bgColor'] ?? NULL;
+              $row->body1         = $value['body1'] ?? NULL;
+              $row->body2         = $value['body2'] ?? NULL;
+              $row->body3         = $value['body3'] ?? NULL;
+              $row->body4         = $value['body4'] ?? NULL;
+              $row->body5         = $value['body5'] ?? NULL;
+
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->status        = (boolean)$value['status'] ?? false;
               $row->save();
