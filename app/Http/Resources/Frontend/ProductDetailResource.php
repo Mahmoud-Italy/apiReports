@@ -19,7 +19,19 @@ class ProductDetailResource extends JsonResource
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             'slug'          => $this->slug,
             'title'         => $this->title,
-            'body'          => $this->body,
+            'short_body'    => $this->short_body,
+            //'body'          => $this->body,
+
+
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
+
+            'body1'         => $this->body1,
+            'body2'         => $this->body2,
+            'body3'         => $this->body3,
+            'body4'         => $this->body4,
+            'body5'         => $this->body5,
+            'body6'         => $this->body6,
         ];
     }
 }
