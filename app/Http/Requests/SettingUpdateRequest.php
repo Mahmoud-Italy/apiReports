@@ -24,7 +24,7 @@ class SettingUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameter('setting')->id;
+        $id   = request('id');
 
         return [
             'id' => 'required|unique:settings,id,' . $id,
