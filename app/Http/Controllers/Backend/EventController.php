@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-use App\Http\Resource\EventResource;
+use App\Http\Resources\EventResource;
 use App\Http\Controllers\Controller;
 
 
