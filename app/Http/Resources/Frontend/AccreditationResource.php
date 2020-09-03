@@ -19,6 +19,9 @@ class AccreditationResource extends JsonResource
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             'slug'          => $this->slug,
             'title'         => $this->title,
+
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
             //'body'          => $this->body,
 
             'body1'          => $this->body1,

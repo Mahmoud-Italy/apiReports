@@ -106,6 +106,8 @@ class Accreditation extends Model
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
               $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
+              $row->bgTitle       = $value['bgTitle'] ?? NULL;
+              $row->bgCitle       = $value['bgColor'] ?? NULL;
 
               $row->body1         = $value['body1'] ?? NULL;
               $row->body2         = $value['body2'] ?? NULL;

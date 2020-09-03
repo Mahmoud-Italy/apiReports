@@ -23,6 +23,9 @@ class AccreditationResource extends JsonResource
             'title'         => $this->title,
             'body'          => $this->body,
 
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
+
 
             'body1'         => $this->body1,
             'body2'         => $this->body2,
