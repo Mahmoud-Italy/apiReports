@@ -17,7 +17,6 @@ class AccreditationResource extends JsonResource
         $content[] = ['name' => 'ali'];
         $content[] = ['name' => 'hema'];
 
-        $content->toArray();
         return [
             'id'            => $this->id,
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
