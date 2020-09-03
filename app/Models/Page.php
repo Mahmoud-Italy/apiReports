@@ -143,6 +143,9 @@ class Page extends Model
               $row->has_training  = (isset($value['has_training'])) ? (boolean)$value['has_training'] : false;
               $row->has_download  = (isset($value['has_download'])) ? (boolean)$value['has_download'] : false;
               $row->has_scroll    = (isset($value['has_scroll'])) ? (boolean)$value['has_scroll'] : false;
+
+              $row->has_header    = (isset($value['has_header'])) ? (boolean)$value['has_header'] : false;
+              $row->has_footer    = (isset($value['has_footer'])) ? (boolean)$value['has_footer'] : false;
               $row->status        = (isset($value['status'])) ? (boolean)$value['status'] : false;
               $row->save();
 

@@ -84,6 +84,8 @@ class PageResource extends JsonResource
             // Status & Visibility
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
+            'has_header'    => (boolean)$this->has_header,
+            'has_footer'    => (boolean)$this->has_footer,
             'has_faq'       => (boolean)$this->has_faq,
             'has_scroll'    => (boolean)$this->has_scroll,
             'has_training'  => (boolean)$this->has_training,
