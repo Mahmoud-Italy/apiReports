@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PopularSearchResource extends JsonResource
+class Sector2Resource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,23 @@ class PopularSearchResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
 
+            'childs'        => count($this->childs),
+
+            'parent'        => ($this->parent) ? $this->parent->title : 'No Parent',
+
+            'program_id'    => $this->program_id,
+            'parent_id'     => $this->parent_id,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
-
             'bgTitle'       => $this->bgTitle,
             'bgColor'       => $this->bgColor,
+
+            // total packages
+            'programs'      => $this->programs->count(),
+            //'sub'           => $this->sub->count(),
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
@@ -42,7 +50,6 @@ class PopularSearchResource extends JsonResource
 
 
             // Status & Visibility
-            'has_sectors'   => (boolean)$this->has_sectors,
             'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
