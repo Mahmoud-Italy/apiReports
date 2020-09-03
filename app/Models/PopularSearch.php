@@ -75,8 +75,8 @@ class PopularSearch extends Model
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
               $row->bgTitle     = $value['bgTitle'] ?? NULL;
-              $row->bgColor     = $value['bgColor'] ?? NULL:
-              $row->sort        = (int)$value['sort'] ?? 0;
+              $row->bgColor     = $value['bgColor'] ?? NULL;
+              $row->sort        = (int)$value['sort'] ?? false;
               $row->has_sectors = (boolean)$value['has_sectors'] ?? false;
               $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
