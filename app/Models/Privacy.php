@@ -73,7 +73,10 @@ class Privacy extends Model
               $row->slug        = strtolower($value['slug']) ?? NULL;
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
+              $row->bgTitle     = $value['bgTitle'] ?? NULL;
+              $row->bgColor     = $value['bgColor'] ?? NULL;
               $row->sort        = (int)$value['sort'] ?? 0;
+              $row->has_scroll  = (boolean)$value['has_scroll'] ?? false;
               $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
 

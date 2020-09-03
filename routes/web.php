@@ -45,7 +45,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $app->apiResource('sectors2', 'Sector2Controller');
         $app->apiResource('products2', 'Product2Controller');
         $app->apiResource('privacy', 'PrivacyController');
-        $app->apiResource('events', 'SettingController');
+        $app->apiResource('events', 'EventController');
         $app->apiResource('online', 'OnlineController');
         $app->apiResource('socials', 'SocialController');
         $app->apiResource('subscribers', 'SubscriberController');

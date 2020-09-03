@@ -7,26 +7,28 @@ use App\Models\Imageable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class OnlineTraining extends Model
+class Event extends Model
 {
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('type', false)->select('url');
     }
 
-    // fetchData
+    public function bgImage() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('type', true)->select('url');
+    }
+
+    // fetch Data
     public static function fetchData($value='')
     {
         // this way will fire up speed of the query
         $obj = self::query();
 
-          
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
                 $q->where('title', 'like', '%'.$value['search'].'%');
-                $q->orWhere('body', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -50,7 +52,7 @@ class OnlineTraining extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('sort', 'DESC');
+            $obj->orderBy('id', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -61,7 +63,7 @@ class OnlineTraining extends Model
 
 
 
-    // createOrUpdate
+    // 
     public static function createOrUpdate($id, $value)
     {
         try {
@@ -69,18 +71,21 @@ class OnlineTraining extends Model
             DB::beginTransaction();
 
               // Row
-              $row                = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->slug          = strtolower($value['slug']) ?? NULL;
-              $row->title         = $value['title'] ?? NULL;
-              $row->body          = $value['body'] ?? NULL;
+              $row              = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->bgTitle     = $value['bgTitle'] ?? NULL;
+              $row->bgColor     = $value['bgColor'] ?? NULL;
 
-              $row->bgTitle       = $value['bgTitle'] ?? NULL;
-              $row->bgColor       = $value['bgColor'] ?? NULL;
-              
-              $row->sort          = (int)$value['sort'] ?? false;
-              $row->has_member    = (boolean)$value['has_member'] ?? false;
-              $row->has_scroll    = (boolean)$value['has_scroll'] ?? false;
-              $row->status        = (boolean)$value['status'] ?? false;
+              $row->body1       = $value['body1'] ?? NULL;
+              $row->body2       = $value['body2'] ?? NULL;
+              $row->body3       = $value['body3'] ?? NULL;
+              $row->body4       = $value['body4'] ?? NULL;
+              $row->body5       = $value['body5'] ?? NULL;
+              $row->body6       = $value['body6'] ?? NULL;
+              $row->body7       = $value['body7'] ?? NULL;
+              $row->body8       = $value['body8'] ?? NULL;
+              $row->body9       = $value['body9'] ?? NULL;
+              $row->body10       = $value['body10'] ?? NULL;
+              $row->body11       = $value['body11'] ?? NULL;
               $row->save();
 
               // Image
@@ -92,12 +97,23 @@ class OnlineTraining extends Model
                 }
               }
 
+
+              if(isset($value['background_image'])) {
+                if($value['background_image'] && !Str::contains($value['background_image'], ['uploads','false'])) {
+                  $image = Imageable::uploadImage($value['background_image']);
+                  $row->bgImage()->delete();
+                  $row->bgImage()->create(['url' => $image, 'type' => true]);
+                }
+              }
+
+
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return $e;
+            return $e->getMessage();
         }
     }
+
 }

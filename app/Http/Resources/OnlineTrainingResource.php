@@ -23,6 +23,9 @@ class OnlineTrainingResource extends JsonResource
             'title'         => $this->title,
             'body'          => $this->body,
 
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
+
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
             'created_at'    => ($this->created_at == $this->updated_at) 
@@ -39,6 +42,7 @@ class OnlineTrainingResource extends JsonResource
 
             // Status & Visibility
             'sort'          => (int)$this->sort,
+            'has_scroll'    => (boolean)$this->has_scroll,
             'has_member'    => (boolean)$this->has_member,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,

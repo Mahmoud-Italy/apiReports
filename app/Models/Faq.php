@@ -75,6 +75,10 @@ class Faq extends Model
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
               $row->sort        = (int)$value['sort'] ?? 0;
+
+              $row->bgTitle     = $value['bgTitle'] ?? NULL;
+              $row->bgColor     = $value['bgColor'] ?? NULL;
+              $row->has_scroll  = (boolean)$value['has_scroll'] ?? false;
               $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
 

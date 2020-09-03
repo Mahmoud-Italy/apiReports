@@ -23,6 +23,8 @@ class PrivacyResource extends JsonResource
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
@@ -39,6 +41,7 @@ class PrivacyResource extends JsonResource
 
 
             // Status & Visibility
+            'has_scroll'    => (boolean)$this->has_scroll,
             'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
