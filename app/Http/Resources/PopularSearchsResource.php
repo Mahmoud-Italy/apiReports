@@ -88,6 +88,7 @@ class PopularSearchResource extends JsonResource
             'has_scroll'    => (boolean)$this->has_scroll,
             'has_training'  => (boolean)$this->has_training,
             'has_download'  => (boolean)$this->has_download,
+            'has_sectors'   => (boolean)$this->has_sectors,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false
