@@ -44,21 +44,25 @@ class AccreditationResource extends JsonResource
             'image1_4'        => ($this->image1_4) ? request()->root() . $this->image1_4->url : NULL,
             // 2
             'body2_1'         => $this->body2_1,
+            'body2_1_r'         => $this->body2_1_r,
             'image2_1'        => ($this->image2_1) ? request()->root() . $this->image2_1->url : NULL,
             'label2_1'        => $this->label2_1,
             'color2_1'        => $this->color2_1,
 
             'body2_2'         => $this->body2_2,
+            'body2_2_r'         => $this->body2_2_r,
             'image2_2'        => ($this->image2_2) ? request()->root() . $this->image2_2->url : NULL,
             'label2_2'        => $this->label2_2,
             'color2_2'        => $this->color2_2,
 
             'body2_3'         => $this->body2_3,
+            'body2_3_r'         => $this->body2_3_r,
             'image2_3'        => ($this->image2_3) ? request()->root() . $this->image2_3->url : NULL,
             'label2_3'        => $this->label2_3,
             'color2_3'        => $this->color2_3,
 
             'body2_4'         => $this->body2_4,
+            'body2_4_r'         => $this->body2_4_r,
             'image2_4'        => ($this->image2_4) ? request()->root() . $this->image2_4->url : NULL,
             'label2_4'        => $this->label2_4,
             'color2_4'        => $this->color2_4,

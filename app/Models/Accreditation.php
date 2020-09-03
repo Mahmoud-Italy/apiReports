@@ -121,15 +121,19 @@ class Accreditation extends Model
               $row->body1_4       = $value['body1_4'] ?? NULL;
 
               $row->body2_1       = $value['body2_1'] ?? NULL;
+              $row->body2_1_r     = $value['body2_1_r'] ?? NULL;
               $row->label2_1      = $value['label2_1'] ?? NULL;
               $row->color2_1      = $value['color2_1'] ?? NULL;
               $row->body2_2       = $value['body2_2'] ?? NULL;
+              $row->body2_2_r     = $value['body2_2_r'] ?? NULL;
               $row->label2_2      = $value['label2_2'] ?? NULL;
               $row->color2_2      = $value['color2_2'] ?? NULL;
               $row->body2_3       = $value['body2_3'] ?? NULL;
+              $row->body2_3_r     = $value['body2_3_r'] ?? NULL;
               $row->label2_3      = $value['label2_3'] ?? NULL;
               $row->color2_3      = $value['color2_3'] ?? NULL;
               $row->body2_4       = $value['body2_4'] ?? NULL;
+              $row->body2_4_r     = $value['body2_4_r'] ?? NULL;
               $row->label2_4      = $value['label2_4'] ?? NULL;
               $row->color2_4      = $value['color2_4'] ?? NULL;
 

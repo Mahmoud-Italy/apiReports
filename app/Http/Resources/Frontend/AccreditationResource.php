@@ -38,7 +38,8 @@ class AccreditationResource extends JsonResource
                     'background'  => ($this->image1_1) ? request()->root() . $this->image1_1->url : NULL,
                     
                     // d2
-                    'content'   => $this->body2_1,
+                    'body_left'   => $this->body2_1,
+                    'body_right'  => $this->body2_1_r,
                     'image'     => ($this->image2_1) ? request()->root() . $this->image2_1->url : NULL,
                     'label'     => $this->label2_1,
                     'color'     => $this->color2_1,
@@ -50,7 +51,8 @@ class AccreditationResource extends JsonResource
                     'image'  => ($this->image1_2) ? request()->root() . $this->image1_2->url : NULL,
                     
                     // d2
-                    'content'   => $this->body2_2,
+                    'body_left'   => $this->body2_2,
+                    'body_right'  => $this->body2_2_r,
                     'image'     => ($this->image2_2) ? request()->root() . $this->image2_2->url : NULL,
                     'label'     => $this->label2_2,
                     'color'     => $this->color2_2,
@@ -62,7 +64,8 @@ class AccreditationResource extends JsonResource
                     'image'  => ($this->image1_3) ? request()->root() . $this->image1_3->url : NULL,
                     
                     // d2
-                    'content'    => $this->body2_3,
+                    'body_left'   => $this->body2_3,
+                    'body_right'  => $this->body2_3_r,
                     'image'      => ($this->image2_3) ? request()->root() . $this->image2_3->url : NULL,
                     'label'      => $this->label2_3,
                     'color'      => $this->color2_3,
@@ -74,7 +77,8 @@ class AccreditationResource extends JsonResource
                     'image'  => ($this->image1_4) ? request()->root() . $this->image1_4->url : NULL,
                     
                     // d2
-                    'content'   => $this->body2_4,
+                    'body_left'   => $this->body2_4,
+                    'body_right'  => $this->body2_4_r,
                     'image'     => ($this->image2_4) ? request()->root() . $this->image2_4->url : NULL,
                     'label'     => $this->label2_4,
                     'color'     => $this->color2_4,
