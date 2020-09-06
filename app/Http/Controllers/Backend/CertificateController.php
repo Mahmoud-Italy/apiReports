@@ -26,13 +26,13 @@ class CertificateController extends Controller
 
     public function show($id)
     {
-        $row = new CertificateResource(Certificate::findOrFail(1));
+        $row = new CertificateResource(Certificate::findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(Request $request, $id)
     {
-        $row = Certificate::createOrUpdate(decrypt($id), $request->all());
+        $row = Certificate::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
