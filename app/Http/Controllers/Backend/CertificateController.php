@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CertificateResource;
 
-class AboutController extends Controller
+class CertificateController extends Controller
 {
     function __construct()
     {
