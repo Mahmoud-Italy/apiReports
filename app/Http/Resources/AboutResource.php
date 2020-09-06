@@ -18,10 +18,54 @@ class AboutResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
-            'pdf'           => ($this->pdf) ? request()->root() . $this->pdf->url : NULL,
+            'pdf'           => ($this->image_pdf) ? request()->root() . $this->image_pdf->url : NULL,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
+
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
+
+
+            'body1'         => $this->body1,
+            'body2'         => $this->body2,
+            'body3'         => $this->body3,
+            'body4'         => $this->body4,
+            'body5'         => $this->body5,
+
+            // 1
+            'body1_1'         => $this->body1_1,
+            'image1_1'        => ($this->image1_1) ? request()->root() . $this->image1_1->url : NULL,
+            'body1_2'         => $this->body1_2,
+            'image1_2'        => ($this->image1_2) ? request()->root() . $this->image1_2->url : NULL,
+            'body1_3'         => $this->body1_3,
+            'image1_3'        => ($this->image1_3) ? request()->root() . $this->image1_3->url : NULL,
+            'body1_4'         => $this->body1_4,
+            'image1_4'        => ($this->image1_4) ? request()->root() . $this->image1_4->url : NULL,
+            // 2
+            'body2_1'         => $this->body2_1,
+            'body2_1_r'         => $this->body2_1_r,
+            'image2_1'        => ($this->image2_1) ? request()->root() . $this->image2_1->url : NULL,
+            'label2_1'        => $this->label2_1,
+            'color2_1'        => $this->color2_1,
+
+            'body2_2'         => $this->body2_2,
+            'body2_2_r'         => $this->body2_2_r,
+            'image2_2'        => ($this->image2_2) ? request()->root() . $this->image2_2->url : NULL,
+            'label2_2'        => $this->label2_2,
+            'color2_2'        => $this->color2_2,
+
+            'body2_3'         => $this->body2_3,
+            'body2_3_r'         => $this->body2_3_r,
+            'image2_3'        => ($this->image2_3) ? request()->root() . $this->image2_3->url : NULL,
+            'label2_3'        => $this->label2_3,
+            'color2_3'        => $this->color2_3,
+
+            'body2_4'         => $this->body2_4,
+            'body2_4_r'         => $this->body2_4_r,
+            'image2_4'        => ($this->image2_4) ? request()->root() . $this->image2_4->url : NULL,
+            'label2_4'        => $this->label2_4,
+            'color2_4'        => $this->color2_4,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
@@ -38,7 +82,12 @@ class AboutResource extends JsonResource
 
 
             // Status & Visibility
+            'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
+            'has_faq'       => (boolean)$this->has_faq,
+            'has_scroll'    => (boolean)$this->has_scroll,
+            'has_training'  => (boolean)$this->has_training,
+            'has_download'  => (boolean)$this->has_download,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false
