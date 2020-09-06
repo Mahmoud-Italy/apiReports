@@ -139,14 +139,24 @@ class Page extends Model
 
               $row->download_name = $value['download_name'] ?? NULL;
               $row->sort          = (int)$value['sort'] ?? 0;
-              $row->has_faq       = (isset($value['has_faq'])) ? (boolean)$value['has_faq'] : false;
-              $row->has_training  = (isset($value['has_training'])) ? (boolean)$value['has_training'] : false;
-              $row->has_download  = (isset($value['has_download'])) ? (boolean)$value['has_download'] : false;
-              $row->has_scroll    = (isset($value['has_scroll'])) ? (boolean)$value['has_scroll'] : false;
-
-              $row->has_header    = (isset($value['has_header'])) ? (boolean)$value['has_header'] : false;
-              $row->has_footer    = (isset($value['has_footer'])) ? (boolean)$value['has_footer'] : false;
-              $row->status        = (isset($value['status'])) ? (boolean)$value['status'] : false;
+              $row->has_faq       = (isset($value['has_faq']) && $value['has_faq']) 
+                                      ? (boolean)$value['has_faq'] 
+                                      : false;
+              $row->has_training  = (isset($value['has_training']) && $value['has_training']) 
+                                      ? (boolean)$value['has_training'] 
+                                      : false;
+              $row->has_member   = (isset($value['has_member']) && $value['has_member']) 
+                                      ? (boolean)$value['has_member'] 
+                                      : false;
+              $row->has_download  = (isset($value['has_download']) && $value['has_download']) 
+                                      ? (boolean)$value['has_download'] 
+                                      : false;
+              $row->has_scroll    = (isset($value['has_scroll']) && $value['has_scroll']) 
+                                      ? (boolean)$value['has_scroll'] 
+                                      : false;
+              $row->status        = (isset($value['status']) && $value['status']) 
+                                      ? (boolean)$value['status'] 
+                                      : false;
               $row->save();
 
               // Image
