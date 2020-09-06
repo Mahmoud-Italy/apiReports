@@ -181,50 +181,77 @@ class AppController extends Controller
     # About
     public function about()
     {
+        $navigation = About::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $rows = AboutResource::collection(About::fetchData(request()->all()));
         return response()->json([
             'rows'        => $rows,
+            'navigation'  => $navigation,
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showabout($slug)
     {
+        $navigation = About::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = About::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new AboutResource(About::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }    
 
     # Faq
     public function faqs()
     {
+        $navigation = Faq::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $rows = FaqResource::collection(Faq::fetchData(request()->all()));
         return response()->json([
             'rows'        => $rows,
+            'navigation'  => $navigation,
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showFaqs($slug)
     {
+        $navigation = Faq::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = Faq::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new FaqResource(Faq::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation'  => $navigation,], 200);
     }
 
 
     # Privacy Policy
     public function privacy()
     {
+        $navigation = Privacy::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $rows = PrivacyResource::collection(Privacy::fetchData(request()->all()));
         return response()->json([
             'rows'        => $rows,
+            'navigation'  => $navigation,
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showPrivacy($slug)
     {
+        $navigation = Privacy::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = Privacy::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new PrivacyResource(Privacy::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
 
 
@@ -232,17 +259,26 @@ class AppController extends Controller
     # Online Training
     public function online()
     {
+        $navigation = Online::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $rows = OnlineTrainingResource::collection(OnlineTraining::fetchData(request()->all()));
         return response()->json([
             'rows'        => $rows,
+            'navigation'  => $navigation,
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showOnline($slug)
     {
+        $navigation = Online::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = OnlineTraining::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new OnlineTrainingResource(OnlineTraining::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
 
 
