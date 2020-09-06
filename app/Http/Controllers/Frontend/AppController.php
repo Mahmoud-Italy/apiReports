@@ -147,17 +147,26 @@ class AppController extends Controller
     # Memberships
     public function memberships()
     {
+        $navigation = Membership::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $rows = MembershipResource::collection(Membership::fetchData(request()->all()));
         return response()->json([
             'rows'        => $rows,
+            'navigation'  => $navigation,
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showMemberships($slug)
     {
+        $navigation = Membership::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = Membership::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new MembershipResource(Membership::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
     public function doMembers(MemberStoreRequest $request)
     {
