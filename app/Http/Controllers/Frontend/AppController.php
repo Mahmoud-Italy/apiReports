@@ -71,17 +71,26 @@ class AppController extends Controller
     # Accredittions
     public function accreditations()
     {
+        $navigation = Accreditation::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $rows = AccreditationResource::collection(Accreditation::fetchData(request()->all()));
         return response()->json([
             'rows'        => $rows,
+            'navigation'  => $navigation,
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showAccreditations($slug)
     {
+        $navigation = Accreditation::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = Accreditation::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new AccreditationResource(Accreditation::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
     public function doTrainings(TrainingStoreRequest $request)
     {
