@@ -148,39 +148,39 @@ class Membership extends Model
 
               // Image
               if(isset($value['base64Image'])) {
+                  $row->image()->delete();
                 if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads','false'])) {
                   $image = Imageable::uploadImage($value['base64Image']);
-                  $row->image()->delete();
                   $row->image()->create(['url' => $image]);
                 }
               }
 
 
               if(isset($value['image1_1'])) {
+                  $row->image1_1()->delete();
                 if($value['image1_1'] && !Str::contains($value['image1_1'], ['uploads','false'])) {
                   $image1_1 = Imageable::uploadImage($value['image1_1']);
-                  $row->image1_1()->delete();
                   $row->image1_1()->create(['url' => $image1_1, 'type' => 1]);
                 }
               }
               if(isset($value['image1_2'])) {
+                  $row->image1_2()->delete();
                 if($value['image1_2'] && !Str::contains($value['image1_2'], ['uploads','false'])) {
                   $image1_2 = Imageable::uploadImage($value['image1_2']);
-                  $row->image1_2()->delete();
                   $row->image1_2()->create(['url' => $image1_2, 'type' => 2]);
                 }
               }
               if(isset($value['image1_3'])) {
+                  $row->image1_3()->delete();
                 if($value['image1_3'] && !Str::contains($value['image1_3'], ['uploads','false'])) {
                   $image1_3 = Imageable::uploadImage($value['image1_3']);
-                  $row->image1_3()->delete();
                   $row->image1_3()->create(['url' => $image1_3, 'type' => 3]);
                 }
               }
               if(isset($value['image1_4'])) {
+                  $row->image1_4()->delete();
                 if($value['image1_4'] && !Str::contains($value['image1_4'], ['uploads','false'])) {
                   $image1_4 = Imageable::uploadImage($value['image1_4']);
-                  $row->image1_4()->delete();
                   $row->image1_4()->create(['url' => $image1_4, 'type' => 4]);
                 }
               }
@@ -189,38 +189,38 @@ class Membership extends Model
 
 
               if(isset($value['image2_1'])) {
+                  $row->image2_1()->delete();
                 if($value['image2_1'] && !Str::contains($value['image2_1'], ['uploads','false'])) {
                   $image2_1 = Imageable::uploadImage($value['image2_1']);
-                  $row->image2_1()->delete();
                   $row->image2_1()->create(['url' => $image2_1, 'type' => 5]);
                 }
               }
               if(isset($value['image2_2'])) {
+                  $row->image2_2()->delete();
                 if($value['image2_2'] && !Str::contains($value['image2_2'], ['uploads','false'])) {
                   $image2_2 = Imageable::uploadImage($value['image2_2']);
-                  $row->image2_2()->delete();
                   $row->image2_2()->create(['url' => $image2_2, 'type' => 6]);
                 }
               }
               if(isset($value['image2_3'])) {
+                  $row->image2_3()->delete();
                 if($value['image2_3'] && !Str::contains($value['image2_3'], ['uploads','false'])) {
                   $image2_3 = Imageable::uploadImage($value['image2_3']);
-                  $row->image2_3()->delete();
                   $row->image2_3()->create(['url' => $image2_3, 'type' => 7]);
                 }
               }
               if(isset($value['image2_4'])) {
+                  $row->image2_4()->delete();
                 if($value['image2_4'] && !Str::contains($value['image2_4'], ['uploads','false'])) {
                   $image2_4 = Imageable::uploadImage($value['image2_4']);
-                  $row->image2_4()->delete();
                   $row->image2_4()->create(['url' => $image2_4, 'type' => 8]);
                 }
               }
 
               if(isset($value['pdf'])) {
+                  $row->image_pdf()->delete();
                 if($value['pdf'] && !Str::contains($value['pdf'], ['uploads','false'])) {
                   $pdf = Imageable::uploadImage($value['pdf']);
-                  $row->image_pdf()->delete();
                   $row->image_pdf()->create(['url' => $pdf, 'is_pdf' => true]);
                 }
               }
