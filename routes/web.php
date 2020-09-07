@@ -65,8 +65,9 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('countries', 'AppController@countries');
         $router->get('home', 'PageController@home');
         $router->get('popularSearch', 'AppController@popular');
-        $router->get('popularSearch/search', 'AppController@search');
-        $router->post('popularSearch/certificate', 'AppController@certificate');
+        $router->get('popularSearch/{slug}', 'AppController@showPopular');
+        // $router->get('popularSearch/search', 'AppController@search');
+        // $router->post('popularSearch/certificate', 'AppController@certificate');
         $router->get('accreditations', 'AppController@accreditations');
         $router->get('accreditations/{slug}', 'AppController@showAccreditations');
         $router->get('programs', 'AppController@programs');
