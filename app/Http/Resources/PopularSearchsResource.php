@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Frontend\SectorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PopularSearchResource extends JsonResource
@@ -83,7 +82,6 @@ class PopularSearchResource extends JsonResource
             'timestamp'     => $this->created_at,
 
 
-            'sectors'       => ($this->sectors) ? SectorResource::collection($sectors) ? null,
             // Status & Visibility
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
