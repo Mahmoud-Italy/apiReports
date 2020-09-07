@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use App\Models\Sector2;
 use App\Models\Imageable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -18,9 +19,7 @@ class PopularSearch extends Model
                   ->select('url');
     }
 
-
-    public function sectors()
-    {
+    public function sectors() {
         return $this->hasMany(Sector2::class, 'search_id');
     }
 
