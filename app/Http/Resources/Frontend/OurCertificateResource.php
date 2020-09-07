@@ -49,7 +49,7 @@ class OurCertificateResource extends JsonResource
                 'title'     => $pro->title,
                 'subTitle'  => $pro->subtitle,
                 'slug'      => $pro->slug,
-                'shortBody' => $pro->short_body,
+                'shortBody' => $pro->short_body
             ];
         }
 
@@ -81,14 +81,11 @@ class OurCertificateResource extends JsonResource
 
             'background3'  => ($this->image3) ? request()->root() . '/uploads/' . $this->image3->url : NULL,
             'title3'       => $this->dTitle,
-            'programs'     => 
+            'programs'     => $programs,
 
             'background4'  => ($this->image4) ? request()->root() . '/uploads/' . $this->image4->url : NULL,
             'title4'       => $this->cTitle,
             'body4'        => $this->cBody,
-
-
-
         ];
     }
 }
