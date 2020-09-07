@@ -131,7 +131,7 @@ class Member extends Model
                 }
               }
               if(isset($value['occupation_file'])) {
-                if($value['passport_file']) {
+                if($value['occupation_file']) {
                   $file3 = Imageable::uploadImage($value['occupation_file']);
                   $row->file3()->delete();
                   $row->file3()->create(['url' => $file3, 'is_pdf' => 3]);
@@ -154,9 +154,9 @@ class Member extends Model
              
 
               // Image
-              if(isset($value['base64Image'])) {
-                if($value['base64Image']) {
-                  $image = Imageable::uploadImage($value['base64Image']);
+              if(isset($value['image'])) {
+                if($value['image']) {
+                  $image = Imageable::uploadImage($value['image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);
                 }
