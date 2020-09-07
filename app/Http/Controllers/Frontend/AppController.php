@@ -342,6 +342,9 @@ class AppController extends Controller
             if(isset($request->website) && $request->website) {
                 $row->website = $request->website;
             }
+            if(isset($request->company) && $request->company) {
+                $row->company = $request->website;
+            }
             if(isset($request->password) && $request->password) {
                 $plainPassword  = $request->password;
                 $row->password  = app('hash')->make($plainPassword);

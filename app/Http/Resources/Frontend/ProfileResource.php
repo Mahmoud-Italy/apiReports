@@ -26,6 +26,7 @@ class ProfileResource extends JsonResource
             'ccode'      => $this->ccode,
             'mobile'     => $this->mobile,
             'website'    => $this->website,
+            'company'    => $this->company,
         ];
     }
 }
