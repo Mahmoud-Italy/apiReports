@@ -17,8 +17,8 @@ class CertificateCategoryResource extends JsonResource
 
         return [
             'title'   => $this->title,
-            'image'   => $this->image() ? request()->root(). '/uploads/' . $this->image()->url : null,
-            'pdf'     => $this->pdf() ? request()->root(). '/uploads/' . $this->pdf()->url : null,
+            'image'   => $this->image ? request()->root(). '/uploads/' . $this->image->url : null,
+            'pdf'     => $this->pdf ? request()->root(). '/uploads/' . $this->pdf->url : null,
         ];
     }
 }

@@ -17,7 +17,7 @@ class CertificateProductResource extends JsonResource
 
         return [
             'id'        => $this->id,
-            'image'     => $this->image() ? request()->root(). '/uploads/' . $this->image()->url : null,
+            'image'     => $this->image ? request()->root(). '/uploads/' . $this->image->url : null,
             'title'     => $this->title,
             'subTitle'  => $this->subtitle,
             'slug'      => $this->slug,
