@@ -4,6 +4,7 @@ namespace App\Http\Resources\Frontend;
 
 use App\Models\CertificateCategory;
 use App\Models\CertificateProduct;
+use App\Http\Resources\CertificateCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OurCertificateResource extends JsonResource
@@ -16,43 +17,6 @@ class OurCertificateResource extends JsonResource
      */
     public function toArray($request)
     {
-        foreach (CertificateCategory::where('cat_id', 1)->get() as $cat1) {
-            $certificates_1[] = [
-                'title'   => $cat1->title,
-                'image'   => $cat1->image() ? request()->root(). '/uploads/' . $cat1->image()->url : null,
-                'pdf'     => $cat1->pdf() ? request()->root(). '/uploads/' . $cat1->pdf()->url : null,
-            ];
-        }
-        
-        foreach (CertificateCategory::where('cat_id', 2)->get() as $cat2) {
-            $certificates_2[] = [
-                'title'   => $cat2->title,
-                'image'   => $cat2->image() ? request()->root(). '/uploads/' . $cat2->image()->url : null,
-                'pdf'     => $cat2->pdf() ? request()->root(). '/uploads/' . $cat2->pdf()->url : null,
-            ];
-        }
-
-        foreach (CertificateCategory::where('cat_id', 3)->get() as $cat3) {
-            $certificates_3[] = [
-                'title'   => $cat3->title,
-                'image'   => $cat3->image() ? request()->root(). '/uploads/' . $cat3->image()->url : null,
-                'pdf'     => $cat3->pdf() ? request()->root(). '/uploads/' . $cat3->pdf()->url : null,
-            ];
-        }
-
-        foreach (CertificateProduct::where(['status' => true, 'trash' => false])
-                            ->orderBy('sort', 'DESC')
-                            ->get() as $pro) {
-            $programs[] = [
-                'id'        => $pro->id,
-                'image'     => $pro->image() ? request()->root(). '/uploads/' . $cat3->image()->url : null,
-                'title'     => $pro->title,
-                'subTitle'  => $pro->subtitle,
-                'slug'      => $pro->slug,
-                'shortBody' => $pro->short_body
-            ];
-        }
-
         return [
             'background1' => ($this->image1) ? request()->root() . '/uploads/' . $this->image1->url : NULL,
             'bgTitle'    => $this->bgTitle1,
@@ -72,16 +36,16 @@ class OurCertificateResource extends JsonResource
             'body2'        => $this->body2,
             'hint2'        => $this->hint2,
 
-            'certificates_1' => $certificates_1,
-            'certificates_2' => $certificates_2,
-            'certificates_3' => $certificates_3,
+            'certificates_1' => CertificateCategory::collection(CertificateCategory::where('cat_id', 1)->get()),
+            'certificates_2' => CertificateCategory::collection(CertificateCategory::where('cat_id', 2)->get()),
+            'certificates_3' => CertificateCategory::collection(CertificateCategory::where('cat_id', 3)->get()),
 
 
             'duration'      => $this->duration,
 
             'background3'  => ($this->image3) ? request()->root() . '/uploads/' . $this->image3->url : NULL,
             'title3'       => $this->dTitle,
-            'programs'     => $programs,
+            'programs'     => CertificateProductResource::collection(CertificateProduct::get()),
 
             'background4'  => ($this->image4) ? request()->root() . '/uploads/' . $this->image4->url : NULL,
             'title4'       => $this->cTitle,
