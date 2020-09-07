@@ -135,7 +135,7 @@ class AppController extends Controller
         $page = Sector::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row  = new SectorProductsResource(Sector::findOrFail(($page->id) ?? 0));
         $sectors = SectorResource::collection(
-                        Sector::where(['status' => true, 'trash' => false])->paginate(10));
+                        Sector::where(['status' => true, 'trash' => false])->orderBy('sort', 'DESC')->paginate(30));
         return response()->json(['row' => $row, 'sectors' => $sectors], 200);
     }
     public function showProducts($slug)
