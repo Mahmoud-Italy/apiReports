@@ -93,6 +93,10 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('pages', 'PageController@index');
         $router->get('pages/{slug}', 'PageController@show');
         $router->get('socials', 'AppController@socials');
+
+        $router->get('myProfile', 'AppController@profile');
+        $router->post('myProfile', 'AppController@updateProfile');
+        $router->get('myCertificates', 'AppController@myCertificates');
     });
 
 });

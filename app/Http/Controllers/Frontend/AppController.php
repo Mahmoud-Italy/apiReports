@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\User;
+use App\Models\Imageable;
 use App\Models\Faq;
 use App\Models\About;
 use App\Models\Social;
@@ -33,6 +35,8 @@ use App\Http\Resources\Frontend\SubSectorResource;
 use App\Http\Resources\Frontend\SectorResource;
 use App\Http\Resources\Frontend\SectorProductsResource;
 use App\Http\Resources\Frontend\PopularSearchResource;
+use App\Http\Resources\Frontend\ProfileResource;
+use App\Http\Resources\Frontend\MyCertificateResource;
 use App\Http\Requests\NewsletterStoreRequest;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\TrainingStoreRequest;
@@ -299,4 +303,57 @@ class AppController extends Controller
         $rows = SocialResource::collection(Social::fetchData(request()->all()));
         return response()->json(['rows' => $rows], 200);
     }
+
+
+
+
+    public function updateProfile()
+    {
+        $user = User::findOrFail(auth()->guard('api')->user()->id);
+        $row  = new ProfileResource($user);
+        return response()->json(['row' => $row], 200);
+    }
+    public function updateProfile(Request $request)
+    {
+        $row             = User::findOrFail(auth()->guard('api')->user()->id);
+
+        if(isset($request->country) && $request->country) {
+            $row->country    = $request->country;
+        }
+        if(isset($request->first_name) && $request->first_name) {
+            $row->first_name = $request->first_name;
+        }
+        if(isset($request->last_name) && $request->last_name) {
+            $row->last_name = $request->last_name;
+        }
+        if(isset($request->ccode) && $request->ccode) {
+            $row->ccode = $request->ccode;
+        }
+        if(isset($request->mobile) && $request->mobile) {
+            $row->mobile = $request->mobile;
+        }
+        if(isset($request->website) && $request->website) {
+            $row->website = $request->website;
+        }
+        if(isset($request->password) && $request->password) {
+            $plainPassword  = $request->password;
+            $row->password  = app('hash')->make($plainPassword);
+        }
+        if(isset($request->avatar) && $request->hasFile('avatar')) {
+            $image = Imageable::uploadImage($request->file('avatar'));
+            $row->image()->delete();
+            $row->image()->create(['url' => $image]);
+        }
+        $row->save();
+
+        return response()->json(['message' => ''], 200);
+    }
+
+    public function myCertificates($value='')
+    {
+        $data = User::where('id', 0)->get(); // tmep
+        $row  = MyCertificateResource::collection($data);
+        return response()->json(['row' => $row], 200);
+    }
 }
+
