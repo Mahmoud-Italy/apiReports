@@ -21,7 +21,7 @@ class Imageable extends Model
           $fileType   = explode(';', $file)[0];
           $fileType   = explode('/', $fileType)[1]; // png or jpg etc
         }
-        $fileName     = date('Y-m-d-h-i-s').'.'.$fileType;
+        $fileName     = date('Y-m-d-h-i-s').'-'.uniqid().'.'.$fileType;
         Storage::disk('public')->put('uploads/'.$fileName, $imageDecoded);
         return $fileName;
     }
