@@ -61,14 +61,14 @@ class AppController extends Controller
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
-    public function search()
-    {
-        $rows  = ProductResource::collection(Product::fetchData(request()->all()));
-        return response()->json([
-            'rows'        => $rows,
-            'paginate'    => $this->paginate($rows)
-        ], 200);
-    }
+    // public function search()
+    // {
+    //     $rows  = ProductResource::collection(Product::fetchData(request()->all()));
+    //     return response()->json([
+    //         'rows'        => $rows,
+    //         'paginate'    => $this->paginate($rows)
+    //     ], 200);
+    // }
     public function certificate()
     {
         return response()->json(['message' => 'No data found.'], 500);
