@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Moldes\Search;
 use App\Models\User;
 use App\Models\Imageable;
 use App\Models\Faq;
@@ -21,6 +22,7 @@ use App\Models\PopularSearch;
 use App\Helpers\Countries;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\SearchResource;
 use App\Http\Resources\Frontend\FaqResource;
 use App\Http\Resources\Frontend\SocialResource;
 use App\Http\Resources\Frontend\ProgramResource;
@@ -372,6 +374,17 @@ class AppController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Invalid access_token.'], 500);
         }
+    }
+
+
+    public function search($value='')
+    {
+        $data = Search::all();
+        $rows = SearchResource::collection($data);
+        return response()->json([
+                'rows'        => $rows,
+                'paginate'    => $this->paginate($rows)
+        ], 200);
     }
 }
 

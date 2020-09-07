@@ -97,6 +97,8 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('myProfile', 'AppController@profile');
         $router->post('myProfile', 'AppController@updateProfile');
         $router->get('myCertificates', 'AppController@myCertificates');
+
+        $router->get('search', 'AppController@search');
     });
 
 });
