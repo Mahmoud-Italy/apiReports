@@ -193,6 +193,7 @@ class Certificate extends Model
                     $row1 = new CertificateCategory;
                     $row1->cat_id = 1;
                     $row1->title = $cat1['cat_title'];
+                    $row1->save();
 
                       if(isset($cat1['cat_image'])) {
                           $row1->image()->delete();
@@ -220,7 +221,7 @@ class Certificate extends Model
                           }
                         }
 
-                    $row1->save();
+                    
                   }
                 }
               }
@@ -234,6 +235,7 @@ class Certificate extends Model
                     $row2 = new CertificateCategory;
                     $row2->cat_id = 2;
                     $row2->title = $cat2['cat_title'];
+                    $row2->save();
 
                       if(isset($cat2['cat_image'])) {
                           $row2->image()->delete();
@@ -261,7 +263,7 @@ class Certificate extends Model
                           }
                         }
                       
-                    $row2->save();
+                    
                   }
                 }
               }
@@ -275,7 +277,8 @@ class Certificate extends Model
                     $row3 = new CertificateCategory;
                     $row3->cat_id = 3;
                     $row3->title = $cat3['cat_title'];
-
+                    $row3->save();
+                    
                       if(isset($cat3['cat_image'])) {
                           $row3->image()->delete();
                           if($cat3['cat_image']) {
@@ -302,7 +305,7 @@ class Certificate extends Model
                           }
                         }
                       
-                    $row3->save();
+                    
                   }
                 }
               }
