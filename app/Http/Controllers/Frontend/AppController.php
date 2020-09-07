@@ -350,7 +350,9 @@ class AppController extends Controller
                 $row->image()->create(['url' => $image]);
             }
             $row->save();
-        return response()->json(['message' => ''], 200);
+
+            $row  = new ProfileResource($row);
+            return response()->json(['row' => $row], 200);
 
         } catch (\Exception $e) {
             return response()->json(['message' => 'Invalid access_token.'], 500);
