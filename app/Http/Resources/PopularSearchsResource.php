@@ -17,8 +17,8 @@ class PopularSearchResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
-            'pdf'           => ($this->image_pdf) ? request()->root() . $this->image_pdf->url : NULL,
+            'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
+            'pdf'           => ($this->image_pdf) ? request()->root() .'/uploads/' . $this->image_pdf->url : NULL,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,

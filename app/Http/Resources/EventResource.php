@@ -16,8 +16,8 @@ class EventResource extends JsonResource
     {
         return [
             'id'       => $this->id,
-            'image'    => ($this->image) ? request()->root() . $this->image->url : NULL,
-            'background' => ($this->bgImage) ? request()->root() . $this->bgImage->url : NULL,
+            'image'    => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
+            'background' => ($this->bgImage) ? request()->root() .'/uploads/' . $this->bgImage->url : NULL,
 
             'bgTitle'  => $this->bgTitle,
             'bgColor'  => $this->bgColor,

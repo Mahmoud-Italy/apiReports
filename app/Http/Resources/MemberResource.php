@@ -17,13 +17,13 @@ class MemberResource extends JsonResource
         return [
             'id'                 => $this->id,
             'encrypt_id'         => encrypt($this->id),
-            'image'              => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'image'              => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
 
-            'passport_file'      => ($this->pdf1) ? request()->root() . $this->pdf1->url : NULL,
-            'passport_size_file' => ($this->pdf2) ? request()->root() . $this->pdf2->url : NULL,
-            'occupation_file'    => ($this->pdf3) ? request()->root() . $this->pdf3->url : NULL,
-            'detailed_resume'    => ($this->pdf4) ? request()->root() . $this->pdf4->url : NULL,
-            'hr_letter_file'     => ($this->pdf5) ? request()->root() . $this->pdf5->url : NULL,
+            'passport_file'      => ($this->pdf1) ? request()->root() .'/uploads/' . $this->pdf1->url : NULL,
+            'passport_size_file' => ($this->pdf2) ? request()->root() .'/uploads/' . $this->pdf2->url : NULL,
+            'occupation_file'    => ($this->pdf3) ? request()->root() .'/uploads/' . $this->pdf3->url : NULL,
+            'detailed_resume'    => ($this->pdf4) ? request()->root() .'/uploads/' . $this->pdf4->url : NULL,
+            'hr_letter_file'     => ($this->pdf5) ? request()->root() .'/uploads/' . $this->pdf5->url : NULL,
 
             'name'               => $this->first_name. ' '.$this->last_name,
             'first_name'         => $this->first_name,

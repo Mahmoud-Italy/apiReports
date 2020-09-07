@@ -17,7 +17,7 @@ class OnlineTrainingResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
 
             'slug'          => $this->slug,
             'title'         => $this->title,

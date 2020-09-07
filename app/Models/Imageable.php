@@ -23,7 +23,7 @@ class Imageable extends Model
         }
         $fileName     = date('Y-m-d-h-i-s').'.'.$fileType;
         Storage::disk('public')->put('uploads/'.$fileName, $imageDecoded);
-        return '/uploads/' . $fileName;
+        return $fileName;
     }
 
     public static function getImagePath($path, $image)

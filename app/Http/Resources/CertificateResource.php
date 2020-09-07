@@ -18,17 +18,17 @@ class CertificateResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'image1'        => ($this->image1) ? request()->root() . $this->image1->url : NULL,
+            'image1'        => ($this->image1) ? request()->root() . '/uploads/' . $this->image1->url : NULL,
             'bgSubTitle1'   => $this->bgSubTitle1,
             'bgTitle1'      => $this->bgTitle1,
             'bgColor1'      => $this->bgColor1,
             'body1'         => $this->body1,
             'has_download'  => (boolean)$this->has_download,
             'download_name' => $this->download_name,
-            'pdf_file'      => ($this->image_pdf) ? request()->root() . $this->image_pdf->url : NULL,
+            'pdf_file'      => ($this->image_pdf) ? request()->root() .'/uploads/' . $this->image_pdf->url : NULL,
 
 
-            'image2'        => ($this->image2) ? request()->root() . $this->image2->url : NULL,
+            'image2'        => ($this->image2) ? request()->root() .'/uploads/' . $this->image2->url : NULL,
             'bgSubTitle2'   => $this->bgSubTitle2,
             'bgTitle2'      => $this->bgTitle2,
             'bgColor2'      => $this->bgColor2,
@@ -37,10 +37,10 @@ class CertificateResource extends JsonResource
             'duration'      => $this->duration,
 
 
-            'image3'        => ($this->image3) ? request()->root() . $this->image3->url : NULL,
+            'image3'        => ($this->image3) ? request()->root() .'/uploads/' . $this->image3->url : NULL,
             'dTitle'        => $this->dTitle,
 
-            'image4'        => ($this->image4) ? request()->root() . $this->image4->url : NULL,
+            'image4'        => ($this->image4) ? request()->root() .'/uploads/' . $this->image4->url : NULL,
             'cTitle'        => $this->cTitle,
             'cBody'         => $this->cBody,
             

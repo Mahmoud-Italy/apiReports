@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
             'sector'        => ($this->sector) ? $this->sector->title : NULL,
             'sector_id'     => ($this->sector) ? encrypt($this->sector->id) : NULL,
 
