@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Imageable;
 use Illuminate\Database\Eloquent\Model;
 
 class CertificateCategory extends Model
