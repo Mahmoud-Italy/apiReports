@@ -161,80 +161,140 @@ class Accreditation extends Model
 
               // Image
               if(isset($value['base64Image'])) {
-                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads','false'])) {
-                  $row->image()->delete();
-                  $image = Imageable::uploadImage($value['base64Image']);
+                $row->image()->delete();
+                if($value['base64Image']) {
+                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['base64Image']);
+                  } else {
+                    $image = explode('/', $value['base64Image']);
+                    $image = end($image);
+                  }
                   $row->image()->create(['url' => $image]);
                 }
               }
 
 
               if(isset($value['image1_1'])) {
-                if($value['image1_1'] && !Str::contains($value['image1_1'], ['uploads','false'])) {
-                  $row->image1_1()->delete();
-                  $image1_1 = Imageable::uploadImage($value['image1_1']);
+                $row->image1_1()->delete();
+                if($value['image1_1']) {
+                  if(!Str::contains($value['image1_1'], ['uploads','false'])) {
+                    $image1_1 = Imageable::uploadImage($value['image1_1']);
+                  } else {
+                    $image1_1 = explode('/', $value['image1_1']);
+                    $image1_1 = end($image1_1);
+                  }
                   $row->image1_1()->create(['url' => $image1_1, 'type' => 1]);
                 }
               }
+
               if(isset($value['image1_2'])) {
-                if($value['image1_2'] && !Str::contains($value['image1_2'], ['uploads','false'])) {
-                  $row->image1_2()->delete();
-                  $image1_2 = Imageable::uploadImage($value['image1_2']);
+                $row->image1_2()->delete();
+                if($value['image1_2']) {
+                  if(!Str::contains($value['image1_2'], ['uploads','false'])) {
+                    $image1_2 = Imageable::uploadImage($value['image1_2']);
+                  } else {
+                    $image1_2 = explode('/', $value['image1_2']);
+                    $image1_2 = end($image1_2);
+                  }
                   $row->image1_2()->create(['url' => $image1_2, 'type' => 2]);
                 }
               }
+
               if(isset($value['image1_3'])) {
-                if($value['image1_3'] && !Str::contains($value['image1_3'], ['uploads','false'])) {
-                  $row->image1_3()->delete();
-                  $image1_3 = Imageable::uploadImage($value['image1_3']);
+                $row->image1_3()->delete();
+                if($value['image1_3']) {
+                  if(!Str::contains($value['image1_3'], ['uploads','false'])) {
+                    $image1_3 = Imageable::uploadImage($value['image1_3']);
+                  } else {
+                    $image1_3 = explode('/', $value['image1_3']);
+                    $image1_3 = end($image1_3);
+                  }
                   $row->image1_3()->create(['url' => $image1_3, 'type' => 3]);
                 }
               }
+
               if(isset($value['image1_4'])) {
-                if($value['image1_4'] && !Str::contains($value['image1_4'], ['uploads','false'])) {
-                  $row->image1_4()->delete();
-                  $image1_4 = Imageable::uploadImage($value['image1_4']);
+                $row->image1_4()->delete();
+                if($value['image1_4']) {
+                  if(!Str::contains($value['image1_4'], ['uploads','false'])) {
+                    $image1_4 = Imageable::uploadImage($value['image1_4']);
+                  } else {
+                    $image1_4 = explode('/', $value['image1_4']);
+                    $image1_4 = end($image1_4);
+                  }
                   $row->image1_4()->create(['url' => $image1_4, 'type' => 4]);
                 }
               }
+              
+
+
 
 
 
 
               if(isset($value['image2_1'])) {
-                if($value['image2_1'] && !Str::contains($value['image2_1'], ['uploads','false'])) {
-                  $row->image2_1()->delete();
-                  $image2_1 = Imageable::uploadImage($value['image2_1']);
+                $row->image2_1()->delete();
+                if($value['image2_1']) {
+                  if(!Str::contains($value['image2_1'], ['uploads','false'])) {
+                    $image2_1 = Imageable::uploadImage($value['image2_1']);
+                  } else {
+                    $image2_1 = explode('/', $value['image2_1']);
+                    $image2_1 = end($image2_1);
+                  }
                   $row->image2_1()->create(['url' => $image2_1, 'type' => 5]);
                 }
               }
+
               if(isset($value['image2_2'])) {
-                if($value['image2_2'] && !Str::contains($value['image2_2'], ['uploads','false'])) {
-                  $row->image2_2()->delete();
-                  $image2_2 = Imageable::uploadImage($value['image2_2']);
+                $row->image2_2()->delete();
+                if($value['image2_2']) {
+                  if(!Str::contains($value['image2_2'], ['uploads','false'])) {
+                    $image2_2 = Imageable::uploadImage($value['image2_2']);
+                  } else {
+                    $image2_2 = explode('/', $value['image2_2']);
+                    $image2_2 = end($image2_2);
+                  }
                   $row->image2_2()->create(['url' => $image2_2, 'type' => 6]);
                 }
               }
+
               if(isset($value['image2_3'])) {
-                if($value['image2_3'] && !Str::contains($value['image2_3'], ['uploads','false'])) {
-                  $row->image2_3()->delete();
-                  $image2_3 = Imageable::uploadImage($value['image2_3']);
+                $row->image2_3()->delete();
+                if($value['image2_3']) {
+                  if(!Str::contains($value['image2_3'], ['uploads','false'])) {
+                    $image2_3 = Imageable::uploadImage($value['image2_3']);
+                  } else {
+                    $image2_3 = explode('/', $value['image2_3']);
+                    $image2_3 = end($image2_3);
+                  }
                   $row->image2_3()->create(['url' => $image2_3, 'type' => 7]);
                 }
               }
+
               if(isset($value['image2_4'])) {
-                if($value['image2_4'] && !Str::contains($value['image2_4'], ['uploads','false'])) {
-                  $row->image2_4()->delete();
-                  $image2_4 = Imageable::uploadImage($value['image2_4']);
+                $row->image2_4()->delete();
+                if($value['image2_4']) {
+                  if(!Str::contains($value['image2_4'], ['uploads','false'])) {
+                    $image2_4 = Imageable::uploadImage($value['image2_4']);
+                  } else {
+                    $image2_4 = explode('/', $value['image2_4']);
+                    $image2_4 = end($image2_4);
+                  }
                   $row->image2_4()->create(['url' => $image2_4, 'type' => 8]);
                 }
               }
 
+
               if(isset($value['pdf'])) {
-                if($value['pdf'] && !Str::contains($value['pdf'], ['uploads','false'])) {
-                  $row->image_pdf()->delete();
-                  $pdf = Imageable::uploadImage($value['pdf']);
-                  $row->image_pdf()->create(['url' => $pdf, 'is_pdf' => true]);
+                $row->image_pdf()->delete();
+                if($value['pdf']) {
+                  if(!Str::contains($value['pdf'], ['uploads','false'])) {
+                    $pdf = Imageable::uploadImage($value['pdf']);
+                  } else {
+                    $pdf = explode('/', $value['pdf']);
+                    $pdf = end($pdf);
+                  }
+                  $row->image_pdf()->create(['url' => $pdf, 'is_pdf' => 1]);
                 }
               }
 

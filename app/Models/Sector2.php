@@ -104,9 +104,14 @@ class Sector2 extends Model
 
 
               if(isset($value['base64Image'])) {
-                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads','false'])) {
-                  $image = Imageable::uploadImage($value['base64Image']);
-                  $row->image()->delete();
+                $row->image()->delete();
+                if($value['base64Image']) {
+                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['base64Image']);
+                  } else {
+                    $image = explode('/', $value['base64Image']);
+                    $image = end($image);
+                  }
                   $row->image()->create(['url' => $image]);
                 }
               }

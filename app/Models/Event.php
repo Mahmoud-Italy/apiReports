@@ -90,19 +90,29 @@ class Event extends Model
 
               // Image
               if(isset($value['base64Image'])) {
-                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads','false'])) {
-                  $image = Imageable::uploadImage($value['base64Image']);
-                  $row->image()->delete();
+                $row->image()->delete();
+                if($value['base64Image']) {
+                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['base64Image']);
+                  } else {
+                    $image = explode('/', $value['base64Image']);
+                    $image = end($image);
+                  }
                   $row->image()->create(['url' => $image]);
                 }
               }
 
 
               if(isset($value['background_image'])) {
-                if($value['background_image'] && !Str::contains($value['background_image'], ['uploads','false'])) {
-                  $image = Imageable::uploadImage($value['background_image']);
-                  $row->bgImage()->delete();
-                  $row->bgImage()->create(['url' => $image, 'type' => true]);
+                $row->bgImage()->delete();
+                if($value['background_image']) {
+                  if(!Str::contains($value['background_image'], ['uploads','false'])) {
+                    $bgImage = Imageable::uploadImage($value['background_image']);
+                  } else {
+                    $bgImage = explode('/', $value['background_image']);
+                    $bgImage = end($bgImage);
+                  }
+                  $row->bgImage()->create(['url' => $bgImage, 'type' => 1]);
                 }
               }
 
