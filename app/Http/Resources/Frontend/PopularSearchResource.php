@@ -84,7 +84,7 @@ class PopularSearchResource extends JsonResource
             'content'        => $content,
 
 
-            'sectors'       => ($this->sectors) ? SectorResource::collection($sectors) ? null,
+            'sectors'       => ($this->sectors) ? SectorResource::collection($sectors) : null,
 
             'download_name' => $this->download_name ?? NULL,
             'pdf_file'      => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
