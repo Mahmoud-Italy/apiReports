@@ -12,9 +12,11 @@ class Certificate extends Model
 {
     protected $guarded = [];
 
-    public function image() {
+
+
+    public function image_pdf() {
         return $this->morphOne(Imageable::class, 'imageable')
-                      ->where('type', 0)
+                      ->where('type', 9)
                       ->select('url');
     }
 
@@ -98,12 +100,14 @@ class Certificate extends Model
               $row->bgSubTitle1    = $value['bgSubTitle1'] ?? NULL;
               $row->bgColor1       = $value['bgColor1'] ?? NULL;
               $row->body1          = $value['body1'] ?? NULL;
+
               $row->bgTitle2       = $value['bgTitle2'] ?? NULL;
               $row->bgSubTitle2    = $value['bgSubTitle2'] ?? NULL;
               $row->bgColor2       = $value['bgColor2'] ?? NULL;
               $row->body2          = $value['body2'] ?? NULL;
               $row->hint2          = $value['hint2'] ?? NULL;
               $row->duration       = $value['duration'] ?? NULL;
+
               $row->dTitle         = $value['dTitle'] ?? NULL;
               $row->cTitle         = $value['cTitle'] ?? NULL;
               $row->cBody          = $value['cBody'] ?? NULL;
@@ -118,6 +122,15 @@ class Certificate extends Model
                 if($value['image1'] && !Str::contains($value['image1'], ['uploads','false'])) {
                   $image = Imageable::uploadImage($value['image1']);
                   $row->image1()->create(['url' => $image, 'type' => 0]);
+                }
+              }
+
+              if(isset($value['pdf_file'])) {
+                  $row->image_pdf()->delete();
+                if($value['pdf_file'] 
+                    && !Str::contains($value['pdf_file'], ['uploads','false'])) {
+                  $image = Imageable::uploadImage($value['pdf_file']);
+                  $row->image_pdf()->create(['url' => $image, 'type' => 9]);
                 }
               }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\CertificateCategory;
+use App\Http\Resources\CertificateCategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CertificateResource extends JsonResource
@@ -17,41 +18,39 @@ class CertificateResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
-            'pdf'           => ($this->image_pdf) ? request()->root() . $this->image_pdf->url : NULL,
-            
-            
-            'bgTitle1'      => $this->bgTitle1,
+            'image1'        => ($this->image1) ? request()->root() . $this->image1->url : NULL,
             'bgSubTitle1'   => $this->bgSubTitle1,
+            'bgTitle1'      => $this->bgTitle1,
             'bgColor1'      => $this->bgColor1,
             'body1'         => $this->body1,
-            'bgTitle2'      => $this->bgTitle2,
+            'has_download'  => (boolean)$this->has_download,
+            'download_name' => $this->download_name,
+            'pdf_file'      => ($this->image_pdf) ? request()->root() . $this->image_pdf->url : NULL,
+
+
+            'image2'        => ($this->image2) ? request()->root() . $this->image2->url : NULL,
             'bgSubTitle2'   => $this->bgSubTitle2,
+            'bgTitle2'      => $this->bgTitle2,
             'bgColor2'      => $this->bgColor2,
             'body2'         => $this->body2,
-
             'hint2'         => $this->hint2,
             'duration'      => $this->duration,
+
+
+            'image3'        => ($this->image3) ? request()->root() . $this->image3->url : NULL,
             'dTitle'        => $this->dTitle,
+
+            'image4'        => ($this->image4) ? request()->root() . $this->image4->url : NULL,
             'cTitle'        => $this->cTitle,
             'cBody'         => $this->cBody,
+            
 
-            'cat1'          => [],
-            'cat2'          => [],
-            'cat3'          => [],
-
-            // Dates
-            'dateForHumans' => $this->created_at->diffForHumans(),
-            'timestamp'     => $this->created_at,
-
-
-            // Status & Visibility
-            'download_name' => $this->download_name,
-            'has_download'  => (boolean)$this->has_download,
-
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
-            'loading'       => false
+            'cat1'          => 
+            CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 1)->get()),
+            'cat2'          => 
+            CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 2)->get()),
+            'cat3'          => 
+            CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 3)->get()),
         ];
     }
 }
