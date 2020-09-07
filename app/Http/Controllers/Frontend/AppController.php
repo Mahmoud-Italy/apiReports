@@ -377,9 +377,9 @@ class AppController extends Controller
     }
 
 
-    public function search($value='')
+    public function search()
     {
-        $data = Search::all();
+        $data = Search::paginate(30);
         $rows = SearchResource::collection($data);
         return response()->json([
                 'rows'        => $rows,
