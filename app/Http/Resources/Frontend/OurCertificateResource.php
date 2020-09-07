@@ -4,7 +4,8 @@ namespace App\Http\Resources\Frontend;
 
 use App\Models\CertificateCategory;
 use App\Models\CertificateProduct;
-use App\Http\Resources\CertificateCategory;
+use App\Http\Resources\CertificateCategoryResource;
+use App\Http\Resources\CertificateProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OurCertificateResource extends JsonResource
@@ -36,9 +37,9 @@ class OurCertificateResource extends JsonResource
             'body2'        => $this->body2,
             'hint2'        => $this->hint2,
 
-            'certificates_1' => CertificateCategory::collection(CertificateCategory::where('cat_id', 1)->get()),
-            'certificates_2' => CertificateCategory::collection(CertificateCategory::where('cat_id', 2)->get()),
-            'certificates_3' => CertificateCategory::collection(CertificateCategory::where('cat_id', 3)->get()),
+            'certificates_1' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 1)->get()),
+            'certificates_2' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 2)->get()),
+            'certificates_3' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 3)->get()),
 
 
             'duration'      => $this->duration,
