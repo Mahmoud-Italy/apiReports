@@ -41,7 +41,7 @@ class PrivacyResource extends JsonResource
 
 
             // Status & Visibility
-            'has_scroll'    => (boolean)$this->has_scroll,
+            'has_scroll'    => (int)$this->has_scroll,
             'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,

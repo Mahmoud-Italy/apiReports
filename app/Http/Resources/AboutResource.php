@@ -84,10 +84,11 @@ class AboutResource extends JsonResource
             // Status & Visibility
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
-            'has_faq'       => (boolean)$this->has_faq,
-            'has_scroll'    => (boolean)$this->has_scroll,
-            'has_training'  => (boolean)$this->has_training,
-            'has_download'  => (boolean)$this->has_download,
+            'has_faq'       => (int)$this->has_faq,
+            'has_scroll'    => (int)$this->has_scroll,
+            'has_training'  => (int)$this->has_training,
+            'has_download'  => (int)$this->has_download,
+            
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false
