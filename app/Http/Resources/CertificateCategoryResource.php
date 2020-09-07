@@ -15,6 +15,7 @@ class CertificateCategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'       => $this->id,
             'image'    => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
             'pdf'      => ($this->pdf) ? request()->root() .'/uploads/' . $this->pdf->url : NULL,
             'title'    => $this->title,
