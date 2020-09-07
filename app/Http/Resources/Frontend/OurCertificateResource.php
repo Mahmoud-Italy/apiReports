@@ -4,8 +4,8 @@ namespace App\Http\Resources\Frontend;
 
 use App\Models\CertificateCategory;
 use App\Models\CertificateProduct;
-use App\Http\Resources\CertificateCategoryResource;
-use App\Http\Resources\CertificateProductResource;
+use App\Http\Resources\Frontend\CertificateCategoryResource;
+use App\Http\Resources\Frontend\CertificateProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OurCertificateResource extends JsonResource
@@ -45,6 +45,7 @@ class OurCertificateResource extends JsonResource
             'duration'      => $this->duration,
 
             'background3'  => ($this->image3) ? request()->root() . '/uploads/' . $this->image3->url : NULL,
+
             'title3'       => $this->dTitle,
             'programs'     => CertificateProductResource::collection(CertificateProduct::get()),
 
