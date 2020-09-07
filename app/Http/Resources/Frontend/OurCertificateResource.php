@@ -42,7 +42,9 @@ class OurCertificateResource extends JsonResource
             'certificates_3' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 3)->get()),
 
 
-            'duration'      => $this->duration,
+            'duration1'      => $this->duration1,
+            'duration2'      => $this->duration2,
+            'duration3'      => $this->duration3,
 
             'background3'  => ($this->image3) ? request()->root() . '/uploads/' . $this->image3->url : NULL,
 
