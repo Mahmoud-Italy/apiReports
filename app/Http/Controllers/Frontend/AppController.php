@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Moldes\Search;
+use App\Models\Search;
 use App\Models\User;
 use App\Models\Imageable;
 use App\Models\Faq;
