@@ -13,7 +13,6 @@ class Certificate extends Model
     protected $guarded = [];
 
 
-
     public function image_pdf() {
         return $this->morphOne(Imageable::class, 'imageable')
                       ->where('type', 9)
