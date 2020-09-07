@@ -351,9 +351,12 @@ class AppController extends Controller
 
     public function myCertificates($value='')
     {
-        $data = User::where('id', 0)->get(); // tmep
-        $row  = MyCertificateResource::collection($data);
-        return response()->json(['row' => $row], 200);
+        $data  = User::where('id', 0)->get(); // tmep
+        $rows  = MyCertificateResource::collection($data);
+        return response()->json([
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
+        ], 200);
     }
 }
 

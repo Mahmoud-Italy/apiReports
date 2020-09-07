@@ -15,11 +15,11 @@ class MyCertificateResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
+            'id'         => NULL,
             'preview'    => NULL,
             'pdf'        => NULL,
-            'title'      => $this->title,
-            'subTitle'   => $this->subTitle,
+            'title'      => NULL,
+            'subTitle'   => NULL,
         ];
     }
 }
