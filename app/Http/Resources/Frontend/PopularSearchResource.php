@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Frontend;
 
+use App\Models\Sector2;
 use App\Http\Resources\Frontend\SectorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
