@@ -108,6 +108,7 @@ class Certificate extends Model
               $row->duration       = $value['duration'] ?? NULL;
 
               $row->dTitle         = $value['dTitle'] ?? NULL;
+              
               $row->cTitle         = $value['cTitle'] ?? NULL;
               $row->cBody          = $value['cBody'] ?? NULL;
 
