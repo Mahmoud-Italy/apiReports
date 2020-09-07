@@ -16,7 +16,7 @@ class SectorResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
+            'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
