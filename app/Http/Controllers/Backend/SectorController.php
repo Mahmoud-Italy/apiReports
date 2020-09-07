@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Sector2;
+use App\Models\Sector;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Sector2UpdateRequest;
-use App\Http\Requests\Sector2StoreRequest;
-use App\Http\Resources\Sector2Resource;
+use App\Http\Requests\SectorUpdateRequest;
+use App\Http\Requests\SectorStoreRequest;
+use App\Http\Resources\SectorResource;
 
 class SectorController extends Controller
 {
@@ -18,8 +18,8 @@ class SectorController extends Controller
 
     public function index()
     {
-        $data = Sector2::all();
-        $rows = Sector2Resource::collection(Sector2::fetchData(request()->all()));
+        $data = Sector::all();
+        $rows = SectorResource::collection(Sector::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
@@ -27,9 +27,9 @@ class SectorController extends Controller
         ], 200);
     }
 
-    public function store(Sector2StoreRequest $request)
+    public function store(SectorStoreRequest $request)
     {
-        $row = Sector2::createOrUpdate(NULL, $request->all());
+        $row = Sector::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
@@ -39,13 +39,13 @@ class SectorController extends Controller
 
     public function show($id)
     {
-        $row = new Sector2Resource(Sector2::findOrFail(decrypt($id)));
+        $row = new SectorResource(Sector::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update(Sector2UpdateRequest $request, $id)
+    public function update(SectorUpdateRequest $request, $id)
     {
-        $row = Sector2::createOrUpdate(decrypt($id), $request->all());
+        $row = Sector::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
@@ -56,7 +56,7 @@ class SectorController extends Controller
     public function destroy($id)
     {
         try {
-            $row = Sector2::query();
+            $row = Sector::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -77,7 +77,7 @@ class SectorController extends Controller
     public function active($id)
     {
         try {
-            $row = Sector2::query();
+            $row = Sector::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -98,7 +98,7 @@ class SectorController extends Controller
     public function inactive($id)
     {
         try {
-            $row = Sector2::query();
+            $row = Sector::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -119,7 +119,7 @@ class SectorController extends Controller
     public function trash($id)
     {
         try {
-            $row = Sector2::query();
+            $row = Sector::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) {
@@ -140,7 +140,7 @@ class SectorController extends Controller
     public function restore($id)
     {
         try {
-            $row = Sector2::query();
+            $row = Sector::query();
 
             if(strpos($id, ',') !== false) {
                 foreach(explode(',',$id) as $sid) { 
@@ -160,7 +160,7 @@ class SectorController extends Controller
 
     public function export()
     {
-        $data = Sector2::where(['status' => true, 'trash' => false]);
+        $data = Sector::where(['status' => true, 'trash' => false]);
 
         if(request('id')) {
             $id = request('id');
@@ -175,6 +175,6 @@ class SectorController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => Sector2Resource::collection($data)], 200);
+        return response()->json(['rows' => SectorResource::collection($data)], 200);
     }
 }
