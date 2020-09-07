@@ -16,7 +16,9 @@ class ProfileResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'avatar'     => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
+            'avatar'     => ($this->image) 
+                                    ? request()->root() . '/uploads/' . $this->image->url 
+                                    : request()->root() . '/uploads/default_avatar.png',
             'email'      => $this->email,
             'first_name' => $this->first_name,
             'last_name'  => $this->last_name,
