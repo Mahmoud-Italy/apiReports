@@ -21,10 +21,6 @@ class Sector2Resource extends JsonResource
 
             'childs'        => count($this->childs),
 
-            'parent'        => ($this->parent) ? $this->parent->title : 'No Parent',
-
-            'program_id'    => $this->program_id,
-            'parent_id'     => $this->parent_id,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
