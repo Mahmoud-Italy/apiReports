@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Frontend;
 
 use App\Models\CertificateCategory;
+use App\Models\CertificateProduct;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OurCertificateResource extends JsonResource
@@ -39,6 +40,19 @@ class OurCertificateResource extends JsonResource
             ];
         }
 
+        foreach (CertificateProduct::where(['status' => true, 'trash' => false])
+                            ->orderBy('sort', 'DESC')
+                            ->get() as $pro) {
+            $programs[] = [
+                'id'        => $pro->id,
+                'image'     => $pro->image() ? request()->root(). '/uploads/' . $cat3->image()->url : null,
+                'title'     => $pro->title,
+                'subTitle'  => $pro->subtitle,
+                'slug'      => $pro->slug,
+                'shortBody' => $pro->short_body,
+            ];
+        }
+
         return [
             'background1' => ($this->image1) ? request()->root() . '/uploads/' . $this->image1->url : NULL,
             'bgTitle'    => $this->bgTitle1,
@@ -67,6 +81,7 @@ class OurCertificateResource extends JsonResource
 
             'background3'  => ($this->image3) ? request()->root() . '/uploads/' . $this->image3->url : NULL,
             'title3'       => $this->dTitle,
+            'programs'     => 
 
             'background4'  => ($this->image4) ? request()->root() . '/uploads/' . $this->image4->url : NULL,
             'title4'       => $this->cTitle,

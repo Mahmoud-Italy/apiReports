@@ -406,9 +406,19 @@ class AppController extends Controller
         $rows = new OurCertificateResource(Certificate::findOrFail(1));
         return response()->json([
             'rows'        => $rows,
-            'navigation'  => $navigation,
-            'paginate'    => $this->paginate($rows)
+            'navigation'  => $navigation
         ], 200);
+    }
+
+    public function ourCertificatesProgram($slug='')
+    {
+        $navigation = CertificateProduct::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
+        $page = CertificateProduct::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
+        $row = new ProductDetailResource(CertificateProduct::findOrFail(($page->id) ?? 0));
+        return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
 }
 
