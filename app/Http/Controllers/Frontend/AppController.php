@@ -353,8 +353,8 @@ class AppController extends Controller
                 $plainPassword  = $request->password;
                 $row->password  = app('hash')->make($plainPassword);
             }
-            if(isset($request->avatar) && $request->hasFile('avatar')) {
-                $image = Imageable::uploadImage($request->file('avatar'));
+            if(isset($request->avatar) && $request->avatar) {
+                $image = Imageable::uploadImage($request->avatar);
                 $row->image()->delete();
                 $row->image()->create(['url' => $image]);
             }
