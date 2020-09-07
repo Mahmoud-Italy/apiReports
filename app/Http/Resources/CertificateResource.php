@@ -34,7 +34,9 @@ class CertificateResource extends JsonResource
             'bgColor2'      => $this->bgColor2,
             'body2'         => $this->body2,
             'hint2'         => $this->hint2,
-            'duration'      => $this->duration,
+            'duration1'      => $this->duration1,
+            'duration2'      => $this->duration2,
+            'duration3'      => $this->duration3,
 
 
             'image3'        => ($this->image3) ? request()->root() .'/uploads/' . $this->image3->url : NULL,

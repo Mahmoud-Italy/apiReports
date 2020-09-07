@@ -105,7 +105,9 @@ class Certificate extends Model
               $row->bgColor2       = $value['bgColor2'] ?? NULL;
               $row->body2          = $value['body2'] ?? NULL;
               $row->hint2          = $value['hint2'] ?? NULL;
-              $row->duration       = $value['duration'] ?? NULL;
+              $row->duration1       = $value['duration1'] ?? NULL;
+              $row->duration2       = $value['duration2'] ?? NULL;
+              $row->duration3       = $value['duration3'] ?? NULL;
 
               $row->dTitle         = $value['dTitle'] ?? NULL;
               
