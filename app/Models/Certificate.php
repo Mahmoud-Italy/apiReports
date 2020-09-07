@@ -190,6 +190,7 @@ class Certificate extends Model
                 CertificateCategory::where('cat_id', 1)->delete();
                 if(count($value['cat1'])) {
                 foreach($value['cat1'] as $cat1) {
+                  if($cat1['cat_title']) {
                     $row1 = new CertificateCategory;
                     $row1->cat_id = 1;
                     $row1->title = $cat1['cat_title'];
@@ -220,8 +221,7 @@ class Certificate extends Model
                             $row1->pdf()->create(['url' => $pdf, 'type' => 1]);
                           }
                         }
-
-                    
+                    }
                   }
                 }
               }
@@ -232,6 +232,7 @@ class Certificate extends Model
                 CertificateCategory::where('cat_id', 2)->delete();
                 if(count($value['cat2'])) {
                 foreach($value['cat2'] as $cat2) {
+                  if($cat2['cat_title']) {
                     $row2 = new CertificateCategory;
                     $row2->cat_id = 2;
                     $row2->title = $cat2['cat_title'];
@@ -261,9 +262,8 @@ class Certificate extends Model
                             }
                             $row2->pdf()->create(['url' => $pdf, 'type' => 1]);
                           }
-                        }
-                      
-                    
+                        } 
+                    }
                   }
                 }
               }
@@ -274,11 +274,11 @@ class Certificate extends Model
                 CertificateCategory::where('cat_id', 3)->delete();
                 if(count($value['cat3'])) {
                 foreach($value['cat3'] as $cat3) {
+                  if($cat3['cat_title']) {
                     $row3 = new CertificateCategory;
                     $row3->cat_id = 3;
                     $row3->title = $cat3['cat_title'];
                     $row3->save();
-                    
                       if(isset($cat3['cat_image'])) {
                           $row3->image()->delete();
                           if($cat3['cat_image']) {
@@ -304,8 +304,7 @@ class Certificate extends Model
                             $row3->pdf()->create(['url' => $pdf, 'type' => 1]);
                           }
                         }
-                      
-                    
+                      }
                   }
                 }
               }
