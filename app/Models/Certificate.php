@@ -121,7 +121,7 @@ class Certificate extends Model
                   $row->image1()->delete();
                 if($value['image1'] && !Str::contains($value['image1'], ['uploads','false'])) {
                   $image = Imageable::uploadImage($value['image1']);
-                  $row->image1()->create(['url' => $image, 'type' => 0]);
+                  $row->image1()->create(['url' => $image, 'type' => 1]);
                 }
               }
 
