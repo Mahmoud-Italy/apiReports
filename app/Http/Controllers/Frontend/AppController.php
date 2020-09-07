@@ -307,56 +307,69 @@ class AppController extends Controller
 
 
 
-    public function updateProfile()
+    public function profile()
     {
-        $user = User::findOrFail(auth()->guard('api')->user()->id);
-        $row  = new ProfileResource($user);
-        return response()->json(['row' => $row], 200);
+        try {
+            $user = User::findOrFail(auth()->guard('api')->user()->id);
+            $row  = new ProfileResource($user);
+            return response()->json(['row' => $row], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Invalid access_token.'], 500);
+        }
     }
     public function updateProfile(Request $request)
     {
-        $row             = User::findOrFail(auth()->guard('api')->user()->id);
+        try {
+            $row   = User::findOrFail(auth()->guard('api')->user()->id);
 
-        if(isset($request->country) && $request->country) {
-            $row->country    = $request->country;
-        }
-        if(isset($request->first_name) && $request->first_name) {
-            $row->first_name = $request->first_name;
-        }
-        if(isset($request->last_name) && $request->last_name) {
-            $row->last_name = $request->last_name;
-        }
-        if(isset($request->ccode) && $request->ccode) {
-            $row->ccode = $request->ccode;
-        }
-        if(isset($request->mobile) && $request->mobile) {
-            $row->mobile = $request->mobile;
-        }
-        if(isset($request->website) && $request->website) {
-            $row->website = $request->website;
-        }
-        if(isset($request->password) && $request->password) {
-            $plainPassword  = $request->password;
-            $row->password  = app('hash')->make($plainPassword);
-        }
-        if(isset($request->avatar) && $request->hasFile('avatar')) {
-            $image = Imageable::uploadImage($request->file('avatar'));
-            $row->image()->delete();
-            $row->image()->create(['url' => $image]);
-        }
-        $row->save();
-
+            if(isset($request->country) && $request->country) {
+                $row->country    = $request->country;
+            }
+            if(isset($request->first_name) && $request->first_name) {
+                $row->first_name = $request->first_name;
+            }
+            if(isset($request->last_name) && $request->last_name) {
+                $row->last_name = $request->last_name;
+            }
+            if(isset($request->ccode) && $request->ccode) {
+                $row->ccode = $request->ccode;
+            }
+            if(isset($request->mobile) && $request->mobile) {
+                $row->mobile = $request->mobile;
+            }
+            if(isset($request->website) && $request->website) {
+                $row->website = $request->website;
+            }
+            if(isset($request->password) && $request->password) {
+                $plainPassword  = $request->password;
+                $row->password  = app('hash')->make($plainPassword);
+            }
+            if(isset($request->avatar) && $request->hasFile('avatar')) {
+                $image = Imageable::uploadImage($request->file('avatar'));
+                $row->image()->delete();
+                $row->image()->create(['url' => $image]);
+            }
+            $row->save();
         return response()->json(['message' => ''], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Invalid access_token.'], 500);
+        }
     }
 
     public function myCertificates($value='')
     {
-        $data  = User::where('id', 0)->get(); // tmep
-        $rows  = MyCertificateResource::collection($data);
-        return response()->json([
-            'rows'        => $rows,
-            'paginate'    => $this->paginate($rows)
-        ], 200);
+        try {
+            $data  = User::where('id', auth()->guard('api')->user()->id)->where('active', 3)->get(); // tmep
+            $rows  = MyCertificateResource::collection($data);
+            return response()->json([
+                'rows'        => $rows,
+                'paginate'    => $this->paginate($rows)
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Invalid access_token.'], 500);
+        }
     }
 }
 
