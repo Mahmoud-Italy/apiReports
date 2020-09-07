@@ -8,12 +8,12 @@ class CertificateCategory extends Model
 {
     protected $guarded = [];
 
-    public function image1() {
+    public function image() {
         return $this->morphOne(Imageable::class, 'imageable')
                       ->where('type', 0)
                       ->select('url');
     }
-    public function image2() {
+    public function pdf() {
         return $this->morphOne(Imageable::class, 'imageable')
                       ->where('type', 1)
                       ->select('url');

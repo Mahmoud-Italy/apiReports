@@ -146,8 +146,9 @@ class Certificate extends Model
               }
 
               // catss
-              if(count($value['cat1'])) {
+              if(isset($value['cat1'])) {
                 CertificateCategory::where('cat_id', 1)->delete();
+                if(count($value['cat1'])) {
                 foreach($value['cat1'] as $cat1) {
                     $row1 = new CertificateCategory;
                     $row1->cat_id = 1;
@@ -165,13 +166,15 @@ class Certificate extends Model
                         $row1->pdf()->create(['url' => $pdf1, 'type' => 1]);
                       }
                     $row1->save();
+                  }
                 }
               }
 
 
               // catss
-              if(count($value['cat2'])) {
+              if(isset($value['cat2'])) {
                 CertificateCategory::where('cat_id', 2)->delete();
+                if(count($value['cat2'])) {
                 foreach($value['cat2'] as $cat2) {
                     $row2 = new CertificateCategory;
                     $row2->cat_id = 2;
@@ -189,13 +192,15 @@ class Certificate extends Model
                         $row2->pdf()->create(['url' => $pdf2, 'type' => 1]);
                       }
                     $row2->save();
+                  }
                 }
               }
 
 
 
-              if(count($value['cat3'])) {
+              if(isset($value['cat3'])) {
                 CertificateCategory::where('cat_id', 3)->delete();
+                if(count($value['cat3'])) {
                 foreach($value['cat3'] as $cat3) {
                     $row3 = new CertificateCategory;
                     $row3->cat_id = 3;
@@ -213,6 +218,7 @@ class Certificate extends Model
                         $row3->pdf()->create(['url' => $pdf3, 'type' => 1]);
                       }
                     $row3->save();
+                  }
                 }
               }
 
