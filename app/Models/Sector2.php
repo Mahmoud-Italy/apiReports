@@ -20,15 +20,6 @@ class Sector2 extends Model
         return $this->hasMany(Product2::class, 'sector_id'); 
     }
 
-    public function childs() {
-        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(__NAMESPACE__.'\\'.class_basename(new self),'parent_id')->select('title');
-    }
-
     // fetch Data
     public static function fetchData($value='')
     {
@@ -44,15 +35,6 @@ class Sector2 extends Model
               });
           }
 
-          if(isset($value['parent_id'])) {
-            if($value['parent_id'] == 1) {
-               $obj->whereNULL('parent_id');
-            } else if($value['parent_id'] != 1) {
-                $obj->whereNOTNULL('parent_id');
-            } else {
-                $obj->whereNULL('parent_id');
-            }
-          }
 
           // status
           if(isset($value['status']) && $value['status']) {
@@ -93,7 +75,6 @@ class Sector2 extends Model
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->search_id      = 6;
               $row->slug           = strtolower($value['slug']) ?? NULL;
               $row->title          = $value['title'] ?? NULL;
               $row->body           = $value['body'] ?? NULL;
