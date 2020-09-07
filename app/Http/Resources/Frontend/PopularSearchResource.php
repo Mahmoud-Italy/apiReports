@@ -62,5 +62,34 @@ class PopularSearchResource extends JsonResource
             'image_dir'   => 'left',
         ];
 
+
+
+        return [
+            'id'            => $this->id,
+            'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
+            'slug'          => $this->slug,
+            'title'         => $this->title,
+
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
+            //'body'          => $this->body,
+
+            'body1'          => $this->body1,
+            'body2'          => $this->body2,
+            'body3'          => $this->body3,
+            'body4'          => $this->body4,
+            'body5'          => $this->body5,
+
+            'content'        => $content,
+
+
+            'download_name' => $this->download_name ?? NULL,
+            'pdf_file'      => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            'has_faq'       => (boolean)$this->has_faq,
+            'has_scroll'    => (boolean)$this->has_scroll,
+            'has_training'  => (boolean)$this->has_training,
+            'has_download'  => (boolean)$this->has_download,
+        ];
+
     }
 }
