@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Search;
 use App\Models\User;
 use App\Models\Imageable;
+use App\Models\Certificate;
+use App\Models\CertificateProduct;
+use App\Models\CertificateCategory;
 use App\Models\Faq;
 use App\Models\About;
 use App\Models\Social;
@@ -39,6 +42,7 @@ use App\Http\Resources\Frontend\SectorProductsResource;
 use App\Http\Resources\Frontend\PopularSearchResource;
 use App\Http\Resources\Frontend\ProfileResource;
 use App\Http\Resources\Frontend\MyCertificateResource;
+use App\Http\Resources\Frontend\OurCertificateResource;
 use App\Http\Requests\NewsletterStoreRequest;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\TrainingStoreRequest;
@@ -343,7 +347,7 @@ class AppController extends Controller
                 $row->website = $request->website;
             }
             if(isset($request->company) && $request->company) {
-                $row->company = $request->website;
+                $row->company = $request->company;
             }
             if(isset($request->password) && $request->password) {
                 $plainPassword  = $request->password;
@@ -387,6 +391,23 @@ class AppController extends Controller
         return response()->json([
                 'rows'        => $rows,
                 'paginate'    => $this->paginate($rows)
+        ], 200);
+    }
+
+
+
+    public function ourCertificates($value='')
+    {
+        $navigation[] = ['id' => 1, 'title' => 'Overview', 'slug' => 'overview'];
+        $navigation[] = ['id' => 2, 'title' => 'Certification Types', 'slug' => 'certification_types'];
+        $navigation[] = ['id' => 3, 'title' => 'Certification', 'slug' => 'certification'];
+        $navigation[] = ['id' => 4, 'title' => 'Online Training', 'slug' => 'online-training'];
+
+        $rows = new OurCertificateResource(Certificate::findOrFail(1));
+        return response()->json([
+            'rows'        => $rows,
+            'navigation'  => $navigation,
+            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 }

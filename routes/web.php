@@ -98,6 +98,8 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->post('myProfile', 'AppController@updateProfile');
         $router->get('myCertificates', 'AppController@myCertificates');
 
+        $router->get('our-certificates', 'AppController@ourCertificates');
+
         $router->get('search', 'AppController@search');
     });
 
