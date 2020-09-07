@@ -93,6 +93,7 @@ class Sector2 extends Model
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->search_id      = 6;
               $row->slug           = strtolower($value['slug']) ?? NULL;
               $row->title          = $value['title'] ?? NULL;
               $row->body           = $value['body'] ?? NULL;

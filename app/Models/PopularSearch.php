@@ -18,6 +18,12 @@ class PopularSearch extends Model
                   ->select('url');
     }
 
+
+    public function sectors()
+    {
+        return $this->hasMany(Sector2::class, 'search_id');
+    }
+
     public function image1_1() {
         return $this->morphOne(Imageable::class, 'imageable')->where('type', 1)->select('url');
     }
