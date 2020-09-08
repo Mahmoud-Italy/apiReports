@@ -35,7 +35,7 @@ class Training extends Model
 
     public function courses() {
        return $this->hasMany(TrainingCourse::class, 'training_id')
-                  ->select('id','program','institute','duration','date');
+                  ->select('id','program','institute','duration','date_from', 'date_to');
     }
     public function languages() {
        return $this->hasMany(TrainingLanguage::class, 'training_id')
@@ -169,7 +169,8 @@ class Training extends Model
                       'program'   => $course['program'] ?? NULL,
                       'institute' => $course['institute'] ?? NULL,
                       'duration'  => $course['duration'] ?? NULL,
-                      'date'      => $course['date'] ?? NULL
+                      'date_from' => $course['date_from'] ?? NULL
+                      'date_to'   => $course['date_to'] ?? NULL
                     ]);
                 }
               }
