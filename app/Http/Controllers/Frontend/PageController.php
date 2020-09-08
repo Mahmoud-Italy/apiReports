@@ -17,15 +17,26 @@ class PageController extends Controller
 {
     public function index($value='')
     {
-        $rows = PageResource::collection(Page::fetchData(request()->all()));
-        return response()->json(['rows' => $rows], 200);
+        $navigation = Page::select('id', 'slug', 'title')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
+        $data = Page::where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->paginate(20);
+        $rows = PageResource::collection($data);
+        return response()->json(['rows' => $rows, 'navigation' => $navigation], 200);
     }
 
     public function show($slug)
     {
+        $navigation = Page::select('id', 'slug', 'title')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $page = Page::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new PageResource(Page::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
 
     public function home()
