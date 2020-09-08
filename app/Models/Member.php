@@ -165,6 +165,7 @@ class Member extends Model
               if(isset($value['courses']) && count($value['courses'])) {
                 $row->courses()->delete();
                 foreach ($value['courses'] as $course) {
+                  if($courses['program']) {
                    $row->courses()->create([
                       'program'   => $course['program'] ?? NULL,
                       'institute' => $course['institute'] ?? NULL,
@@ -172,6 +173,7 @@ class Member extends Model
                       'date_from' => $course['date_from'] ?? NULL,
                       'date_to'   => $course['date_to'] ?? NULL
                     ]);
+                   }
                 }
               }
 
@@ -179,22 +181,26 @@ class Member extends Model
               if(isset($value['languages']) && count($value['languages'])) {
                 $row->languages()->delete();
                 foreach ($value['languages'] as $language) {
+                  if($language['language']) {
                    $row->languages()->create([
                       'language'   => $language['language'] ?? NULL,
                       'level'      => $language['level'] ?? NULL
                     ]);
+                  }
                 }
               }
 
               if(isset($value['qualifcations']) && count($value['qualifcations'])) {
                 $row->qualifcations()->delete();
                 foreach ($value['qualifcations'] as $qualifcation) {
+                  if($qualifcation['educational']) {
                    $row->qualifcations()->create([
                       'educational'   => $qualifcation['educational'] ?? NULL,
                       'univeristy'    => $qualifcation['univeristy'] ?? NULL,
                       'grade'         => $qualifcation['grade'] ?? NULL,
                       'year'          => $qualifcation['year'] ?? NULL
                     ]);
+                  }
                 }
               }
 

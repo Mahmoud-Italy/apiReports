@@ -19,11 +19,11 @@ class MemberResource extends JsonResource
             'encrypt_id'         => encrypt($this->id),
             'image'              => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
 
-            'passport_file'      => ($this->pdf1) ? request()->root() .'/uploads/' . $this->pdf1->url : NULL,
-            'passport_size_file' => ($this->pdf2) ? request()->root() .'/uploads/' . $this->pdf2->url : NULL,
-            'occupation_file'    => ($this->pdf3) ? request()->root() .'/uploads/' . $this->pdf3->url : NULL,
-            'detailed_resume'    => ($this->pdf4) ? request()->root() .'/uploads/' . $this->pdf4->url : NULL,
-            'hr_letter_file'     => ($this->pdf5) ? request()->root() .'/uploads/' . $this->pdf5->url : NULL,
+            'passport_file'      => ($this->file1) ? request()->root() .'/uploads/' . $this->file1->url : NULL,
+            'passport_size_file' => ($this->file2) ? request()->root() .'/uploads/' . $this->file2->url : NULL,
+            'occupation_file'    => ($this->file3) ? request()->root() .'/uploads/' . $this->file3->url : NULL,
+            'detailed_resume'    => ($this->file4) ? request()->root() .'/uploads/' . $this->file4->url : NULL,
+            'hr_letter_file'     => ($this->file5) ? request()->root() .'/uploads/' . $this->file5->url : NULL,
 
             'name'               => $this->first_name. ' '.$this->last_name,
             'first_name'         => $this->first_name,
