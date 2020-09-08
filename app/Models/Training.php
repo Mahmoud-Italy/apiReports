@@ -169,7 +169,7 @@ class Training extends Model
                       'program'   => $course['program'] ?? NULL,
                       'institute' => $course['institute'] ?? NULL,
                       'duration'  => $course['duration'] ?? NULL,
-                      'date_from' => $course['date_from'] ?? NULL
+                      'date_from' => $course['date_from'] ?? NULL,
                       'date_to'   => $course['date_to'] ?? NULL
                     ]);
                 }
