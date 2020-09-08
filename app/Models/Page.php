@@ -157,6 +157,13 @@ class Page extends Model
               $row->status        = (isset($value['status']) && $value['status']) 
                                       ? (boolean)$value['status'] 
                                       : false;
+
+              $row->has_header        = (isset($value['has_header']) && $value['has_header']) 
+                                      ? (boolean)$value['has_header'] 
+                                      : false;
+              $row->has_footer      = (isset($value['has_footer']) && $value['has_footer']) 
+                                      ? (boolean)$value['has_footer'] 
+                                      : false;
               $row->save();
 
               // Image

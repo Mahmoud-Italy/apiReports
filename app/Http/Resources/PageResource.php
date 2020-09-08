@@ -91,6 +91,8 @@ class PageResource extends JsonResource
             'has_scroll'    => (int)$this->has_scroll,
             'has_training'  => (int)$this->has_training,
             'has_download'  => (int)$this->has_download,
+            'has_header'    => (int)$this->has_header,
+            'has_footer'    => (int)$this->has_footer,
             
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
