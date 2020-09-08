@@ -59,11 +59,10 @@ class AppController extends Controller
     # Popular Searchs
     public function popular()
     {
-        $navigation = PopularSearch::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = PopularSearch::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = PopularSearchResource::collection(PopularSearch::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = PopularSearchResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -72,10 +71,9 @@ class AppController extends Controller
     }
     public function showpopular($slug)
     {
-        $navigation = PopularSearch::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = PopularSearch::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = PopularSearch::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new PopularSearchResource(PopularSearch::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
@@ -96,11 +94,10 @@ class AppController extends Controller
     # Accredittions
     public function accreditations()
     {
-        $navigation = Accreditation::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Accreditation::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = AccreditationResource::collection(Accreditation::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = AccreditationResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -109,10 +106,9 @@ class AppController extends Controller
     }
     public function showAccreditations($slug)
     {
-        $navigation = Accreditation::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Accreditation::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = Accreditation::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new AccreditationResource(Accreditation::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
@@ -131,7 +127,10 @@ class AppController extends Controller
     # Programs
     public function programs()
     {
-        $rows = ProgramResource::collection(Program::fetchData(request()->all()));
+        $navigation = Program::where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->paginate(20);
+        $rows = ProgramResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
@@ -139,9 +138,12 @@ class AppController extends Controller
     }
     public function showPrograms($slug)
     {
+        $navigation = Program::where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->paginate(20);
         $page = Program::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row  = new ProgramResource(Program::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row], 200);
+        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
     public function showSectors($slug)
     {
@@ -172,11 +174,10 @@ class AppController extends Controller
     # Memberships
     public function memberships()
     {
-        $navigation = Membership::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Membership::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = MembershipResource::collection(Membership::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = MembershipResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -185,10 +186,9 @@ class AppController extends Controller
     }
     public function showMemberships($slug)
     {
-        $navigation = Membership::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Membership::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = Membership::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new MembershipResource(Membership::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
@@ -206,11 +206,10 @@ class AppController extends Controller
     # About
     public function about()
     {
-        $navigation = About::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = About::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = AboutResource::collection(About::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = AboutResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -219,10 +218,9 @@ class AppController extends Controller
     }
     public function showabout($slug)
     {
-        $navigation = About::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = About::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = About::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new AboutResource(About::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
@@ -231,11 +229,10 @@ class AppController extends Controller
     # Faq
     public function faqs()
     {
-        $navigation = Faq::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Faq::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = FaqResource::collection(Faq::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = FaqResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -244,10 +241,9 @@ class AppController extends Controller
     }
     public function showFaqs($slug)
     {
-        $navigation = Faq::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Faq::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = Faq::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new FaqResource(Faq::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation,], 200);
@@ -257,11 +253,10 @@ class AppController extends Controller
     # Privacy Policy
     public function privacy()
     {
-        $navigation = Privacy::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Privacy::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = PrivacyResource::collection(Privacy::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = PrivacyResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -270,10 +265,9 @@ class AppController extends Controller
     }
     public function showPrivacy($slug)
     {
-        $navigation = Privacy::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Privacy::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = Privacy::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new PrivacyResource(Privacy::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
@@ -284,11 +278,10 @@ class AppController extends Controller
     # Online Training
     public function online()
     {
-        $navigation = Online::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Online::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
-        $rows = OnlineTrainingResource::collection(OnlineTraining::fetchData(request()->all()));
+                                ->paginate(20);
+        $rows = OnlineTrainingResource::collection($navigation);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
@@ -297,10 +290,9 @@ class AppController extends Controller
     }
     public function showOnline($slug)
     {
-        $navigation = Online::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = Online::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = OnlineTraining::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new OnlineTrainingResource(OnlineTraining::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
@@ -427,10 +419,9 @@ class AppController extends Controller
 
     public function ourCertificatesProgram($slug='')
     {
-        $navigation = CertificateProduct::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
+        $navigation = CertificateProduct::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->paginate(20);
         $page = CertificateProduct::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new ProductDetailResource(CertificateProduct::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);

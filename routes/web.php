@@ -100,6 +100,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('myCertificates', 'AppController@myCertificates');
 
         $router->get('our-certificates', 'AppController@ourCertificates');
+        $router->get('our-certificates/program/{slug}', 'AppController@ourCertificatesProgram');
 
         $router->get('search', 'AppController@search');
     });
