@@ -25,7 +25,11 @@ class PageController extends Controller
                                 ->orderBy('sort', 'DESC')
                                 ->paginate(20);
         $rows = PageResource::collection($data);
-        return response()->json(['rows' => $rows, 'navigation' => $navigation], 200);
+        return response()->json([
+            'rows'        => $rows,
+            'navigation'  => $navigation,
+            'paginate'    => $this->paginate($rows)
+        ], 200);
     }
 
     public function show($slug)
