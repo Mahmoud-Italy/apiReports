@@ -189,7 +189,7 @@ class AppController extends Controller
         $data = Membership::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->paginate(20);
-        $rows = MembershipResource::collection($navigation);
+        $rows = MembershipResource::collection($data);
         return response()->json([
             'rows'        => $rows,
             'navigation'  => $navigation,
