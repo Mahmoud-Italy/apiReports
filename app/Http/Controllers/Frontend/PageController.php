@@ -20,7 +20,7 @@ class PageController extends Controller
         $navigation = Page::select('id', 'slug', 'title')
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->get();
+                                ->get(); 
         $data = Page::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->paginate(20);
