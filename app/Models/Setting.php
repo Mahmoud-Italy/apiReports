@@ -12,7 +12,11 @@ class Setting extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('type', false)->select('url');
+    }
+
+    public function image2() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('type', true)->select('url');
     }
 
     // fetch Data
@@ -78,11 +82,44 @@ class Setting extends Model
               $row->save();
 
               // Image
+
+
               if(isset($value['base64Image'])) {
-                if($value['base64Image'] && !Str::contains($value['base64Image'], ['uploads','false'])) {
-                  $image = Imageable::uploadImage($value['base64Image']);
-                  $row->image()->delete();
+                $row->image()->delete();
+                if($value['base64Image']) {
+                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['base64Image']);
+                  } else {
+                    $image = explode('/', $value['base64Image']);
+                    $image = end($image);
+                  }
+                  $row->image()->create(['url' => $image, 'type' => 1]);
+                }
+              }
+
+              if(isset($value['base64Image'])) {
+                $row->image()->delete();
+                if($value['base64Image']) {
+                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['base64Image']);
+                  } else {
+                    $image = explode('/', $value['base64Image']);
+                    $image = end($image);
+                  }
                   $row->image()->create(['url' => $image]);
+                }
+              }
+
+              if(isset($value['base64Image2'])) {
+                $row->image2()->delete();
+                if($value['base64Image2']) {
+                  if(!Str::contains($value['base64Image2'], ['uploads','false'])) {
+                    $image2 = Imageable::uploadImage($value['base64Image2']);
+                  } else {
+                    $image2 = explode('/', $value['base64Image2']);
+                    $image2 = end($image2);
+                  }
+                  $row->image2()->create(['url' => $image2, 'type' => 1]);
                 }
               }
 

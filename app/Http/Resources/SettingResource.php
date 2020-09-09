@@ -17,6 +17,7 @@ class SettingResource extends JsonResource
         return [
             'id'            => $this->id,
             'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
+            'image2'         => ($this->image2) ? request()->root() .'/uploads/' . $this->image2->url : NULL,
             'bgTitle'       => $this->bgTitle,
             'bgColor'       => $this->bgColor,
             'title'         => $this->title,
