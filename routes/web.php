@@ -32,7 +32,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $app->apiResource('sectors', 'SectorController');
         $app->apiResource('products', 'ProductController');
         $app->apiResource('memberships', 'MembershipController');
-        $app->apiResource('abouts', 'AboutController');
+        $app->apiResource('about', 'AboutController');
         $app->apiResource('contacts', 'SettingController');
         $app->apiResource('certificates', 'CertificateController');
         $app->apiResource('cert-products', 'CProductController');

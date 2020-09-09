@@ -16,82 +16,38 @@ class AboutResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
-            'pdf'           => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
-            'slug'          => $this->slug,
-            'title'         => $this->title,
-            'body'          => $this->body,
-
-            'bgTitle'       => $this->bgTitle,
-            'bgColor'       => $this->bgColor,
-
-
-            'body1'         => $this->body1,
-            'body2'         => $this->body2,
-            'body3'         => $this->body3,
-            'body4'         => $this->body4,
-            'body5'         => $this->body5,
-
-            // 1
-            'body1_1'         => $this->body1_1,
-            'image1_1'        => ($this->image1_1) ? request()->root() . '/uploads/' . $this->image1_1->url : NULL,
-            'body1_2'         => $this->body1_2,
-            'image1_2'        => ($this->image1_2) ? request()->root() . '/uploads/' . $this->image1_2->url : NULL,
-            'body1_3'         => $this->body1_3,
-            'image1_3'        => ($this->image1_3) ? request()->root() . '/uploads/' . $this->image1_3->url : NULL,
-            'body1_4'         => $this->body1_4,
-            'image1_4'        => ($this->image1_4) ? request()->root() . '/uploads/' . $this->image1_4->url : NULL,
-            // 2
-            'body2_1'         => $this->body2_1,
-            'body2_1_r'         => $this->body2_1_r,
-            'image2_1'        => ($this->image2_1) ? request()->root() . '/uploads/' . $this->image2_1->url : NULL,
-            'label2_1'        => $this->label2_1,
-            'color2_1'        => $this->color2_1,
-
-            'body2_2'         => $this->body2_2,
-            'body2_2_r'         => $this->body2_2_r,
-            'image2_2'        => ($this->image2_2) ? request()->root() . '/uploads/' . $this->image2_2->url : NULL,
-            'label2_2'        => $this->label2_2,
-            'color2_2'        => $this->color2_2,
-
-            'body2_3'         => $this->body2_3,
-            'body2_3_r'         => $this->body2_3_r,
-            'image2_3'        => ($this->image2_3) ? request()->root() . '/uploads/' . $this->image2_3->url : NULL,
-            'label2_3'        => $this->label2_3,
-            'color2_3'        => $this->color2_3,
-
-            'body2_4'         => $this->body2_4,
-            'body2_4_r'         => $this->body2_4_r,
-            'image2_4'        => ($this->image2_4) ? request()->root() . '/uploads/' . $this->image2_4->url : NULL,
-            'label2_4'        => $this->label2_4,
-            'color2_4'        => $this->color2_4,
-
-            // Dates
-            'dateForHumans' => $this->created_at->diffForHumans(),
-            'created_at'    => ($this->created_at == $this->updated_at) 
-                                ? 'Created <br/>'. $this->created_at->diffForHumans()
-                                : NULL,
-            'updated_at'    => ($this->created_at != $this->updated_at) 
-                                ? 'Updated <br/>'. $this->updated_at->diffForHumans()
-                                : NULL,
-            'deleted_at'    => ($this->updated_at && $this->trash) 
-                                ? 'Deleted <br/>'. $this->updated_at->diffForHumans()
-                                : NULL,
-            'timestamp'     => $this->created_at,
-
-
-            // Status & Visibility
-            'download_name' => $this->download_name,
-            'sort'          => (int)$this->sort,
-            'has_faq'       => (int)$this->has_faq,
-            'has_scroll'    => (int)$this->has_scroll,
-            'has_training'  => (int)$this->has_training,
-            'has_download'  => (int)$this->has_download,
             
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
-            'loading'       => false
+
+            'bgTitle1'       => $this->bgTitle1,
+            'bgColor1'       => $this->bgColor1,
+            'body1'          => $this->body1,
+            'has_download'   => (int)$this->has_download,
+            'download_name'  => $this->download_name,
+            'pdf_file'       => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+
+            'title2_1'       => $this->title2_1,
+            'title2_2'       => $this->title2_2,
+            'body2_1'        => $this->body2_1,
+            'video2_2'       => $this->video2_2,
+
+            'title3_1'       => $this->title3_1,
+            'title3_2'       => $this->title3_2,
+            'body3_1'        => $this->body3_1,
+            'body3_2'        => $this->body3_2,
+
+
+            'title4_1'       => $this->title4_1,
+            'title4_2'       => $this->title4_2,
+            'body4_1'        => $this->body4_1,
+            'body4_2'        => $this->body4_2,
+
+            'title5_1'       => $this->title5_1,
+            'title5_2'       => $this->title5_2,
+            'body5_1'        => $this->body5_1,
+            'image5_2'       => ($this->image5_2) ? request()->root() . '/uploads/' . $this->image5_2->url : NULL,
+            'body5_3'        => $this->body5_3,
+            'body5_4'        => $this->body5_4,
         ];
     }
 }

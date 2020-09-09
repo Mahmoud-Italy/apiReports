@@ -45,7 +45,7 @@ class AboutController extends Controller
 
     public function update(AboutUpdateRequest $request, $id)
     {
-        $row = About::createOrUpdate(decrypt($id), $request->all());
+        $row = About::createOrUpdate($id, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
