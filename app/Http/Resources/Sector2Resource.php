@@ -22,6 +22,8 @@ class Sector2Resource extends JsonResource
 
             'slug'          => $this->slug,
             'title'         => $this->title,
+            'subTitle'         => $this->subTitle,
+
             'body'          => $this->body,
             'bgTitle'       => $this->bgTitle,
             'bgColor'       => $this->bgColor,

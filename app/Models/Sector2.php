@@ -77,6 +77,7 @@ class Sector2 extends Model
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
               $row->slug           = strtolower($value['slug']) ?? NULL;
               $row->title          = $value['title'] ?? NULL;
+              $row->subTitle          = $value['subTitle'] ?? NULL;
               $row->body           = $value['body'] ?? NULL;
               $row->bgTitle        = $value['bgTitle'] ?? NULL;
               $row->bgColor        = $value['bgColor'] ?? NULL;
