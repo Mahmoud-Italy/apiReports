@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Search;
 use App\Models\Setting;
 use App\Models\User;
-use App\Models\Online;
+use App\Models\OnlineTraining as Online;
 use App\Models\Imageable;
 use App\Models\Certificate;
 use App\Models\CertificateProduct;
