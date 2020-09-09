@@ -13,7 +13,10 @@ class Program extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', false)->select('url');
+    }
+    public function pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', true)->select('url');
     }
 
     public function sectors() {
@@ -83,6 +86,8 @@ class Program extends Model
               $row->body          = $value['body'] ?? NULL;
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
+              $row->download_name = $value['download_name'] ?? NULL;
+
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->has_sectors   = (boolean)$value['has_sectors'] ?? false;
               $row->status        = (boolean)$value['status'] ?? false;
@@ -99,6 +104,20 @@ class Program extends Model
                     $image = end($image);
                   }
                   $row->image()->create(['url' => $image]);
+                }
+              }
+
+
+              if(isset($value['download_file'])) {
+                $row->pdf()->delete();
+                if($value['download_file']) {
+                  if(!Str::contains($value['download_file'], ['uploads','false'])) {
+                    $file = Imageable::uploadImage($value['download_file']);
+                  } else {
+                    $file = explode('/', $value['download_file']);
+                    $file = end($file);
+                  }
+                  $row->pdf()->create(['url' => $file, 'is_pdf' => true]);
                 }
               }
 
