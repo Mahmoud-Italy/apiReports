@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Search;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\Imageable;
 use App\Models\Certificate;
