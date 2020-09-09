@@ -103,6 +103,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('our-certificates/program/{slug}', 'AppController@ourCertificatesProgram');
 
         $router->get('search', 'AppController@search');
+        $router->get('logo', 'AppController@logo');
     });
 
 });

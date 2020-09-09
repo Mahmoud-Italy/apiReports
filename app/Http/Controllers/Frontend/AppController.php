@@ -38,6 +38,7 @@ use App\Http\Resources\Frontend\ProductResource;
 use App\Http\Resources\Frontend\ProductDetailResource;
 use App\Http\Resources\Frontend\SubSectorResource;
 use App\Http\Resources\Frontend\SectorResource;
+use App\Http\Resources\Frontend\LogoResource;
 use App\Http\Resources\Frontend\SectorProductsResource;
 use App\Http\Resources\Frontend\PopularSearchResource;
 use App\Http\Resources\Frontend\ProfileResource;
@@ -458,6 +459,15 @@ class AppController extends Controller
         $page = CertificateProduct::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new ProductDetailResource(CertificateProduct::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
+    }
+
+
+
+
+    public function logo($value='')
+    {
+        $row = new LogoResource(Setting::findOrFail(5));
+        return response()->json(['row' => $row], 200);
     }
 }
 
