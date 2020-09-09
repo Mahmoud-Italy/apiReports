@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchUpdateRequest;
 use App\Http\Requests\SearchStoreRequest;
-use App\Http\Resources\SearchResource;
+use App\Http\Resources\PopularSearchResource;
 
 class SearchController extends Controller
 {
@@ -19,7 +19,7 @@ class SearchController extends Controller
     public function index()
     {
         $data = PopularSearch::get();
-        $rows = SearchResource::collection(PopularSearch::fetchData(request()->all()));
+        $rows = PopularSearchResource::collection(PopularSearch::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
@@ -39,7 +39,7 @@ class SearchController extends Controller
 
     public function show($id)
     {
-        $row = new SearchResource(PopularSearch::findOrFail(decrypt($id)));
+        $row = new PopularSearchResource(PopularSearch::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
@@ -175,6 +175,6 @@ class SearchController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        return response()->json(['rows' => SearchResource::collection($data)], 200);
+        return response()->json(['rows' => PopularSearchResource::collection($data)], 200);
     }
 }
