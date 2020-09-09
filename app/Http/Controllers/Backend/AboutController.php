@@ -39,7 +39,7 @@ class AboutController extends Controller
 
     public function show($id)
     {
-        $row = new AboutResource(About::findOrFail(decrypt($id)));
+        $row = new AboutResource(About::findOrFail($id));
         return response()->json(['row' => $row], 200);
     }
 
