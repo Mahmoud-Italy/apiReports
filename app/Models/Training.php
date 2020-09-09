@@ -165,7 +165,7 @@ class Training extends Model
               if(isset($value['courses']) && count($value['courses'])) {
                 $row->courses()->delete();
                 foreach ($value['courses'] as $course) {
-                  if($course['program']) {
+                  if(isset($course['program']) && $course['program']) {
                    $row->courses()->create([
                       'program'   => $course['program'] ?? NULL,
                       'institute' => $course['institute'] ?? NULL,
@@ -180,11 +180,11 @@ class Training extends Model
 
               if(isset($value['languages']) && count($value['languages'])) {
                 $row->languages()->delete();
-                foreach ($value['languages'] as $language) {
-                  if($language['language']) {
+                foreach ($value['languages'] as $lang) {
+                  if(isset($lang['language']) && $lang['language']) {
                    $row->languages()->create([
-                      'language'   => $language['language'] ?? NULL,
-                      'level'      => $language['level'] ?? NULL
+                      'language'   => $lang['language'] ?? NULL,
+                      'level'      => $lang['level'] ?? NULL
                     ]);
                   }
                 }
@@ -192,13 +192,13 @@ class Training extends Model
 
               if(isset($value['qualifcations']) && count($value['qualifcations'])) {
                 $row->qualifcations()->delete();
-                foreach ($value['qualifcations'] as $qualifcation) {
-                  if($qualifcation['educational']) {
+                foreach ($value['qualifcations'] as $qual) {
+                  if(isset($qual['educational']) && $qual['educational']) {
                    $row->qualifcations()->create([
-                      'educational'   => $qualifcation['educational'] ?? NULL,
-                      'univeristy'    => $qualifcation['univeristy'] ?? NULL,
-                      'grade'         => $qualifcation['grade'] ?? NULL,
-                      'year'          => $qualifcation['year'] ?? NULL
+                      'educational'   => $qual['educational'] ?? NULL,
+                      'univeristy'    => $qual['univeristy'] ?? NULL,
+                      'grade'         => $qual['grade'] ?? NULL,
+                      'year'          => $qual['year'] ?? NULL
                     ]);
                   }
                 }
