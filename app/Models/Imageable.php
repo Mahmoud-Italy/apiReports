@@ -20,6 +20,9 @@ class Imageable extends Model
         if(explode(';', $file)[0]) {
           $fileType   = explode(';', $file)[0];
           $fileType   = explode('/', $fileType)[1]; // png or jpg etc
+          if ($fileType == 'svg+xml') {
+                $fileType = 'svg';
+          }
         }
         $fileName     = date('Y-m-d-h-i-s').'-'.uniqid().'.'.$fileType;
         Storage::disk('public')->put('uploads/'.$fileName, $imageDecoded);
