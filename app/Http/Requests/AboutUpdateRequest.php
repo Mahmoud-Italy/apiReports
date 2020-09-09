@@ -26,7 +26,7 @@ class AboutUpdateRequest extends FormRequest
     {
         //$id   = decrypt(request('id'));
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
             //'slug'   => 'required|unique:abouts,slug,' . $id,
             //'title'  => 'required',
         ];
