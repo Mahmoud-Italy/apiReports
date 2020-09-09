@@ -165,7 +165,7 @@ class Member extends Model
               if(isset($value['courses']) && count($value['courses'])) {
                 $row->courses()->delete();
                 foreach ($value['courses'] as $course) {
-                  if($courses['program']) {
+                  if($course['program']) {
                    $row->courses()->create([
                       'program'   => $course['program'] ?? NULL,
                       'institute' => $course['institute'] ?? NULL,
