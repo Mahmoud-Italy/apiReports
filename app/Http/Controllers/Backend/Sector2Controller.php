@@ -39,7 +39,7 @@ class Sector2Controller extends Controller
 
     public function show($id)
     {
-        $row = new Sector2Resource(Sector::findOrFail(decrypt($id)));
+        $row = new Sector2Resource(Sector2::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
