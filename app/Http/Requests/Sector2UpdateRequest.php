@@ -28,7 +28,7 @@ class Sector2UpdateRequest extends FormRequest
 
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:sectors2,slug,' . $id
+            'slug'   => 'required|unique:sector2s,slug,' . $id
         ];
     }
 

@@ -28,7 +28,7 @@ class Product2UpdateRequest extends FormRequest
         
         return [
             'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:products2,slug,' . $id,
+            'slug'   => 'required|unique:product2s,slug,' . $id,
         ];
     }
 
