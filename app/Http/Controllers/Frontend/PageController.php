@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use App\Models\Page;
 use App\Models\Inbox;
 use App\Models\Setting;
+use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\HomeResource;
