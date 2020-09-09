@@ -74,7 +74,7 @@ class Setting extends Model
               $row            = (isset($id)) ? self::findOrFail($id) : new self;
               $row->bgTitle   = (isset($value['bgTitle'])) ? $value['bgTitle'] : NULL;
               $row->bgSubTitle   = (isset($value['bgSubTitle'])) ? $value['bgSubTitle'] : NULL;
-              $row->bgColor   = (isset($value['bgColor'])) ? $value['bgTitle'] : NULL;
+              $row->bgColor   = (isset($value['bgColor'])) ? $value['bgColor'] : NULL;
               $row->body1     = (isset($value['body1']) && $value['body1']) ? $value['body1'] : NULL;
               $row->body2     = (isset($value['body2']) && $value['body2']) ? $value['body2'] : NULL;
               $row->body3     = (isset($value['body3']) && $value['body3']) ? $value['body3'] : NULL;
