@@ -210,7 +210,7 @@ class Member extends Model
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return $e->getMessage();
+            return $e;
         }
     }
 
