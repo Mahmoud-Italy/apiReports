@@ -40,6 +40,8 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $app->apiResource('media', 'MediaController');
         $app->apiResource('trainings', 'TrainingController');
         $app->apiResource('members', 'MemberController');
+        $app->apiResource('instructors', 'InstructorController');
+        $app->apiResource('experiences', 'ExperienceController');
         $app->apiResource('users', 'UserController');
         $app->apiResource('pages', 'PageController');
         $app->apiResource('faqs', 'FaqController');
@@ -81,8 +83,12 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('about/{slug}', 'AppController@showAbout');
         $router->get('contacts', 'PageController@contacts');
         $router->post('contacts', 'PageController@doContacts');
+        
         $router->post('trainings-applications', 'AppController@doTrainings');
         $router->post('members-applications', 'AppController@doMembers');
+        $router->post('instructor-applications', 'AppController@doInstructor');
+        $router->post('experience-applications', 'AppController@doExperience');
+        
         $router->get('faqs', 'AppController@faqs');
         $router->get('faqs/{slug}', 'AppController@showFaqs');
         $router->get('privacy', 'AppController@privacy');

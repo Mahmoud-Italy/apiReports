@@ -17,8 +17,12 @@ use App\Models\Sector;
 use App\Models\Product;
 use App\Models\Privacy;
 use App\Models\Subcriber;
+
 use App\Models\Member;
 use App\Models\Training;
+use App\Models\Instructor;
+use App\Models\Experience;
+
 use App\Models\Membership;
 use App\Models\Accreditation;
 use App\Models\OnlineTraining;
@@ -211,6 +215,27 @@ class AppController extends Controller
     public function doMembers(MemberStoreRequest $request)
     {
        $row = Member::createOrUpdate(NULL, $request->all());
+        if($row === true) {
+            return response()->json(['message' => ''], 201);
+        } else {
+            return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
+        }
+    }
+
+
+    public function doInstructor(MemberStoreRequest $request)
+    {
+       $row = Instructor::createOrUpdate(NULL, $request->all());
+        if($row === true) {
+            return response()->json(['message' => ''], 201);
+        } else {
+            return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
+        }
+    }
+
+    public function doExperience(MemberStoreRequest $request)
+    {
+       $row = Experience::createOrUpdate(NULL, $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 201);
         } else {
