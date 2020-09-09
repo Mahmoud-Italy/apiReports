@@ -42,6 +42,7 @@ class FaqResource extends JsonResource
 
             // Status & Visibility
             'has_scroll'    => (int)$this->has_scroll,
+            'sort'          => (int)$this->sort,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false
