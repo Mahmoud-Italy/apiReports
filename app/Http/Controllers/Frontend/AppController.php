@@ -49,6 +49,7 @@ use App\Http\Resources\Frontend\PopularSearchResource;
 use App\Http\Resources\Frontend\ProfileResource;
 use App\Http\Resources\Frontend\MyCertificateResource;
 use App\Http\Resources\Frontend\OurCertificateResource;
+use App\Http\Resources\Frontend\SettingResource;
 use App\Http\Requests\NewsletterStoreRequest;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\TrainingStoreRequest;
@@ -131,6 +132,11 @@ class AppController extends Controller
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
         }
     }
+    public function trainings()
+    {
+       $row = new SettingResource(Setting::find(7));
+        return response()->json(['row' => $row], 200);
+    }
 
 
     # Programs
@@ -212,6 +218,12 @@ class AppController extends Controller
         $row = new MembershipResource(Membership::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
+
+    public function members()
+    {
+       $row = new SettingResource(Setting::find(8));
+        return response()->json(['row' => $row], 200);
+    }
     public function doMembers(MemberStoreRequest $request)
     {
        $row = Member::createOrUpdate(NULL, $request->all());
@@ -232,6 +244,11 @@ class AppController extends Controller
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
         }
     }
+    public function instructor()
+    {
+       $row = new SettingResource(Setting::find(9));
+        return response()->json(['row' => $row], 200);
+    }
 
     public function doExperience(MemberStoreRequest $request)
     {
@@ -241,6 +258,11 @@ class AppController extends Controller
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
         }
+    }
+    public function experience()
+    {
+       $row = new SettingResource(Setting::find(10));
+        return response()->json(['row' => $row], 200);
     }
     
     # About

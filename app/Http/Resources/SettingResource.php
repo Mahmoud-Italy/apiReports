@@ -19,6 +19,7 @@ class SettingResource extends JsonResource
             'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
             'image2'         => ($this->image2) ? request()->root() .'/uploads/' . $this->image2->url : NULL,
             'bgTitle'       => $this->bgTitle,
+            'bgSubTitle'    => $this->bgSubTitle,
             'bgColor'       => $this->bgColor,
             'title'         => $this->title,
 
@@ -27,6 +28,7 @@ class SettingResource extends JsonResource
             'body3'         => $this->body3,
             'body4'         => $this->body4,
             'body5'         => $this->body5,
+            'body6'         => $this->body6,
         ];
     }
 }

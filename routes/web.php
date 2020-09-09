@@ -84,11 +84,18 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('contacts', 'PageController@contacts');
         $router->post('contacts', 'PageController@doContacts');
         
+        $router->get('trainings-applications', 'AppController@trainings');
         $router->post('trainings-applications', 'AppController@doTrainings');
+
+        $router->get('members-applications', 'AppController@members');
         $router->post('members-applications', 'AppController@doMembers');
+
+        $router->get('instructor-applications', 'AppController@instructor');
         $router->post('instructor-applications', 'AppController@doInstructor');
+
+        $router->get('experience-applications', 'AppController@experience');
         $router->post('experience-applications', 'AppController@doExperience');
-        
+
         $router->get('faqs', 'AppController@faqs');
         $router->get('faqs/{slug}', 'AppController@showFaqs');
         $router->get('privacy', 'AppController@privacy');
