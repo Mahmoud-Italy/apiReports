@@ -77,10 +77,14 @@ class OnlineTraining extends Model
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
               
-              $row->sort          = (int)$value['sort'] ?? false;
-              $row->has_member    = (boolean)$value['has_member'] ?? false;
-              $row->has_scroll    = (boolean)$value['has_scroll'] ?? false;
-              $row->status        = (boolean)$value['status'] ?? false;
+              $row->sort          = (isset($value['sort']) && $value['sort'])
+                                      ? (int)$value['sort'] : false;
+              $row->has_member    = (isset($value['has_member']) && $value['has_member'])
+                                      ? (boolean)$value['has_member'] : false;
+              $row->has_scroll    = (isset($value['has_scroll']) && $value['has_scroll'])
+                                      ? (boolean)$value['has_scroll'] : false;
+              $row->status        = (isset($value['status']) && $value['status'])
+                                      ? (boolean)$value['status'] : false;
               $row->save();
 
               // Image
