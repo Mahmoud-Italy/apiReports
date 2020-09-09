@@ -4,6 +4,7 @@ namespace App\Http\Resources\Frontend;
 
 use App\Models\Sector2;
 use App\Http\Resources\Frontend\SectorResource;
+use App\Http\Resources\Frontend\Sector2Resource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PopularSearchResource extends JsonResource
@@ -86,7 +87,7 @@ class PopularSearchResource extends JsonResource
 
 
             'sectors'       => 
-            SectorResource::collection(
+            Sector2Resource::collection(
                     Sector2::where(['status' => true, 'trash' => false])
                                     ->orderBY('sort','DESC')
                                     ->get()),
