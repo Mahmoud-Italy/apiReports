@@ -19,8 +19,8 @@ class AboutResource extends JsonResource
             'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
             
 
-            'bgTitle1'       => $this->bgTitle1,
-            'bgColor1'       => $this->bgColor1,
+            'bgTitle'       => $this->bgTitle1,
+            'bgColor'       => $this->bgColor1,
             'body1'          => $this->body1,
             'has_download'   => (int)$this->has_download,
             'download_name'  => $this->download_name,
