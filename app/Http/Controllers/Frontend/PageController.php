@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\HomeResource;
 use App\Http\Resources\Frontend\EventResource;
+use App\Http\Resources\Frontend\Event2Resource;
 use App\Http\Resources\Frontend\PageResource;
 use App\Http\Requests\InboxStoreRequest;
 
@@ -71,7 +72,7 @@ class PageController extends Controller
 
     public function events()
     {
-        $row = new EventResource(Setting::findOrFail(4));
+        $row = new Event2Resource(Event::findOrFail(1));
         return response()->json(['row' => $row], 200);
     }
 }
