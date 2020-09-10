@@ -53,6 +53,8 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $app->apiResource('online', 'OnlineController');
         $app->apiResource('socials', 'SocialController');
         $app->apiResource('subscribers', 'SubscriberController');
+
+        $app->apiResource('emails', 'EmailTemplateController');
     });
 
 

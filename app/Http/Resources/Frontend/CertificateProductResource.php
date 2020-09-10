@@ -18,6 +18,11 @@ class CertificateProductResource extends JsonResource
         return [
             'id'        => $this->id,
             'image'     => $this->image ? request()->root(). '/uploads/' . $this->image->url : null,
+
+            'download_pdf'   => $this->pdf ? request()->root(). '/uploads/' . $this->pdf->url : null,
+            'download_image' => $this->image_pdf ? request()->root(). '/uploads/' . $this->image_pdf->url : null,
+            'download_name'  => $this->download_name,
+
             'title'     => $this->title,
             'subTitle'  => $this->subtitle,
             'slug'      => $this->slug,
