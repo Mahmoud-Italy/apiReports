@@ -15,12 +15,25 @@ class AboutResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'    => $this->id,
-            'title' => $this->title,
-            'body1' => $this->body1,
-            'body2' => $this->body2,
-            'body3' => $this->body3,
-            'body4' => $this->body4,
+            'fbody1' => $this->fbody1,
+            'fbody2' => $this->fbody2,
+            'fbody3' => $this->fbody3,
+            'fbody4' => $this->fbody4,
+
+            'rbody1' => $this->rbody1,
+            'rbody2' => $this->rbody2,
+            'rbody3' => $this->rbody3,
+            'rbody4' => $this->rbody4,
+
+            'vbody1' => $this->vbody1,
+            'vbody2' => $this->vbody2,
+            'vbody3' => $this->vbody3,
+            'vbody4' => $this->vbody4,
+
+            'wfbody1' => $this->wbody1,
+            'wfbody2' => $this->wbody2,
+            'wfbody3' => $this->wbody3,
+            'wfbody4' => $this->wbody4,
         ];
     }
 }
