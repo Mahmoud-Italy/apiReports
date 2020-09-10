@@ -1,6 +1,6 @@
 <?php
-use Lararoutes\Lumen\CustomRoutes;
-$app = new CustomRoutes($router);
+use App\Legacy\Routes;
+$app = new Routes($router);
 
 /*
 |--------------------------------------------------------------------------

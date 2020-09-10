@@ -37,6 +37,38 @@ class ExploreController extends Controller
         ], 200);
    }
 
+
+   public function instructors(Request $request)
+   {
+      $data = Instructor::fetchPeriod($request->headers->all(), $request->days);
+      return response()->json([
+            'total'      => $data['total'],
+            'percentage' => $data['percentage'],
+            'arrow'      => $data['arrow']
+        ], 200);
+   }
+
+   public function experiences(Request $request)
+   {
+      $data = Experience::fetchPeriod($request->headers->all(), $request->days);
+      return response()->json([
+            'total'      => $data['total'],
+            'percentage' => $data['percentage'],
+            'arrow'      => $data['arrow']
+        ], 200);
+   }
+
+
+   public function trainings(Request $request)
+   {
+      $data = Training::fetchPeriod($request->headers->all(), $request->days);
+      return response()->json([
+            'total'      => $data['total'],
+            'percentage' => $data['percentage'],
+            'arrow'      => $data['arrow']
+        ], 200);
+   }
+
    // Total Members
    public function members(Request $request)
    {
