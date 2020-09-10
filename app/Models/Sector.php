@@ -13,7 +13,14 @@ class Sector extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', false)->select('url');
+    }
+    public function pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', true)->select('url');
+    }
+
+    public function image_pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 2)->select('url');
     }
 
     public function programs() {
@@ -111,6 +118,9 @@ class Sector extends Model
               $row->bgColor        = $value['bgColor'] ?? NULL;
               $row->sort           = (int)$value['sort'] ?? 0;
               $row->status         = (boolean)$value['status'] ?? false;
+
+              $row->download_name        = $value['download_name'] ?? NULL;
+              
               $row->save();
 
 
@@ -124,6 +134,32 @@ class Sector extends Model
                     $image = end($image);
                   }
                   $row->image()->create(['url' => $image]);
+                }
+              }
+
+              if(isset($value['download_file'])) {
+                $row->pdf()->delete();
+                if($value['download_file']) {
+                  if(!Str::contains($value['download_file'], ['uploads','false'])) {
+                    $file = Imageable::uploadImage($value['download_file']);
+                  } else {
+                    $file = explode('/', $value['download_file']);
+                    $file = end($file);
+                  }
+                  $row->pdf()->create(['url' => $file, 'is_pdf' => true]);
+                }
+              }
+
+              if(isset($value['download_image'])) {
+                $row->image_pdf()->delete();
+                if($value['download_image']) {
+                  if(!Str::contains($value['download_image'], ['uploads','false'])) {
+                    $file2 = Imageable::uploadImage($value['download_image']);
+                  } else {
+                    $file2 = explode('/', $value['download_image']);
+                    $file2 = end($file2);
+                  }
+                  $row->image_pdf()->create(['url' => $file2, 'is_pdf' => 2]);
                 }
               }
 

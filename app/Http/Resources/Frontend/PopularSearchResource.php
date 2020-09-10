@@ -93,9 +93,9 @@ class PopularSearchResource extends JsonResource
                                     ->get()),
 
             'download_name' => $this->download_name ?? NULL,
-            'pdf_file'      => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            'pdf_file'      => ($this->pdf) ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
+            'image_file'      => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
             'has_faq'       => (boolean)$this->has_faq,
-            'has_scroll'    => (boolean)$this->has_scroll,
             'has_training'  => (boolean)$this->has_training,
             'has_download'  => (boolean)$this->has_download,
         ];

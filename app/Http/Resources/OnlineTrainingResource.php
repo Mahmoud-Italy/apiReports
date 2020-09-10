@@ -41,13 +41,8 @@ class OnlineTrainingResource extends JsonResource
 
 
             // Status & Visibility
-            //'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
-            'has_faq'       => (int)$this->has_faq,
-            'has_scroll'    => (int)$this->has_scroll,
-            //'has_training'  => (int)$this->has_training,
-            //'has_download'  => (int)$this->has_download,
-            
+            'has_member'    => (int)$this->has_member,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false

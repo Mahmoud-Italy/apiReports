@@ -17,6 +17,9 @@ class Sector2Resource extends JsonResource
         return [
             'id'            => $this->id,
             'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
+            'download_file'  => ($this->pdf) ? request()->root() .'/uploads/' . $this->pdf->url : NULL,
+            'download_image' => ($this->pdf_image) ? request()->root() .'/uploads/' . $this->pdf_image->url : NULL,
+            'download_name'  => $this->download_name,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'subTitle'      => $this->subTitle,

@@ -23,7 +23,6 @@ class OnlineTrainingResource extends JsonResource
             'title'         => $this->title,
             'body'          => $this->body,
             'has_member'    => (boolean)$this->has_member,
-            'has_scroll'    => (boolean)$this->has_scroll,
         ];
     }
 }

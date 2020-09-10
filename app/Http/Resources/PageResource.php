@@ -18,7 +18,8 @@ class PageResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
-            'pdf'           => ($this->image_pdf) ? request()->root() .'/uploads/' . $this->image_pdf->url : NULL,
+            'download_pdf'  => ($this->pdf) ? request()->root() .'/uploads/' . $this->pdf->url : NULL,
+            'download_image' => => ($this->image_pdf) ? request()->root() .'/uploads/' . $this->image_pdf->url 
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
@@ -88,8 +89,6 @@ class PageResource extends JsonResource
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            'has_scroll'    => (int)$this->has_scroll,
-            'has_training'  => (int)$this->has_training,
             'has_download'  => (int)$this->has_download,
             'has_header'    => (int)$this->has_header,
             'has_footer'    => (int)$this->has_footer,
