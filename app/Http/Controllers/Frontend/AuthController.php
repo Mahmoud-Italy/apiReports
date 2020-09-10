@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\User;
+use App\Models\EmailTemplate;
 use App\Models\PasswordReset;
 use App\Mail\VerifyMailable;
 use App\Mail\WelcomeMailable;
@@ -53,9 +54,11 @@ class AuthController extends Controller
                 $user->verification = $user->id.mt_rand(100000,999999);
                 $user->save();
 
+                $data = EmailTemplate::find(1);
+
                 // Send Email
                 try {
-                    Mail::to($user->email)->send(new VerifyMailable($user));
+                    Mail::to($user->email)->send(new VerifyMailable($user, $data));
                 } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -76,11 +79,12 @@ class AuthController extends Controller
             $row->verification = NULL;
             $row->active = true;
             $row->save();
+            $data = EmailTemplate::find(1);
             return response()->json(['message' => ''], 200);
 
             // Send Email
             try {
-                Mail::to($row->email)->send(new WelcomeMailable($row));
+                Mail::to($row->email)->send(new WelcomeMailable($row, $data));
             } catch (\Exception $e) { }
 
         } else {
@@ -173,10 +177,10 @@ class AuthController extends Controller
 
         $token = $isExist->id.mt_rand(100000,999999);
         $row = PasswordReset::create(['email' => $request->email, 'token' => $token]);
-            
+        $data = EmailTemplate::find(1);
             // Send Email
             try {
-                Mail::to($request->email)->send(new ForgetMailable($row));
+                Mail::to($request->email)->send(new ForgetMailable($row, $data));
             } catch (\Exception $e) { }
 
         if($row) {
@@ -193,10 +197,10 @@ class AuthController extends Controller
         $row->password = app('hash')->make($plainPassword);
         $row->save();
         PasswordReset::where('email', $request->email)->delete();
-
+        $data = EmailTemplate::find(1);
             // Send Email
             try {
-                Mail::to($row->email)->send(new ResetMailable($row));
+                Mail::to($row->email)->send(new ResetMailable($row, $data));
             } catch (\Exception $e) { }
 
         if($row) {
