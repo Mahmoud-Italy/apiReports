@@ -1,6 +1,6 @@
 <?php
-// use App\Legacy\Routes;
-// $app = new Routes($router);
+use App\Legacy\Routes;
+$app = new Routes($router);
 
 
 $router->get('/', function () use ($router) {
