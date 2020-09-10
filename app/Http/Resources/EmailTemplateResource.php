@@ -30,10 +30,10 @@ class EmailTemplateResource extends JsonResource
             'vbody3' => $this->vbody3,
             'vbody4' => $this->vbody4,
 
-            'wfbody1' => $this->wbody1,
-            'wfbody2' => $this->wbody2,
-            'wfbody3' => $this->wbody3,
-            'wfbody4' => $this->wbody4,
+            'wbody1' => $this->wbody1,
+            'wbody2' => $this->wbody2,
+            'wbody3' => $this->wbody3,
+            'wbody4' => $this->wbody4,
         ];
     }
 }
