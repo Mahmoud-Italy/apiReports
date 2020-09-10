@@ -19,6 +19,10 @@ class Program extends Model
         return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', true)->select('url');
     }
 
+    public function image_pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 2)->select('url');
+    }
+
     public function sectors() {
         return $this->hasMany(Sector::class, 'program_id')
                     ->whereNULL('parent_id')
@@ -118,6 +122,19 @@ class Program extends Model
                     $file = end($file);
                   }
                   $row->pdf()->create(['url' => $file, 'is_pdf' => true]);
+                }
+              }
+
+              if(isset($value['download_image'])) {
+                $row->image_pdf()->delete();
+                if($value['download_image']) {
+                  if(!Str::contains($value['download_image'], ['uploads','false'])) {
+                    $file2 = Imageable::uploadImage($value['download_image']);
+                  } else {
+                    $file2 = explode('/', $value['download_image']);
+                    $file2 = end($file2);
+                  }
+                  $row->image_pdf()->create(['url' => $file2, 'is_pdf' => 2]);
                 }
               }
 

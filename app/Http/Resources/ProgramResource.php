@@ -21,6 +21,7 @@ class ProgramResource extends JsonResource
             'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
 
             'download_file' => ($this->pdf) ? request()->root() .'/uploads/' . $this->pdf->url : NULL,
+            'download_image' => ($this->image_pdf) ? request()->root() .'/uploads/' . $this->image_pdf->url : NULL,
 
             'download_name' => $this->download_name,
             'slug'          => $this->slug,
