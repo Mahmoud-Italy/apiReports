@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Visitor;
 use App\Models\Training;
+use App\Models\Experience;
+use App\Models\Instructor;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\Sector;
@@ -15,21 +17,22 @@ use Illuminate\Http\Request;
 
 class ExploreController extends Controller
 {
-    // Total visitors
-    public function visitors(Request $request)
-    {
-      $data = Visitor::fetchPeriod($request->headers->all(), $request->days);
+    
+
+   public function trainings(Request $request)
+   {
+      $data = Training::fetchPeriod($request->headers->all(), $request->days);
       return response()->json([
             'total'      => $data['total'],
             'percentage' => $data['percentage'],
             'arrow'      => $data['arrow']
         ], 200);
-    }
+   }
 
-    // Total Trainings
-   public function trainings(Request $request)
+   // Total Members
+   public function members(Request $request)
    {
-      $data = Training::fetchPeriod($request->headers->all(), $request->days);
+      $data = Member::fetchPeriod($request->headers->all(), $request->days);
       return response()->json([
             'total'      => $data['total'],
             'percentage' => $data['percentage'],
@@ -59,26 +62,18 @@ class ExploreController extends Controller
    }
 
 
-   public function trainings(Request $request)
-   {
-      $data = Training::fetchPeriod($request->headers->all(), $request->days);
-      return response()->json([
-            'total'      => $data['total'],
-            'percentage' => $data['percentage'],
-            'arrow'      => $data['arrow']
-        ], 200);
-   }
+   
 
-   // Total Members
-   public function members(Request $request)
-   {
-      $data = Member::fetchPeriod($request->headers->all(), $request->days);
+   // Total visitors
+    public function visitors(Request $request)
+    {
+      $data = Visitor::fetchPeriod($request->headers->all(), $request->days);
       return response()->json([
             'total'      => $data['total'],
             'percentage' => $data['percentage'],
             'arrow'      => $data['arrow']
         ], 200);
-   }
+    }
 
    // Total Users
    public function users(Request $request)
