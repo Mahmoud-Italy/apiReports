@@ -11,14 +11,16 @@ class VerifyMailable extends Mailable
 {
     use Queueable, SerializesModels;
     public $row;
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($row)
+    public function __construct($row, $data)
     {
         $this->row = $row;
+        $this->data = $data;
     }
 
     /**
