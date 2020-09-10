@@ -1,8 +1,8 @@
 <?php
 
-namespace Lararoutes\Lumen;
+namespace App\Legacy;
 
-class CustomRoutes
+class Routes
 {
     protected $app;
       
