@@ -25,8 +25,6 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     /** Backend **/
     $router->group(['prefix' => 'dashboard', 'namespace' => 'Backend'], function($router) use ($app) {
         $app->authResource('auth', 'AuthController');
-        $router->get('explore/totalInstructors', 'ExploreController@instructors');
-        $router->get('explore/totalExperiences', 'ExploreController@experiences');
         $app->exploreResource('explore', 'ExploreController');
         $app->apiResource('home', 'SettingController');
         $app->apiResource('accreditations', 'AccreditationController');
