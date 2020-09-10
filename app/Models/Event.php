@@ -74,6 +74,7 @@ class Event extends Model
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
               $row->bgTitle     = $value['bgTitle'] ?? NULL;
               $row->bgColor     = $value['bgColor'] ?? NULL;
+              $row->bgHint     = $value['bgHint'] ?? NULL;
 
               $row->body1       = $value['body1'] ?? NULL;
               $row->body2       = $value['body2'] ?? NULL;

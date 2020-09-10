@@ -21,7 +21,8 @@ class EventResource extends JsonResource
 
             'bgTitle'  => $this->bgTitle,
             'bgColor'  => $this->bgColor,
-            
+            'bgHint'  => $this->bgHint,
+
             'body1'    => $this->body1,
             'body2'    => $this->body2,
             'body3'    => $this->body3,
