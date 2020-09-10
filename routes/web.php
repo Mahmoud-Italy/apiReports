@@ -2,7 +2,6 @@
 use App\Legacy\Routes;
 $app = new Routes($router);
 
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
