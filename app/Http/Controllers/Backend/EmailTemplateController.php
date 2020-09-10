@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EmailTemplateResource;
 
-class AboutController extends Controller
+class EmailTemplateController extends Controller
 {
     function __construct()
     {
