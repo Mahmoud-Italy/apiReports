@@ -1,6 +1,17 @@
 <?php
-use App\Legacy\Routes;
-$app = new Routes($router);
+use Lararoutes\Lumen\CustomRoutes;
+$app = new CustomRoutes($router);
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It is a breeze. Simply tell Lumen the URIs it should respond to
+| and give it the Closure to call when that URI is requested.
+|
+*/
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
@@ -15,6 +26,8 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
     $router->group(['prefix' => 'dashboard', 'namespace' => 'Backend'], function($router) use ($app) {
         $app->authResource('auth', 'AuthController');
         $app->exploreResource('explore', 'ExploreController');
+        $router->get('explore/totalInstructors', 'ExploreController@instructors');
+        $router->get('explore/totalExperiences', 'ExploreController@experiences');
         $app->apiResource('home', 'SettingController');
         $app->apiResource('accreditations', 'AccreditationController');
         $app->apiResource('programs', 'ProgramController');
