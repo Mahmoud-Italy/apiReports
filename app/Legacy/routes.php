@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Legacy;
 
 class Routes
