@@ -30,7 +30,7 @@ class AboutResource extends JsonResource
             'title2_1'       => $this->title2_1,
             'title2_2'       => $this->title2_2,
             'body2_1'        => $this->body2_1,
-            'video2_2'       => str_replace('watch', 'embed', $this->video2_2),
+            'video2_2'       => str_replace('watch?v=', 'embed/', $this->video2_2),
 
             'title3_1'       => $this->title3_1,
             'title3_2'       => $this->title3_2,
