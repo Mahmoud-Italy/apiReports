@@ -29,6 +29,7 @@ use App\Models\Accreditation;
 use App\Models\OnlineTraining;
 use App\Models\PopularSearch;
 use App\Helpers\Countries;
+use App\Helpers\Geo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Frontend\SearchResource;
@@ -517,6 +518,12 @@ class AppController extends Controller
     {
         $row = new LogoResource(Setting::findOrFail(5));
         return response()->json(['row' => $row], 200);
+    }
+
+
+    public function find($value='')
+    {
+        return Geo::ip_info(request()->ip());
     }
 }
 
