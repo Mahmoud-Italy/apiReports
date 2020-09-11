@@ -4,7 +4,7 @@ namespace App\Helpers;
 class Geo
 {
 
-  public static function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) 
+  public static function ip_info($ip = NULL, $purpose = "country", $deep_detect = TRUE) 
     {
         $output = NULL;
         if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
