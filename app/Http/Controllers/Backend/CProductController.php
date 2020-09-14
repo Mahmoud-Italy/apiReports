@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CertProductUpdateRequest;
 use App\Http\Requests\CertProductStoreRequest;
-use App\Http\Resources\CertProductResource;
+use App\Http\Resources\Backend\CertProductResource;
 
 class CProductController extends Controller
 {

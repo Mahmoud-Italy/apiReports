@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\PopularSearch;
 use App\Models\Visitor;
 use App\Models\Page;
 use App\Models\Inbox;
@@ -9,10 +10,11 @@ use App\Models\Setting;
 use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Resources\HomeResource;
+use App\Http\Resources\Backend\HomeResource;
 use App\Http\Resources\Frontend\EventResource;
 use App\Http\Resources\Frontend\Event2Resource;
 use App\Http\Resources\Frontend\PageResource;
+use App\Http\Resources\Frontend\LogoResource;
 use App\Http\Requests\InboxStoreRequest;
 
 class PageController extends Controller
@@ -45,14 +47,26 @@ class PageController extends Controller
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
 
+
+
+
     public function home()
     {
         try {
             Visitor::saveAsVisitor();
         } catch (Exception $e) { }
         
-        $row = new HomeResource(Setting::findOrFail(1));
-        return response()->json(['row' => $row], 200);
+        $home = new HomeResource(Setting::findOrFail(1));
+        $logo = new LogoResource(Setting::findOrFail(5));
+        $navigation = PopularSearch::select('id', 'title', 'slug')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
+        return response()->json([
+            'logo'      => $logo,
+            'home'      => $home,
+            'searchs'   => $navigation,
+        ], 200);
     }
 
 

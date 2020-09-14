@@ -11,8 +11,8 @@ use App\Models\User;
 use App\Models\Sector;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\SectorResource;
+use App\Http\Resources\Backend\ProductResource;
+use App\Http\Resources\Backend\SectorResource;
 use Illuminate\Http\Request;
 
 class ExploreController extends Controller

@@ -29,6 +29,7 @@ class SettingResource extends JsonResource
             'body4'         => $this->body4,
             'body5'         => $this->body5,
             'body6'         => $this->body6,
+            'link'          => $this->link,
         ];
     }
 }

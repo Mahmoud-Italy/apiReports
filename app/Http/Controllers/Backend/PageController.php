@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PageUpdateRequest;
 use App\Http\Requests\PageStoreRequest;
-use App\Http\Resources\PageResource;
+use App\Http\Resources\Backend\PageResource;
 
 class PageController extends Controller
 {

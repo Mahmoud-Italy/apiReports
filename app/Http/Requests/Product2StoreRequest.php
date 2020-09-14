@@ -26,7 +26,7 @@ class Product2StoreRequest extends FormRequest
     {
 
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
             'slug'   => 'required|unique:product2s,slug',
         ];
     }

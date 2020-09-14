@@ -27,7 +27,7 @@ class UserUpdateRequest extends FormRequest
         $id = request('id');
 
         return [
-            'image' => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            //'image' => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
             'email' => 'required|unique:users,email,' . $id
         ];
     }

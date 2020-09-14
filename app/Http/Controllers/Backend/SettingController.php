@@ -6,7 +6,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SettingUpdateRequest;
-use App\Http\Resources\SettingResource;
+use App\Http\Resources\Backend\SettingResource;
 
 class SettingController extends Controller
 {
@@ -44,5 +44,47 @@ class SettingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function active($id)
+    {
+        try {
+            $row = Setting::query();
+
+            if(strpos($id, ',') !== false) {
+                foreach(explode(',',$id) as $sid) {
+                    $ids[] = $sid;
+                }
+                $row->whereIN('id', $ids);
+            } else {
+                $row->where('id', $id);
+            }   
+            $row->update(['status' => true, 'trash' => false]);
+
+            return response()->json(['message' => ''], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function inactive($id)
+    {
+        try {
+            $row = Setting::query();
+
+            if(strpos($id, ',') !== false) {
+                foreach(explode(',',$id) as $sid) {
+                    $ids[] = $sid;
+                }
+                $row->whereIN('id', $ids);
+            } else {
+                $row->where('id', $id);
+            }   
+            $row->update(['status' => false, 'trash' => false]);
+
+            return response()->json(['message' => ''], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }

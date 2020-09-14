@@ -6,7 +6,7 @@ use App\Models\Inbox;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InboxStoreRequest;
-use App\Http\Resources\InboxResource;
+use App\Http\Resources\Backend\InboxResource;
 
 class InboxController extends Controller
 {

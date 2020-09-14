@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Setting;
 use App\Models\Accreditation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AccreditationUpdateRequest;
 use App\Http\Requests\AccreditationStoreRequest;
-use App\Http\Resources\AccreditationResource;
+use App\Http\Resources\Backend\AccreditationResource;
 
 class AccreditationController extends Controller
 {
@@ -23,6 +24,7 @@ class AccreditationController extends Controller
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
+            'active'      => Setting::select('status')->findOrFail(14),
             'paginate'    => $this->paginate($rows)
         ], 200);
     }

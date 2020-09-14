@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MemberUpdateRequest;
 use App\Http\Requests\MemberStoreRequest;
-use App\Http\Resources\ExperienceResource;
+use App\Http\Resources\Backend\ExperienceResource;
 
 class ExperienceController extends Controller
 {

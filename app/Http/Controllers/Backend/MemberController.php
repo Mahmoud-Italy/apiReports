@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MemberUpdateRequest;
 use App\Http\Requests\MemberStoreRequest;
-use App\Http\Resources\MemberResource;
+use App\Http\Resources\Backend\MemberResource;
 
 class MemberController extends Controller
 {

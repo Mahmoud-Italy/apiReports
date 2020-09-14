@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MemberUpdateRequest;
 use App\Http\Requests\MemberStoreRequest;
-use App\Http\Resources\InstructorResource;
+use App\Http\Resources\Backend\InstructorResource;
 
 class InstructorController extends Controller
 {

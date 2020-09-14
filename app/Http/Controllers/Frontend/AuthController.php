@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthStoreRequest;
 use App\Http\Requests\ForgetRequest;
 use App\Http\Requests\ResetRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\Backend\UserResource;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller

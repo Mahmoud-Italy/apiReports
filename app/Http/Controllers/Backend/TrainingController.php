@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TrainingUpdateRequest;
 use App\Http\Requests\TrainingStoreRequest;
-use App\Http\Resources\TrainingResource;
+use App\Http\Resources\Backend\TrainingResource;
 
 class TrainingController extends Controller
 {

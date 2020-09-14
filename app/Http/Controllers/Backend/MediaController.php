@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaUpdateRequest;
 use App\Http\Requests\MediaStoreRequest;
-use App\Http\Resources\MediaResource;
+use App\Http\Resources\Backend\MediaResource;
 
 class MediaController extends Controller
 {

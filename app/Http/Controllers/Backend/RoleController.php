@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleUpdateRequest;
 use App\Http\Requests\RoleStoreRequest;
-use App\Http\Resources\RoleResource;
+use App\Http\Resources\Backend\RoleResource;
 
 class RoleController extends Controller
 {

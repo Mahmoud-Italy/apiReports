@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AboutUpdateRequest;
 use App\Http\Requests\AboutStoreRequest;
-use App\Http\Resources\AboutResource;
+use App\Http\Resources\Backend\AboutResource;
 
 class AboutController extends Controller
 {

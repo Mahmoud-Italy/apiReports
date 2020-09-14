@@ -19,23 +19,23 @@ class OurCertificateResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'background1' => ($this->image1) ? request()->root() . '/uploads/' . $this->image1->url : NULL,
-            'bgTitle'    => $this->bgTitle1,
-            'bgSubTitle' => $this->bgSubTitle1,
-            'bgColor1'   => $this->bgColor1,
-            'body1'      => $this->body1,
+            'image1'      => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
+            'bgTitle1'    => $this->bgTitle1,
+            'bgSubTitle1' => $this->bgSubTitle1,
+            'bgColor1'    => $this->bgColor1,
+            'body1'       => $this->body1,
 
-            'has_download'  => (boolean)$this->has_download,
-            'download_name' => $this->download_name,
-            'download_file' => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            'has_download'   => (int)$this->has_download,
+            'download_name'  => $this->download_name,
+            'download_file'  => ($this->pdf) ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
+            'download_image' => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
 
-
-            'background2'  => ($this->image2) ? request()->root() . '/uploads/' . $this->image2->url : NULL,
-            'bgTitle2'     => $this->bgTitle2,
-            'bgSubTitle2'  => $this->bgSubTitle2,
-            'bgColor2'     => $this->bgColor2,
-            'body2'        => $this->body2,
-            'hint2'        => $this->hint2,
+            'image2'        => ($this->image2) ? request()->root() .'/uploads/' . $this->image2->url : NULL,
+            'bgTitle2'      => $this->bgTitle2,
+            'bgSubTitle2'   => $this->bgSubTitle2,
+            'bgColor2'      => $this->bgColor2,
+            'body2'         => $this->body2,
+            'hint2'         => $this->hint2,
 
             'certificates_1' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 1)->get()),
             'certificates_2' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 2)->get()),
@@ -46,14 +46,21 @@ class OurCertificateResource extends JsonResource
             'duration2'      => $this->duration2,
             'duration3'      => $this->duration3,
 
-            'background3'  => ($this->image3) ? request()->root() . '/uploads/' . $this->image3->url : NULL,
-
-            'title3'       => $this->dTitle,
+            'image3'        => ($this->image3) ? request()->root() .'/uploads/' . $this->image3->url : NULL,
+            'dTitle'        => $this->dTitle,
+            
             'programs'     => CertificateProductResource::collection(CertificateProduct::get()),
 
-            'background4'  => ($this->image4) ? request()->root() . '/uploads/' . $this->image4->url : NULL,
-            'title4'       => $this->cTitle,
-            'body4'        => $this->cBody,
+            'cTitle'        => $this->cTitle,
+            'cBody1'         => $this->cBody1,
+            'cBody2'         => $this->cBody2,
+            'cBody3'         => $this->cBody3,
+            'cBody4'         => $this->cBody4,
+
+            'image5_1'      => ($this->image5_1) ? request()->root() .'/uploads/' . $this->image5_1->url : NULL,
+            'image5_2'      => ($this->image5_2) ? request()->root() .'/uploads/' . $this->image5_2->url : NULL,
+            'image5_3'      => ($this->image5_3) ? request()->root() .'/uploads/' . $this->image5_3->url : NULL,
+            'image5_4'      => ($this->image5_4) ? request()->root() .'/uploads/' . $this->image5_4->url : NULL,
         ];
     }
 }

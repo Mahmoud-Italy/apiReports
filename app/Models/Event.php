@@ -74,7 +74,7 @@ class Event extends Model
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
               $row->bgTitle     = $value['bgTitle'] ?? NULL;
               $row->bgColor     = $value['bgColor'] ?? NULL;
-              $row->bgHint     = $value['bgHint'] ?? NULL;
+              $row->bgHint      = $value['bgHint'] ?? NULL;
 
               $row->body1       = $value['body1'] ?? NULL;
               $row->body2       = $value['body2'] ?? NULL;
@@ -85,18 +85,25 @@ class Event extends Model
               $row->body7       = $value['body7'] ?? NULL;
               $row->body8       = $value['body8'] ?? NULL;
               $row->body9       = $value['body9'] ?? NULL;
-              $row->body10       = $value['body10'] ?? NULL;
-              $row->body11       = $value['body11'] ?? NULL;
+              $row->body10      = $value['body10'] ?? NULL;
+              $row->body11      = $value['body11'] ?? NULL;
+              $row->body12      = $value['body12'] ?? NULL;
+              $row->body13      = $value['body13'] ?? NULL;
+              $row->body14      = $value['body14'] ?? NULL;
+              $row->body15      = $value['body15'] ?? NULL;
+              $row->body16      = $value['body16'] ?? NULL;
+              $row->body17      = $value['body17'] ?? NULL;
+              $row->body18      = $value['body18'] ?? NULL;
               $row->save();
 
               // Image
-              if(isset($value['base64Image'])) {
+              if(isset($value['image'])) {
                 $row->image()->delete();
-                if($value['base64Image']) {
-                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
-                    $image = Imageable::uploadImage($value['base64Image']);
+                if($value['image']) {
+                  if(!Str::contains($value['image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['image']);
                   } else {
-                    $image = explode('/', $value['base64Image']);
+                    $image = explode('/', $value['image']);
                     $image = end($image);
                   }
                   $row->image()->create(['url' => $image]);

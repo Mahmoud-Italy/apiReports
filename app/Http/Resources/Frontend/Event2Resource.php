@@ -16,7 +16,7 @@ class Event2Resource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'image'    => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
+            'image'      => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
             'background' => ($this->bgImage) ? request()->root() .'/uploads/' . $this->bgImage->url : NULL,
 
             'bgTitle'  => $this->bgTitle,
@@ -34,6 +34,13 @@ class Event2Resource extends JsonResource
             'body9'    => $this->body9,
             'body10'   => $this->body10,
             'body11'   => $this->body11,
+            'body12'   => $this->body12,
+            'body13'   => $this->body13,
+            'body14'   => $this->body14,
+            'body15'   => $this->body15,
+            'body16'   => $this->body16,
+            'body17'   => $this->body17,
+            'body18'   => $this->body18,
         ];
     }
 }

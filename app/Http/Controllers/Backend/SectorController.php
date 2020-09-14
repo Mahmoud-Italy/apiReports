@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SectorUpdateRequest;
 use App\Http\Requests\SectorStoreRequest;
-use App\Http\Resources\SectorResource;
+use App\Http\Resources\Backend\SectorResource;
 
 class SectorController extends Controller
 {

@@ -76,7 +76,6 @@ class Privacy extends Model
               $row->bgTitle     = $value['bgTitle'] ?? NULL;
               $row->bgColor     = $value['bgColor'] ?? NULL;
               $row->sort        = (int)$value['sort'] ?? 0;
-              $row->has_scroll  = (boolean)$value['has_scroll'] ?? false;
               $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
 

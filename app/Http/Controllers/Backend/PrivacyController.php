@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PrivacyUpdateRequest;
 use App\Http\Requests\PrivacyStoreRequest;
-use App\Http\Resources\PrivacyResource;
+use App\Http\Resources\Backend\PrivacyResource;
 
 class PrivacyController extends Controller
 {

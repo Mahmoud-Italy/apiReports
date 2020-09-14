@@ -105,15 +105,9 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $data = Accreditation::where(['status' => true, 'trash' => false])
-                                ->orderBy('sort', 'DESC')
-                                ->paginate(20);
-        $rows = AccreditationResource::collection($data);
-        return response()->json([
-            'rows'        => $rows,
-            'navigation'  => $navigation,
-            'paginate'    => $this->paginate($rows)
-        ], 200);
+        $page = Accreditation::where(['status' => true, 'trash' => false])->orderBy('sort', 'DESC')->first();
+        $row = new AccreditationResource(Accreditation::findOrFail(($page->id) ?? 0));
+        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
     public function showAccreditations($slug)
     {
@@ -274,14 +268,13 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $data = About::where(['status' => true, 'trash' => false])
-                                ->orderBy('sort', 'DESC')
-                                ->paginate(20);
-        $rows = AboutResource::collection($data);
+        $data = About::where(['status' => true, 'trash' => false])->findOrFail(1);;
+        //$rows = AboutResource::collection($data);
+        $row = new AboutResource($data);
         return response()->json([
-            'rows'        => $rows,
+            'row'        => $row,
             'navigation'  => $navigation,
-            'paginate'    => $this->paginate($rows)
+            //'paginate'    => $this->paginate($rows)
         ], 200);
     }
     public function showabout($slug)
@@ -304,7 +297,7 @@ class AppController extends Controller
                                 ->get();
         $data = Faq::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->paginate(20);
+                                ->paginate(30);
         $rows = FaqResource::collection($data);
         return response()->json([
             'rows'        => $rows,
@@ -333,7 +326,7 @@ class AppController extends Controller
                                 ->get();
         $data = Privacy::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->paginate(20);
+                                ->paginate(30);
         $rows = PrivacyResource::collection($data);
         return response()->json([
             'rows'        => $rows,
@@ -361,15 +354,9 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $data = Online::where(['status' => true, 'trash' => false])
-                                ->orderBy('sort', 'DESC')
-                                ->paginate(20);
-        $rows = OnlineTrainingResource::collection($data);
-        return response()->json([
-            'rows'        => $rows,
-            'navigation'  => $navigation,
-            'paginate'    => $this->paginate($rows)
-        ], 200);
+        $page = OnlineTraining::where(['status' => true, 'trash' => false])->orderBy('sort','DESC')->first();
+        $row = new OnlineTrainingResource(OnlineTraining::findOrFail(($page->id) ?? 0));
+        return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
     public function showOnline($slug)
     {
@@ -524,6 +511,14 @@ class AppController extends Controller
     public function find($value='')
     {
         return Geo::ip_info(request()->ip());
+    }
+
+    public function setting($value='')
+    {
+        $logo   = new LogoResource(Setting::findOrFail(5));
+        $social = SocialResource::collection(Social::fetchData(request()->all()));
+        $header = SettingResource::collection(Setting::whereIN('id', [14,15,16,17,18,19,20,21,22])->get());
+        return response()->json(['logo' => $logo, 'social' => $social, 'header' => $header], 200);
     }
 }
 

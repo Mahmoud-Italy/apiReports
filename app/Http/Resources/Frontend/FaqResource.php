@@ -22,7 +22,6 @@ class FaqResource extends JsonResource
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
-            'has_scroll'    => (boolean)$this->has_scroll,
         ];
     }
 }

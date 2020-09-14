@@ -14,17 +14,20 @@ class Certificate extends Model
 
 
     public function image_pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 2)->select('url');
+    }
+    public function pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 1)->select('url');
+    }
+
+    public function image() {
         return $this->morphOne(Imageable::class, 'imageable')
-                      ->where('type', 9)
+                      ->where('type', 0)
+                      ->where('is_pdf', 0)
                       ->select('url');
     }
 
 
-    public function image1() {
-        return $this->morphOne(Imageable::class, 'imageable')
-                      ->where('type', 1)
-                      ->select('url');
-    }
     public function image2() {
         return $this->morphOne(Imageable::class, 'imageable')
                       ->where('type', 2)
@@ -35,9 +38,25 @@ class Certificate extends Model
                       ->where('type', 3)
                       ->select('url');
     }
-    public function image4() {
+
+    public function image5_1() {
         return $this->morphOne(Imageable::class, 'imageable')
-                      ->where('type', 4)
+                      ->where('type', 5)
+                      ->select('url');
+    }
+    public function image5_2() {
+        return $this->morphOne(Imageable::class, 'imageable')
+                      ->where('type', 6)
+                      ->select('url');
+    }
+    public function image5_3() {
+        return $this->morphOne(Imageable::class, 'imageable')
+                      ->where('type', 7)
+                      ->select('url');
+    }
+    public function image5_4() {
+        return $this->morphOne(Imageable::class, 'imageable')
+                      ->where('type', 8)
                       ->select('url');
     }
 
@@ -112,36 +131,54 @@ class Certificate extends Model
               $row->dTitle         = $value['dTitle'] ?? NULL;
               
               $row->cTitle         = $value['cTitle'] ?? NULL;
-              $row->cBody          = $value['cBody'] ?? NULL;
+
+              $row->cBody1          = $value['cBody1'] ?? NULL;
+              $row->cBody2          = $value['cBody2'] ?? NULL;
+              $row->cBody3          = $value['cBody3'] ?? NULL;
+              $row->cBody4          = $value['cBody4'] ?? NULL;
+              $row->cBody5          = $value['cBody5'] ?? NULL;
 
               $row->download_name  = $value['download_name'] ?? NULL;
               $row->has_download   = (boolean)$value['has_download'] ?? false;
               $row->save();
 
 
-              if(isset($value['image1'])) {
-                $row->image1()->delete();
-                if($value['image1']) {
-                  if(!Str::contains($value['image1'], ['uploads','false'])) {
-                    $image1 = Imageable::uploadImage($value['image1']);
+              if(isset($value['image'])) {
+                $row->image()->delete();
+                if($value['image']) {
+                  if(!Str::contains($value['image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['image']);
                   } else {
-                    $image1 = explode('/', $value['image1']);
-                    $image1 = end($image1);
+                    $image = explode('/', $value['image']);
+                    $image = end($image);
                   }
-                  $row->image1()->create(['url' => $image1, 'type' => 1]);
+                  $row->image()->create(['url' => $image]);
                 }
               }
 
-              if(isset($value['pdf_file'])) {
-                $row->image_pdf()->delete();
-                if($value['pdf_file']) {
-                  if(!Str::contains($value['pdf_file'], ['uploads','false'])) {
-                    $pdf_file = Imageable::uploadImage($value['pdf_file']);
+
+              if(isset($value['download_file'])) {
+                $row->pdf()->delete();
+                if($value['download_file']) {
+                  if(!Str::contains($value['download_file'], ['uploads','false'])) {
+                    $pdf = Imageable::uploadImage($value['download_file']);
                   } else {
-                    $pdf_file = explode('/', $value['pdf_file']);
-                    $pdf_file = end($pdf_file);
+                    $pdf = explode('/', $value['download_file']);
+                    $pdf = end($pdf);
                   }
-                  $row->image_pdf()->create(['url' => $pdf_file, 'type' => 9]);
+                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => 1]);
+                }
+              }
+              if(isset($value['download_image'])) {
+                $row->image_pdf()->delete();
+                if($value['download_image']) {
+                  if(!Str::contains($value['download_image'], ['uploads','false'])) {
+                    $image_pdf = Imageable::uploadImage($value['download_image']);
+                  } else {
+                    $image_pdf = explode('/', $value['download_image']);
+                    $image_pdf = end($image_pdf);
+                  }
+                  $row->image_pdf()->create(['url' => $image_pdf, 'is_pdf' => 2]);
                 }
               }
 
@@ -173,16 +210,55 @@ class Certificate extends Model
               }
 
 
-              if(isset($value['image4'])) {
-                $row->image4()->delete();
-                if($value['image4']) {
-                  if(!Str::contains($value['image4'], ['uploads','false'])) {
-                    $image4 = Imageable::uploadImage($value['image4']);
+              if(isset($value['image5_1'])) {
+                $row->image5_1()->delete();
+                if($value['image5_1']) {
+                  if(!Str::contains($value['image5_1'], ['uploads','false'])) {
+                    $image5_1 = Imageable::uploadImage($value['image5_1']);
                   } else {
-                    $image4 = explode('/', $value['image4']);
-                    $image4 = end($image4);
+                    $image5_1 = explode('/', $value['image5_1']);
+                    $image5_1 = end($image5_1);
                   }
-                  $row->image4()->create(['url' => $image4, 'type' => 4]);
+                  $row->image5_1()->create(['url' => $image5_1, 'type' => 5]);
+                }
+              }
+
+              if(isset($value['image5_2'])) {
+                $row->image5_2()->delete();
+                if($value['image5_2']) {
+                  if(!Str::contains($value['image5_2'], ['uploads','false'])) {
+                    $image5_2 = Imageable::uploadImage($value['image5_2']);
+                  } else {
+                    $image5_2 = explode('/', $value['image5_2']);
+                    $image5_2 = end($image5_2);
+                  }
+                  $row->image5_2()->create(['url' => $image5_2, 'type' => 6]);
+                }
+              }
+
+              if(isset($value['image5_3'])) {
+                $row->image5_3()->delete();
+                if($value['image5_3']) {
+                  if(!Str::contains($value['image5_3'], ['uploads','false'])) {
+                    $image5_3 = Imageable::uploadImage($value['image5_3']);
+                  } else {
+                    $image5_3 = explode('/', $value['image5_3']);
+                    $image5_3 = end($image5_3);
+                  }
+                  $row->image5_3()->create(['url' => $image5_3, 'type' => 7]);
+                }
+              }
+
+              if(isset($value['image5_4'])) {
+                $row->image5_4()->delete();
+                if($value['image5_4']) {
+                  if(!Str::contains($value['image5_4'], ['uploads','false'])) {
+                    $image5_4 = Imageable::uploadImage($value['image5_4']);
+                  } else {
+                    $image5_4 = explode('/', $value['image5_4']);
+                    $image5_4 = end($image5_4);
+                  }
+                  $row->image5_4()->create(['url' => $image5_4, 'type' => 8]);
                 }
               }
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubscriberUpdateRequest;
 use App\Http\Requests\SubscriberStoreRequest;
-use App\Http\Resources\SubscriberResource;
+use App\Http\Resources\Backend\SubscriberResource;
 
 class SubscriberController extends Controller
 {

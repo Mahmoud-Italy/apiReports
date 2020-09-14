@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProgramUpdateRequest;
 use App\Http\Requests\ProgramStoreRequest;
-use App\Http\Resources\ProgramResource;
+use App\Http\Resources\Backend\ProgramResource;
 
 class ProgramController extends Controller
 {

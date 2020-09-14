@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources\Frontend;
 
-use App\Models\Sector2;
-use App\Http\Resources\Frontend\SectorResource;
-use App\Http\Resources\Frontend\Sector2Resource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PopularSearchResource extends JsonResource
@@ -17,88 +14,194 @@ class PopularSearchResource extends JsonResource
      */
     public function toArray($request)
     {
-        $content[] = [
-            'body'        => $this->body1_1,
-            'background'  => ($this->image1_1) ? request()->root() . '/uploads/' . $this->image1_1->url : NULL,
-            
-            'body_left'   => $this->body2_1,
-            'body_right'  => $this->body2_1_r,
-            'image'       => ($this->image2_1) ? request()->root() . '/uploads/' . $this->image2_1->url : NULL,
-            'label'       => $this->label2_1,
-            'color'       => $this->color2_1,
-            'image_dir'   => 'right',
-        ];
-
-        $content[] = [
-            'body'        => $this->body1_2,
-            'background'  => ($this->image1_2) ? request()->root() . '/uploads/' . $this->image1_2->url : NULL,
-
-            'body_left'   => $this->body2_2,
-            'body_right'  => $this->body2_2_r,
-            'image'       => ($this->image2_2) ? request()->root() . '/uploads/' . $this->image2_2->url : NULL,
-            'label'       => $this->label2_2,
-            'color'       => $this->color2_2,
-            'image_dir'   => 'left',
-        ];
-
-        $content[] = [
-            'body'        => $this->body1_3,
-            'background'  => ($this->image1_3) ? request()->root() . '/uploads/' . $this->image1_3->url : NULL,
-                    
-            'body_left'   => $this->body2_3,
-            'body_right'  => $this->body2_3_r,
-            'image'       => ($this->image2_3) ? request()->root() . '/uploads/' . $this->image2_3->url : NULL,
-            'label'       => $this->label2_3,
-            'color'       => $this->color2_3,
-            'image_dir'   => 'right',
-        ];
-
-        $content[] = [
-            'body'        => $this->body1_4,
-            'background'  => ($this->image1_4) ? request()->root() . '/uploads/' . $this->image1_4->url : NULL,
-            
-            'body_left'   => $this->body2_4,
-            'body_right'  => $this->body2_4_r,
-            'image'       => ($this->image2_4) ? request()->root() . '/uploads/' . $this->image2_4->url : NULL,
-            'label'       => $this->label2_4,
-            'color'       => $this->color2_4,
-            'image_dir'   => 'left',
-        ];
-
-
-
         return [
-            'id'            => $this->id,
-            'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
+            'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
+            
+            'download_file' => ($this->pdf) 
+                                ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
+            'download_image' => ($this->image_pdf) 
+                                ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            'download_name' => $this->download_name,
+            'sort'          => (int)$this->sort,
+            'has_faq'       => (int)$this->has_faq,
+            'has_application'=> (int)$this->has_application,
+            'has_download'  => (int)$this->has_download,
+
+
+
             'slug'          => $this->slug,
             'title'         => $this->title,
-
             'bgTitle'       => $this->bgTitle,
             'bgColor'       => $this->bgColor,
-            //'body'          => $this->body,
 
-            'body1'          => $this->body1,
-            'body2'          => $this->body2,
-            'body3'          => $this->body3,
-            'body4'          => $this->body4,
-            'body5'          => $this->body5,
+            // d1
+            'body1_1'       => $this->body1_1,
 
-            'content'        => $content,
+            // d2
+            'image1_2'        => ($this->image1_2) 
+                                ? request()->root() .'/uploads/' . $this->image1_2->url : NULL,
+            'line1_2'         => $this->line1_2,
+            'mask1_2'         => $this->mask1_2,
+            'color1_2'        => $this->color1_2,
+            'body1_2_1'       => $this->body1_2_1,
+            'body1_2_2'       => $this->body1_2_2,
+
+            'image1_3'        => ($this->image1_3) 
+                                ? request()->root() .'/uploads/' . $this->image1_3->url : NULL,
+            'line1_3'         => $this->line1_3,
+            'mask1_3'         => $this->mask1_3,
+            'color1_3'        => $this->color1_3,
+            'body1_3_1'       => $this->body1_3_1,
+            'body1_3_2'       => $this->body1_3_2,
+
+            'image1_4'        => ($this->image1_4) 
+                                ? request()->root() .'/uploads/' . $this->image1_4->url : NULL,
+            'line1_4'         => $this->line1_4,
+            'mask1_4'         => $this->mask1_4,
+            'color1_4'        => $this->color1_4,
+            'body1_4_1'       => $this->body1_4_1,
+            'body1_4_2'       => $this->body1_4_2,
+
+            'image1_5'        => ($this->image1_5) 
+                                ? request()->root() .'/uploads/' . $this->image1_5->url : NULL,
+            'line1_5'         => $this->line1_5,
+            'mask1_5'         => $this->mask1_5,
+            'color1_5'        => $this->color1_5,
+            'body1_5_1'       => $this->body1_5_1,
+            'body1_5_2'       => $this->body1_5_2,
 
 
-            'sectors'       => 
-            Sector2Resource::collection(
-                    Sector2::where(['status' => true, 'trash' => false])
-                                    ->orderBY('sort','DESC')
-                                    ->get()),
 
-            'download_name' => $this->download_name ?? NULL,
-            'pdf_file'      => ($this->pdf) ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
-            'image_file'      => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
-            'has_faq'       => (boolean)$this->has_faq,
-            'has_training'  => (boolean)$this->has_training,
-            'has_download'  => (boolean)$this->has_download,
+            'image2_1'        => ($this->image2_1) 
+                                ? request()->root() .'/uploads/' . $this->image2_1->url : NULL,
+            'line2_1'         => $this->line2_1,
+            'mask2_1'         => $this->mask2_1,
+            'color2_1'        => $this->color2_1,
+            'body2_1'         => $this->body2_1,
+
+            'image2_2'        => ($this->image2_2) 
+                                ? request()->root() .'/uploads/' . $this->image2_2->url : NULL,
+            'line2_2'         => $this->line2_2,
+            'mask2_2'         => $this->mask2_2,
+            'color2_2'        => $this->color2_2,
+            'body2_2'         => $this->body2_2,
+
+            'image2_3'        => ($this->image2_3) 
+                                ? request()->root() .'/uploads/' . $this->image2_3->url : NULL,
+            'line2_3'         => $this->line2_3,
+            'mask2_3'         => $this->mask2_3,
+            'color2_3'        => $this->color2_3,
+            'body2_3'         => $this->body2_3,
+
+            'image2_4'        => ($this->image2_4) 
+                                ? request()->root() .'/uploads/' . $this->image2_4->url : NULL,
+            'line2_4'         => $this->line2_4,
+            'mask2_4'         => $this->mask2_4,
+            'color2_4'        => $this->color2_4,
+            'body2_4'         => $this->body2_4,
+
+
+            'image3_1'        => ($this->image3_1) 
+                                ? request()->root() .'/uploads/' . $this->image3_1->url : NULL,
+            'body3_1'         => $this->body3_1,
+
+            'image3_2'        => ($this->image3_2) 
+                                ? request()->root() .'/uploads/' . $this->image3_2->url : NULL,
+            'body3_2'         => $this->body3_2,
+
+            'image3_3'        => ($this->image3_3) 
+                                ? request()->root() .'/uploads/' . $this->image3_3->url : NULL,
+            'body3_3'         => $this->body3_3,
+
+            'image3_4'        => ($this->image3_4) 
+                                ? request()->root() .'/uploads/' . $this->image3_4->url : NULL,
+            'body3_4'         => $this->body3_4,
+
+            'image3_5'        => ($this->image3_5) 
+                                ? request()->root() .'/uploads/' . $this->image3_5->url : NULL,
+            'body3_5'         => $this->body3_5,
+
+            'image3_6'        => ($this->image3_6) 
+                                ? request()->root() .'/uploads/' . $this->image3_6->url : NULL,
+            'body3_6'         => $this->body3_6,
+
+            'image3_7'        => ($this->image3_7) 
+                                ? request()->root() .'/uploads/' . $this->image3_7->url : NULL,
+            'body3_7'         => $this->body3_7,
+
+            'image3_8'        => ($this->image3_8) 
+                                ? request()->root() .'/uploads/' . $this->image3_8->url : NULL,
+            'body3_8'         => $this->body3_8,
+
+            'image3_9'        => ($this->image3_9) 
+                                ? request()->root() .'/uploads/' . $this->image3_9->url : NULL,
+            'body3_9'         => $this->body3_9,
+
+            
+            'image4_1'        => ($this->image4_1) 
+                                ? request()->root() .'/uploads/' . $this->image4_1->url : NULL,
+            'body4_1'         => $this->body4_1,
+
+            'image4_2'        => ($this->image4_2) 
+                                ? request()->root() .'/uploads/' . $this->image4_2->url : NULL,
+            'body4_2'         => $this->body4_2,
+
+            'image4_3'        => ($this->image4_3) 
+                                ? request()->root() .'/uploads/' . $this->image4_3->url : NULL,
+            'body4_3'         => $this->body4_3,
+
+            'image4_4'        => ($this->image4_4) 
+                                ? request()->root() .'/uploads/' . $this->image4_4->url : NULL,
+            'body4_4'         => $this->body4_4,
+
+
+
+
+            'image5_1'        => ($this->image5_1) 
+                                ? request()->root() .'/uploads/' . $this->image5_1->url : NULL,
+            'line5_1'         => $this->line5_1,
+            'mask5_1'         => $this->mask5_1,
+            'color5_1'        => $this->color5_1,
+            'body5_1'         => $this->body5_1,
+
+            'image5_2'        => ($this->image5_2) 
+                                ? request()->root() .'/uploads/' . $this->image5_2->url : NULL,
+            'line5_2'         => $this->line5_2,
+            'mask5_2'         => $this->mask5_2,
+            'color5_2'        => $this->color5_2,
+            'body5_2'         => $this->body5_2,
+
+            'image5_3'        => ($this->image5_3) 
+                                ? request()->root() .'/uploads/' . $this->image5_3->url : NULL,
+            'line5_3'         => $this->line5_3,
+            'mask5_3'         => $this->mask5_3,
+            'color5_3'        => $this->color5_3,
+            'body5_3'         => $this->body5_3,
+
+            'image5_4'        => ($this->image5_4) 
+                                ? request()->root() .'/uploads/' . $this->image5_4->url : NULL,
+            'line5_4'         => $this->line5_4,
+            'mask5_4'         => $this->mask5_4,
+            'color5_4'        => $this->color5_4,
+            'body5_4'         => $this->body5_4,
+              
+
+            'image6_1'        => ($this->image6_1) 
+                                ? request()->root() .'/uploads/' . $this->image6_1->url : NULL,
+            'body6_1'         => $this->body6_1,
+
+            'image6_2'        => ($this->image6_2) 
+                                ? request()->root() .'/uploads/' . $this->image6_2->url : NULL,
+            'body6_2'         => $this->body6_2,
+
+            'image6_3'        => ($this->image6_3) 
+                                ? request()->root() .'/uploads/' . $this->image6_3->url : NULL,
+            'body6_3'         => $this->body6_3,
+
+            'image6_4'        => ($this->image6_4) 
+                                ? request()->root() .'/uploads/' . $this->image6_4->url : NULL,
+            'body6_4'         => $this->body6_4,
+
         ];
-
     }
 }

@@ -75,13 +75,23 @@ class Faq extends Model
               $row->title       = $value['title'] ?? NULL;
               $row->body        = $value['body'] ?? NULL;
               $row->sort        = (int)$value['sort'] ?? false;
-
               $row->bgTitle     = $value['bgTitle'] ?? NULL;
               $row->bgColor     = $value['bgColor'] ?? NULL;
-              $row->has_scroll  = (boolean)$value['has_scroll'] ?? false;
               $row->status      = (boolean)$value['status'] ?? false;
               $row->save();
 
+              if(isset($value['image'])) {
+                $row->image()->delete();
+                if($value['image']) {
+                  if(!Str::contains($value['image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['image']);
+                  } else {
+                    $image = explode('/', $value['image']);
+                    $image = end($image);
+                  }
+                  $row->image()->create(['url' => $image]);
+                }
+              }
 
             DB::commit();
 

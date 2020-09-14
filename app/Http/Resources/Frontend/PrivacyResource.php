@@ -16,13 +16,11 @@ class PrivacyResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            //'image'         => ($this->image) ? request()->root() . $this->image->url : NULL,
             'bgTitle'       => $this->bgTitle,
             'bgColor'       => $this->bgColor,
             'slug'          => $this->slug,
             'title'         => $this->title,
             'body'          => $this->body,
-            'has_scroll'    => $this->has_scroll,
         ];
     }
 }

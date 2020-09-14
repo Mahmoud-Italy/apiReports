@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SocialUpdateRequest;
 use App\Http\Requests\SocialStoreRequest;
-use App\Http\Resources\SocialResource;
+use App\Http\Resources\Backend\SocialResource;
 
 class SocialController extends Controller
 {

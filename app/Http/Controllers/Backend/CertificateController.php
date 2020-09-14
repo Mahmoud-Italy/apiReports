@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CertificateResource;
+use App\Http\Resources\Backend\CertificateResource;
 
 class CertificateController extends Controller
 {

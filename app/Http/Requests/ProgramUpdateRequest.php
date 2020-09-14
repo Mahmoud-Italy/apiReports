@@ -27,7 +27,7 @@ class ProgramUpdateRequest extends FormRequest
         $id        = request('id');
         
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
             'slug'   => 'required|unique:programs,slug,' . $id,
             'title'  => 'required'
         ];
