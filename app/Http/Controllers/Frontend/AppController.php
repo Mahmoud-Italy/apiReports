@@ -490,9 +490,10 @@ class AppController extends Controller
 
     public function ourCertificatesProgram($slug='')
     {
-        $navigation = CertificateProduct::where(['status' => true, 'trash' => false])
+        $navigation = CertificateProduct::select('id', 'slug', 'title')
+                                ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->paginate(20);
+                                ->get();
         $page = CertificateProduct::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new ProductDetailResource(CertificateProduct::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
