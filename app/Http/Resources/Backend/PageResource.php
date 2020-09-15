@@ -223,6 +223,8 @@ class PageResource extends JsonResource
             'has_application'=> (int)$this->has_application,
             'has_download'  => (int)$this->has_download,
             'has_programs'  => (int)$this->has_programs,
+            'has_header'    => (int)$this->has_header,
+            'has_footer'    => (int)$this->has_footer,
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,
             'loading'       => false

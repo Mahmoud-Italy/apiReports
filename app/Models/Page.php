@@ -289,6 +289,12 @@ class Page extends Model
               $row->has_programs    = (isset($value['has_programs']) && $value['has_programs']) 
                                         ? (boolean)$value['has_programs'] 
                                         : false;
+              $row->has_header    = (isset($value['has_header']) && $value['has_header']) 
+                                        ? (boolean)$value['has_header'] 
+                                        : false;
+              $row->has_footer    = (isset($value['has_footer']) && $value['has_footer']) 
+                                        ? (boolean)$value['has_footer'] 
+                                        : false;
               $row->status          = (isset($value['status']) && $value['status']) 
                                         ? (boolean)$value['status'] 
                                         : false;
