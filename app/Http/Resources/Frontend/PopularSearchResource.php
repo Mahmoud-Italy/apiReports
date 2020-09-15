@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Frontend;
 
+use App\Models\Product2;
 use App\Http\Resources\Frontend\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -29,7 +30,7 @@ class PopularSearchResource extends JsonResource
             'has_download'  => (int)$this->has_download,
             'has_programs'  => (int)$this->has_programs,
 
-            'programs'      => ProductResource::collection($this->programs),
+            'programs'      => ProductResource::collection(Product2::where(['status'=>true, 'trash'=>false])->orderBy('sort','DESC')->get()),
 
 
 
