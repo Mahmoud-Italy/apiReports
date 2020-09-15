@@ -18,7 +18,6 @@ class Program extends Model
     public function pdf() {
         return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 1)->select('url');
     }
-
     public function image_pdf() {
         return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 2)->select('url');
     }
