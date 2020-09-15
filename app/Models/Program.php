@@ -106,7 +106,7 @@ class Program extends Model
                     $image = explode('/', $value['image']);
                     $image = end($image);
                   }
-                  $row->image()->create(['url' => $image]);
+                  $row->image()->create(['url' => $image, 'is_pdf' => 0]);
                 }
               }
 
