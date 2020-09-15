@@ -26,6 +26,7 @@ class PopularSearchResource extends JsonResource
             'has_faq'       => (int)$this->has_faq,
             'has_application'=> (int)$this->has_application,
             'has_download'  => (int)$this->has_download,
+            'has_programs'  => (int)$this->has_programs,
 
 
 
