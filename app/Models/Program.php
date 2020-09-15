@@ -97,13 +97,13 @@ class Program extends Model
               $row->save();
 
               // Image
-              if(isset($value['base64Image'])) {
+              if(isset($value['image'])) {
                 $row->image()->delete();
-                if($value['base64Image']) {
-                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
-                    $image = Imageable::uploadImage($value['base64Image']);
+                if($value['image']) {
+                  if(!Str::contains($value['image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['image']);
                   } else {
-                    $image = explode('/', $value['base64Image']);
+                    $image = explode('/', $value['image']);
                     $image = end($image);
                   }
                   $row->image()->create(['url' => $image]);
