@@ -13,13 +13,16 @@ class Program extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 0)->select('url');
-    }
-    public function pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 1)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')
+                  ->where('type', 0)
+                  ->where('is_pdf', 0)
+                  ->select('url');
     }
     public function image_pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 2)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 2)->select('url');
+    }
+    public function pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 1)->select('url');
     }
 
     public function sectors() {
@@ -106,7 +109,7 @@ class Program extends Model
                     $image = explode('/', $value['image']);
                     $image = end($image);
                   }
-                  $row->image()->create(['url' => $image, 'is_pdf' => 0]);
+                  $row->image()->create(['url' => $image]);
                 }
               }
 
@@ -115,25 +118,24 @@ class Program extends Model
                 $row->pdf()->delete();
                 if($value['download_file']) {
                   if(!Str::contains($value['download_file'], ['uploads','false'])) {
-                    $file = Imageable::uploadImage($value['download_file']);
+                    $pdf = Imageable::uploadImage($value['download_file']);
                   } else {
-                    $file = explode('/', $value['download_file']);
-                    $file = end($file);
+                    $pdf = explode('/', $value['download_file']);
+                    $pdf = end($pdf);
                   }
-                  $row->pdf()->create(['url' => $file, 'is_pdf' => 1]);
+                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => 1]);
                 }
               }
-
               if(isset($value['download_image'])) {
                 $row->image_pdf()->delete();
                 if($value['download_image']) {
                   if(!Str::contains($value['download_image'], ['uploads','false'])) {
-                    $file2 = Imageable::uploadImage($value['download_image']);
+                    $image_pdf = Imageable::uploadImage($value['download_image']);
                   } else {
-                    $file2 = explode('/', $value['download_image']);
-                    $file2 = end($file2);
+                    $image_pdf = explode('/', $value['download_image']);
+                    $image_pdf = end($pdf);
                   }
-                  $row->image_pdf()->create(['url' => $file2, 'is_pdf' => 2]);
+                  $row->image_pdf()->create(['url' => $image_pdf, 'is_pdf' => 2]);
                 }
               }
 
