@@ -25,7 +25,7 @@ class PageStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
             'slug'   => 'required|unique:pages,slug',
             'title'  => 'required'
         ];
