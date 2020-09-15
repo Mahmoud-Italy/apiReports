@@ -432,12 +432,14 @@ class AppController extends Controller
                 $plainPassword  = $request->password;
                 $row->password  = app('hash')->make($plainPassword);
             }
+
+            $row->save();
+            
             if(isset($request->avatar) && $request->avatar) {
                 $image = Imageable::uploadImage($request->avatar);
                 $row->image()->delete();
                 $row->image()->create(['url' => $image]);
             }
-            $row->save();
 
             $row  = new ProfileResource($row);
             return response()->json(['row' => $row], 200);
