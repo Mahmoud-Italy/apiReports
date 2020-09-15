@@ -13,10 +13,10 @@ class Program extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', false)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 0)->select('url');
     }
     public function pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', true)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 1)->select('url');
     }
 
     public function image_pdf() {
@@ -121,7 +121,7 @@ class Program extends Model
                     $file = explode('/', $value['download_file']);
                     $file = end($file);
                   }
-                  $row->pdf()->create(['url' => $file, 'is_pdf' => true]);
+                  $row->pdf()->create(['url' => $file, 'is_pdf' => 1]);
                 }
               }
 
