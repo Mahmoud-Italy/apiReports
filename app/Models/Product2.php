@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Sector2;
 use App\Models\Imageable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -16,9 +15,6 @@ class Product2 extends Model
         return $this->morphOne(Imageable::class, 'imageable')->select('url');
     }
 
-    public function sector() {
-        return $this->belongsTo(Sector2::class, 'sector_id')->select('id','title');
-    }
 
 
     // fetchData
@@ -26,10 +22,6 @@ class Product2 extends Model
     {
         // this way will fire up speed of the query
         $obj = self::query();
-
-          if(isset($value['sector_id']) && $value['sector_id']) {
-            $obj->where('sector_id', decrypt($value['sector_id']));
-          }
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -79,7 +71,6 @@ class Product2 extends Model
 
               // Row
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->sector_id     = decrypt($value['sector_id']) ?? NULL;
               $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
               $row->subtitle      = $value['subtitle'] ?? NULL;

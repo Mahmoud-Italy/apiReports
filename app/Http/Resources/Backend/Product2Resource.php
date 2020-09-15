@@ -20,7 +20,6 @@ class Product2Resource extends JsonResource
             
             'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
             'sector'        => ($this->sector) ? $this->sector->title : NULL,
-            'sector_id'     => ($this->sector) ? encrypt($this->sector->id) : NULL,
 
             'slug'          => $this->slug,
             'title'         => $this->title,
