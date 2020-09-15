@@ -16,6 +16,7 @@ use App\Models\Social;
 use App\Models\Program;
 use App\Models\Sector;
 use App\Models\Product;
+use App\Models\Product2;
 use App\Models\Privacy;
 use App\Models\Subcriber;
 
@@ -496,6 +497,18 @@ class AppController extends Controller
                                 ->get();
         $page = CertificateProduct::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row = new ProductDetailResource(CertificateProduct::findOrFail(($page->id) ?? 0));
+        return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
+    }
+
+
+    public function showProgramsPopularSearch($slug='')
+    {
+        $navigation = Product2::select('id', 'slug', 'title')
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
+        $page = Product2::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
+        $row = new ProductDetailResource(Product2::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation'  => $navigation], 200);
     }
 

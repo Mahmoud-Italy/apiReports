@@ -59,6 +59,9 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('home', 'PageController@home');
         $router->get('popularSearch', 'AppController@popular');
         $router->get('popularSearch/{slug}', 'AppController@showPopular');
+
+        $router->get('popularSearch/in/programs/{slug}', 'AppController@showProgramsPopularSearch');
+
         $router->get('accreditations', 'AppController@accreditations');
         $router->get('accreditations/{slug}', 'AppController@showAccreditations');
         $router->get('programs', 'AppController@programs');
@@ -66,6 +69,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('programs/sectors/{slug}', 'AppController@showSectors');
         $router->get('programs/sectors/{slug}/products', 'AppController@allProducts');
         $router->get('programs/sectors/products/{slug}', 'AppController@showProducts');
+
         $router->get('memberships', 'AppController@memberships');
         $router->get('memberships/{slug}', 'AppController@showMemberships');
         $router->get('about', 'AppController@about');
