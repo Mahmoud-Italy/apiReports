@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Frontend;
 
+use App\Http\Resources\Frontend\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PopularSearchResource extends JsonResource
@@ -27,6 +28,8 @@ class PopularSearchResource extends JsonResource
             'has_application'=> (int)$this->has_application,
             'has_download'  => (int)$this->has_download,
             'has_programs'  => (int)$this->has_programs,
+
+            'programs'      => ProductResource::collection($this->programs),
 
 
 
