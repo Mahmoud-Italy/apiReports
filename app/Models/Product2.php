@@ -94,7 +94,7 @@ class Product2 extends Model
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->status        = (boolean)$value['status'] ?? false;
 
-              $row->download_name  = $value['download_name'] ?? NULL:
+              $row->download_name  = $value['download_name'] ?? NULL;
               $row->save();
 
               // Image
