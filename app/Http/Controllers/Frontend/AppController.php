@@ -269,7 +269,7 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $data = About::where(['status' => true, 'trash' => false])->findOrFail(1);;
+        $data = About::where(['status' => true, 'trash' => false])->orderBy('sort', 'DESC')->first();
         //$rows = AboutResource::collection($data);
         $row = new AboutResource($data);
         return response()->json([

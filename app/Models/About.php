@@ -106,6 +106,9 @@ class About extends Model
 
               // Row
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->slug          = strtolower($value['slug']) ?? NULL;
+              $row->title         = $value['title'] ?? NULL;
+              
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
               $row->body1         = $value['body1'] ?? NULL;
@@ -151,6 +154,11 @@ class About extends Model
                                       : false;
               $row->has_faq         = (isset($value['has_faq']) && $value['has_faq']) 
                                         ? (boolean)$value['has_faq'] 
+                                        : false;
+
+              $row->sort            = (int)$value['sort'] ?? 0;
+              $row->status          = (isset($value['status']) && $value['status']) 
+                                        ? (boolean)$value['status'] 
                                         : false;
               $row->save();
 

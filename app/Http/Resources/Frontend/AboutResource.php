@@ -19,8 +19,10 @@ class AboutResource extends JsonResource
             'id'            => $this->id,
             'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
             
-            'bgTitle'        => $this->bgTitle,
-            'bgColor'        => $this->bgColor,
+            'slug'          => $this->slug,
+            'title'         => $this->title,
+            'bgTitle'       => $this->bgTitle,
+            'bgColor'       => $this->bgColor,
             
             'has_download'   => (int)$this->has_download,
             'download_name'  => $this->download_name,
@@ -79,6 +81,10 @@ class AboutResource extends JsonResource
             'body5_8'        => $this->body5_8,
             'image5_8'       => ($this->image5_8) ? request()->root() . '/uploads/' . $this->image5_8->url : NULL,
             'read5_8'        => $this->read5_8,
+
+            'sort'          => (int)$this->sort,
+            'has_faq'       => (int)$this->has_faq,
+            'has_application'=> (int)$this->has_application,
         ];
 
     }

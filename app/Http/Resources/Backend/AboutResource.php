@@ -18,6 +18,9 @@ class AboutResource extends JsonResource
             'id'            => $this->id,
             'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
             
+            'slug'          => $this->slug,
+            'title'         => $this->title,
+            
             'bgTitle'        => $this->bgTitle,
             'bgColor'        => $this->bgColor,
             'body1'          => $this->body1,
@@ -76,6 +79,32 @@ class AboutResource extends JsonResource
             'body5_8'        => $this->body5_8,
             'image5_8'       => ($this->image5_8) ? request()->root() . '/uploads/' . $this->image5_8->url : NULL,
             'read5_8'        => $this->read5_8,
+
+
+
+            // Dates
+            'dateForHumans' => $this->created_at->diffForHumans(),
+            'created_at'    => ($this->created_at == $this->updated_at) 
+                                ? 'Created <br/>'. $this->created_at->diffForHumans()
+                                : NULL,
+            'updated_at'    => ($this->created_at != $this->updated_at) 
+                                ? 'Updated <br/>'. $this->updated_at->diffForHumans()
+                                : NULL,
+            'deleted_at'    => ($this->updated_at && $this->trash) 
+                                ? 'Deleted <br/>'. $this->updated_at->diffForHumans()
+                                : NULL,
+            'timestamp'     => $this->created_at,
+
+
+            // Status & Visibility
+            'download_name' => $this->download_name,
+            'sort'          => (int)$this->sort,
+            'has_faq'       => (int)$this->has_faq,
+            'has_application'=> (int)$this->has_application,
+            'has_download'  => (int)$this->has_download,
+            'status'        => (boolean)$this->status,
+            'trash'         => (boolean)$this->trash,
+            'loading'       => false
         ];
     }
 }
