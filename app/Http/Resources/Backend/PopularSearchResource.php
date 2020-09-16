@@ -23,6 +23,9 @@ class PopularSearchResource extends JsonResource
             'download_image' => ($this->image_pdf) 
                                 ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
 
+            'childs'        => count($this->childs),
+            'parent_name'   => ($this->parent) ? $this->parent->title : NULL,
+
             'slug'          => $this->slug,
             'title'         => $this->title,
             'bgTitle'       => $this->bgTitle,

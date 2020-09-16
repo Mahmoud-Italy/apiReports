@@ -126,12 +126,26 @@ class PopularSearch extends Model
     }
 
 
+    public function childs() {
+        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    }
+    public function parent() {
+        return $this->belongsTo(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    }
+
+
     // fetchData
     public static function fetchData($value='')
     {
         // this way will fire up speed of the query
         $obj = self::query();
 
+
+          if(isset($value['parent_id']) && $value['parent_id']) {
+            $obj->where('parent_id', decrypt($value['parent_id']));
+          } else {
+            $obj->whereNULL('parent_id');
+          }
           
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -182,6 +196,9 @@ class PopularSearch extends Model
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
               $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
+              $row->parent_id     = (isset($value['parent_id']) && $value['parent_id'])
+                                      ? decrypt($value['parent_id'])
+                                      : NULL;
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
 

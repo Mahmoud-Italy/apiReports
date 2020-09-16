@@ -9,20 +9,16 @@ use App\Http\Requests\SearchUpdateRequest;
 use App\Http\Requests\SearchStoreRequest;
 use App\Http\Resources\Backend\PopularSearchResource;
 
-class SearchController extends Controller
+class SearchSubController extends Controller
 {
     function __construct()
     {
         //
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        if(isset($request->parent_id) && $request->parent_id) {
-            $data = PopularSearch::where('parent_id', decrypt($request->parent_id))->get();
-        } else {
-            $data = PopularSearch::get();
-        }
+        $data = PopularSearch::where('parent_id', decrypt(request('parent_id')))->get();
         $rows = PopularSearchResource::collection(PopularSearch::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
