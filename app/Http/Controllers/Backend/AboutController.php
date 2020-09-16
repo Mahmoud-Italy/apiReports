@@ -39,13 +39,13 @@ class AboutController extends Controller
 
     public function show($id)
     {
-        $row = new AboutResource(About::findOrFail($id));
+        $row = new AboutResource(About::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(AboutUpdateRequest $request, $id)
     {
-        $row = About::createOrUpdate($id, $request->all());
+        $row = About::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
