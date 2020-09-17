@@ -579,7 +579,7 @@ class AppController extends Controller
     public function setting($value='')
     {
         $logo   = new LogoResource(Setting::findOrFail(5));
-        $social = SocialResource::collection(Social::fetchData(request()->all()));
+        $social = SocialResource::collection(Social::where(['status' => true, 'trash'=>false])->orderBy('sort', 'DESC')->get());
         $header = SettingResource::collection(Setting::whereIN('id', [14,15,16,17,18,19,20,21,22])->get());
         return response()->json(['logo' => $logo, 'social' => $social, 'header' => $header], 200);
     }
