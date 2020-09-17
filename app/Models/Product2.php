@@ -95,6 +95,13 @@ class Product2 extends Model
               $row->status        = (boolean)$value['status'] ?? false;
 
               $row->download_name  = $value['download_name'] ?? NULL;
+
+              $row->has_application  = (isset($value['has_application']) && $value['has_application'])
+                                        ? (boolean)$value['has_application'] : false;
+              $row->application_name = (isset($value['application_name']) && $value['application_name']) 
+                                        ? $value['application_name'] : NULL;
+              $row->application_path = (isset($value['application_path']) && $value['application_path']) 
+                                        ? $value['application_path'] : NULL;
               $row->save();
 
               // Image

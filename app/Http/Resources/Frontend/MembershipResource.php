@@ -83,12 +83,17 @@ class MembershipResource extends JsonResource
             'content'        => $content,
 
 
-            'download_name' => $this->download_name ?? NULL,
-            'pdf_file'      => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            'download_file' => ($this->pdf) 
+                                ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
+            'download_image' => ($this->image_pdf) 
+                                ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            'download_name' => $this->download_name,
+
             'has_faq'       => (boolean)$this->has_faq,
-            'has_scroll'    => (boolean)$this->has_scroll,
-            'has_training'  => (boolean)$this->has_training,
-            'has_download'  => (boolean)$this->has_download,
+
+            'has_application'  => (int)$this->has_application,
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
         ];
     }
 }

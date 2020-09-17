@@ -24,12 +24,14 @@ class PageResource extends JsonResource
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            'has_application'=> (int)$this->has_application,
             'has_download'  => (int)$this->has_download,
 
             'has_header'    => (int)$this->has_header,
             'has_footer'    => (int)$this->has_footer,
 
+            'has_application'  => (int)$this->has_application,
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
 
 
             'slug'          => $this->slug,

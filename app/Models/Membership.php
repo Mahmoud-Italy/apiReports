@@ -45,7 +45,10 @@ class Membership extends Model
     }
 
     public function image_pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', true)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 2)->select('url');
+    }
+    public function pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 1)->select('url');
     }
 
 
@@ -142,17 +145,16 @@ class Membership extends Model
               $row->has_faq       = (isset($value['has_faq']) && $value['has_faq']) 
                                       ? (boolean)$value['has_faq'] 
                                       : false;
-              $row->has_training  = (isset($value['has_training']) && $value['has_training']) 
-                                      ? (boolean)$value['has_training'] 
-                                      : false;
-              $row->has_member   = (isset($value['has_member']) && $value['has_member']) 
-                                      ? (boolean)$value['has_member'] 
-                                      : false;
+                                      
+              $row->has_application  = (isset($value['has_application']) && $value['has_application'])
+                                        ? (boolean)$value['has_application'] : false;
+              $row->application_name = (isset($value['application_name']) && $value['application_name']) 
+                                        ? $value['application_name'] : NULL;
+              $row->application_path = (isset($value['application_path']) && $value['application_path']) 
+                                        ? $value['application_path'] : NULL;
+
               $row->has_download  = (isset($value['has_download']) && $value['has_download']) 
                                       ? (boolean)$value['has_download'] 
-                                      : false;
-              $row->has_scroll    = (isset($value['has_scroll']) && $value['has_scroll']) 
-                                      ? (boolean)$value['has_scroll'] 
                                       : false;
               $row->status        = (isset($value['status']) && $value['status']) 
                                       ? (boolean)$value['status'] 
@@ -160,13 +162,13 @@ class Membership extends Model
               $row->save();
 
               // Image
-              if(isset($value['base64Image'])) {
+              if(isset($value['image'])) {
                 $row->image()->delete();
-                if($value['base64Image']) {
-                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
-                    $image = Imageable::uploadImage($value['base64Image']);
+                if($value['image']) {
+                  if(!Str::contains($value['image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['image']);
                   } else {
-                    $image = explode('/', $value['base64Image']);
+                    $image = explode('/', $value['image']);
                     $image = end($image);
                   }
                   $row->image()->create(['url' => $image]);
@@ -285,16 +287,28 @@ class Membership extends Model
               }
 
 
-              if(isset($value['pdf'])) {
-                $row->image_pdf()->delete();
-                if($value['pdf']) {
-                  if(!Str::contains($value['pdf'], ['uploads','false'])) {
-                    $pdf = Imageable::uploadImage($value['pdf']);
+              if(isset($value['download_file'])) {
+                $row->pdf()->delete();
+                if($value['download_file']) {
+                  if(!Str::contains($value['download_file'], ['uploads','false'])) {
+                    $pdf = Imageable::uploadImage($value['download_file']);
                   } else {
-                    $pdf = explode('/', $value['pdf']);
+                    $pdf = explode('/', $value['download_file']);
                     $pdf = end($pdf);
                   }
-                  $row->image_pdf()->create(['url' => $pdf, 'is_pdf' => 1]);
+                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => 1]);
+                }
+              }
+              if(isset($value['download_image'])) {
+                $row->image_pdf()->delete();
+                if($value['download_image']) {
+                  if(!Str::contains($value['download_image'], ['uploads','false'])) {
+                    $image_pdf = Imageable::uploadImage($value['download_image']);
+                  } else {
+                    $image_pdf = explode('/', $value['download_image']);
+                    $image_pdf = end($pdf);
+                  }
+                  $row->image_pdf()->create(['url' => $image_pdf, 'is_pdf' => 2]);
                 }
               }
 

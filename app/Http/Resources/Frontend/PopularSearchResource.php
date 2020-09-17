@@ -30,6 +30,9 @@ class PopularSearchResource extends JsonResource
             'has_download'  => (int)$this->has_download,
             'has_programs'  => (int)$this->has_programs,
 
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
+
             'programs'      => ProductResource::collection(Product2::where(['status'=>true, 'trash'=>false])->orderBy('sort','DESC')->get()),
 
 

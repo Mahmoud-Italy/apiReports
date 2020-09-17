@@ -24,8 +24,12 @@ class AccreditationResource extends JsonResource
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            'has_application'=> (int)$this->has_application,
             'has_download'  => (int)$this->has_download,
+
+
+            'has_application'  => (int)$this->has_application,
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
 
 
 

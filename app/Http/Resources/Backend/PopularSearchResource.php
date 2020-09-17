@@ -220,10 +220,15 @@ class PopularSearchResource extends JsonResource
 
 
             // Status & Visibility
-            'download_name' => $this->download_name,
+            'has_application'  => (int)$this->has_application,
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
+
+            'download_name'    => $this->download_name,
+
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            'has_application'=> (int)$this->has_application,
+            
             'has_download'  => (int)$this->has_download,
             'has_programs'  => (int)$this->has_programs,
             'status'        => (boolean)$this->status,

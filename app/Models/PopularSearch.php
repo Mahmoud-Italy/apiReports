@@ -291,15 +291,22 @@ class PopularSearch extends Model
               $row->body6_4       = $value['body6_4'] ?? NULL;
 
 
+            
+
               $row->download_name = $value['download_name'] ?? NULL;
               $row->sort          = (int)$value['sort'] ?? 0;
 
               $row->has_faq         = (isset($value['has_faq']) && $value['has_faq']) 
                                         ? (boolean)$value['has_faq'] 
                                         : false;
-              $row->has_application = (isset($value['has_application']) && $value['has_application']) 
-                                        ? (boolean)$value['has_application'] 
-                                        : false;
+
+              $row->has_application  = (isset($value['has_application']) && $value['has_application'])
+                                        ? (boolean)$value['has_application'] : false;
+              $row->application_name = (isset($value['application_name']) && $value['application_name']) 
+                                        ? $value['application_name'] : NULL;
+              $row->application_path = (isset($value['application_path']) && $value['application_path']) 
+                                        ? $value['application_path'] : NULL;
+
               $row->has_download    = (isset($value['has_download']) && $value['has_download']) 
                                         ? (boolean)$value['has_download'] 
                                         : false;

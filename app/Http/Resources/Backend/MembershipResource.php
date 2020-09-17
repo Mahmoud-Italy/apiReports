@@ -85,9 +85,11 @@ class MembershipResource extends JsonResource
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            'has_scroll'    => (int)$this->has_scroll,
-            'has_training'  => (int)$this->has_training,
             'has_download'  => (int)$this->has_download,
+
+            'has_application'  => (int)$this->has_application,
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
             
             'status'        => (boolean)$this->status,
             'trash'         => (boolean)$this->trash,

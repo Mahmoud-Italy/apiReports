@@ -84,7 +84,9 @@ class AboutResource extends JsonResource
 
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            'has_application'=> (int)$this->has_application,
+            'has_application'  => (int)$this->has_application,
+            'applicaiton_name' => $this->applicaiton_name,
+            'applicaiton_path' => $this->applicaiton_path,
         ];
 
     }

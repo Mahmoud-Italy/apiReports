@@ -96,6 +96,14 @@ class Program extends Model
 
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->has_sectors   = (boolean)$value['has_sectors'] ?? false;
+
+              $row->has_application  = (isset($value['has_application']) && $value['has_application'])
+                                        ? (boolean)$value['has_application'] : false;
+              $row->application_name = (isset($value['application_name']) && $value['application_name']) 
+                                        ? $value['application_name'] : NULL;
+              $row->application_path = (isset($value['application_path']) && $value['application_path']) 
+                                        ? $value['application_path'] : NULL;
+
               $row->status        = (boolean)$value['status'] ?? false;
               $row->save();
 
