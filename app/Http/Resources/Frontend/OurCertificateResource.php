@@ -38,9 +38,9 @@ class OurCertificateResource extends JsonResource
             'body2'         => $this->body2,
             'hint2'         => $this->hint2,
 
-            'cat1_name'      => Setting::select('body1')->where('id', 6)->pluck('body1'),
-            'cat2_name'      => Setting::select('body2')->where('id', 6)->pluck('body2'),
-            'cat3_name'      => Setting::select('body3')->where('id', 6)->pluck('body3'),
+            'cat1_name'      => Setting::select('body1')->where('id', 6)->first(),
+            'cat2_name'      => Setting::select('body2')->where('id', 6)->first(),
+            'cat3_name'      => Setting::select('body3')->where('id', 6)->first(),
 
             'certificates_1' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 1)->get()),
             'certificates_2' => CertificateCategoryResource::collection(CertificateCategory::where('cat_id', 2)->get()),
