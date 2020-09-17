@@ -12,15 +12,15 @@ class CertificateProduct extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', false)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', false)->select('url');
     }
 
     public function pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', true)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', true)->select('url');
     }
 
     public function image_pdf() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('is_pdf', 2)->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 2)->select('url');
     }
 
 
