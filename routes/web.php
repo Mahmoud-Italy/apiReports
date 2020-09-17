@@ -21,6 +21,11 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $app->apiResource('programs', 'ProgramController');
         $app->apiResource('sectors', 'SectorController');
         $app->apiResource('products', 'ProductController');
+
+        $router->get('applications/{type}', 'ApplicationController@index');
+        $router->get('applications/{type}/{id}', 'ApplicationController@show');
+        $router->get('applications/{type}/export', 'ApplicationController@export');
+
         $app->apiResource('memberships', 'MembershipController');
         $app->apiResource('about', 'AboutController');
         $app->apiResource('contacts', 'SettingController');
