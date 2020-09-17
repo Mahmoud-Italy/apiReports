@@ -67,29 +67,27 @@ class AppController extends Controller
     }
 
     # Popular Searchs
-    public function popular()
-    {
-        $navigation = PopularSearch::select('id', 'title', 'slug')
-                                ->where(['status' => true, 'trash' => false])
-                                ->orderBy('sort', 'DESC')
-                                ->get();
-        $data = PopularSearch::where(['status' => true, 'trash' => false])
-                                ->orderBy('sort', 'DESC')
-                                ->paginate(20);
-        $rows = PopularSearchResource::collection($data);
-        return response()->json([
-            'rows'        => $rows,
-            'navigation'  => $navigation,
-            'paginate'    => $this->paginate($rows)
-        ], 200);
-    }
     public function showpopular($slug)
     {
         $navigation = PopularSearch::select('id', 'title', 'slug')
+                                ->whereNULL('parent_id')
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $page = PopularSearch::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
+        $page = PopularSearch::where(['status' => true, 'trash' => false])->whereNULL('parent_id')->where('slug', $slug)->first();
+        $row = new PopularSearchResource(PopularSearch::findOrFail(($page->id) ?? 0));
+        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
+    }
+    public function showShortCutPopular($slug)
+    {
+        $page = PopularSearch::where(['status' => true, 'trash' => false])
+                                ->whereNOTNULL('parent_id')->where('slug', $slug)
+                                ->first();
+        $navigation = PopularSearch::select('id', 'title', 'slug')
+                                ->where('parent_id', $page->id)
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get();
         $row = new PopularSearchResource(PopularSearch::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
