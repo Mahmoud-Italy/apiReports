@@ -74,7 +74,10 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $page = PopularSearch::where(['status' => true, 'trash' => false])->whereNULL('parent_id')->where('slug', $slug)->first();
+        $page = PopularSearch::where(['status' => true, 'trash' => false])
+                                ->whereNULL('parent_id')
+                                ->orderBy('sort','DESC')
+                                ->first();
         $row = new PopularSearchResource(PopularSearch::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
