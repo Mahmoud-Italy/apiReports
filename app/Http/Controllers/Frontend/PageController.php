@@ -59,6 +59,7 @@ class PageController extends Controller
         $home = new HomeResource(Setting::findOrFail(1));
         $logo = new LogoResource(Setting::findOrFail(5));
         $navigation = PopularSearch::select('id', 'title', 'slug')
+                                ->whereNULL('parent_id')
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
