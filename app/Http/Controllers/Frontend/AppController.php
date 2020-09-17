@@ -83,22 +83,26 @@ class AppController extends Controller
     }
     public function showpopular($slug)
     {
-        $navigation = PopularSearch::select('id', 'title', 'slug')
+        $page = PopularSearch::where(['status' => true, 'trash' => false])
                                 ->whereNULL('parent_id')
+                                ->where('slug', $slug)->first();
+        $navigation = PopularSearch::select('id', 'title', 'slug')
+                                ->where('parent_id', $page->id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $page = PopularSearch::where(['status' => true, 'trash' => false])->whereNULL('parent_id')->where('slug', $slug)->first();
+        
         $row = new PopularSearchResource(PopularSearch::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }
-    public function showShortCutPopular($slug)
+    public function showShortcutPopular($slug)
     {
         $page = PopularSearch::where(['status' => true, 'trash' => false])
-                                ->whereNOTNULL('parent_id')->where('slug', $slug)
+                                ->whereNOTNULL('parent_id')
+                                ->where('slug', $slug)
                                 ->first();
         $navigation = PopularSearch::select('id', 'title', 'slug')
-                                ->where('parent_id', $page->id)
+                                ->where('parent_id', $page->parent_id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();

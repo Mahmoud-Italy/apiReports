@@ -60,7 +60,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         
         $router->get('popularSearch', 'AppController@popular');
         $router->get('popularSearch/{slug}', 'AppController@showPopular');
-        $router->get('popularSearch/shortcut/{slug}', 'AppController@showShortCutPopular');
+        $router->get('popularSearch/shortcut/{slug}', 'AppController@showShortcutPopular');
         $router->get('popularSearch/in/programs/{slug}', 'AppController@showProgramsPopularSearch');
 
         $router->get('accreditations', 'AppController@accreditations');
