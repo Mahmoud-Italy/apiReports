@@ -36,10 +36,10 @@ class ApplicationController extends Controller
             $rows = TrainingResource::collection(Training::fetchData(request()->all()));
         }
         $statusBar = [
-            'app1' => Training::get(),
-            'app2' => Member::get(),
-            'app3' => Instructor::get(),
-            'app4' => Experience::get()
+            'app1' => Training::count(),
+            'app2' => Member::count(),
+            'app3' => Instructor::count(),
+            'app4' => Experience::count()
         ];
         return response()->json([
             'statusBar'   => $statusBar,
