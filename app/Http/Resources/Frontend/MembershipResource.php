@@ -83,6 +83,7 @@ class MembershipResource extends JsonResource
             'content'        => $content,
 
 
+            'has_download'  => $this->has_download,
             'download_file' => ($this->pdf) 
                                 ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
             'download_image' => ($this->image_pdf) 
