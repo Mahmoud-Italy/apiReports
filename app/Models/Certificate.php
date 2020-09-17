@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use App\Models\Setting;
 use App\Models\Imageable;
 use Illuminate\Support\Str;
 use App\Models\CertificateCategory;
@@ -391,6 +392,11 @@ class Certificate extends Model
 
 
 
+              $setting = Setting::findOrFail(6);
+              $setting->body1 = $value['cat1_name'];
+              $setting->body2 = $value['cat2_name'];
+              $setting->body3 = $value['cat3_name'];
+              $setting->save();
             DB::commit();
 
             return true;
