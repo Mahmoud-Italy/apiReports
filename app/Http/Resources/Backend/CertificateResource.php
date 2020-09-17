@@ -26,9 +26,9 @@ class CertificateResource extends JsonResource
             'bgColor1'      => $this->bgColor1,
             'body1'         => $this->body1,
 
-            'cat1_name'      => Setting::select('body1')->where('id', 6)->first(),
-            'cat2_name'      => Setting::select('body2')->where('id', 6)->first(),
-            'cat3_name'      => Setting::select('body3')->where('id', 6)->first(),
+            'cat1_name'      => Setting::select('body1')->where('id', 6)->pluck('body1'),
+            'cat2_name'      => Setting::select('body2')->where('id', 6)->pluck('body2'),
+            'cat3_name'      => Setting::select('body3')->where('id', 6)->pluck('body3'),
 
             'has_download'   => (int)$this->has_download,
             'download_name'  => $this->download_name,
