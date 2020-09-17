@@ -714,7 +714,7 @@ class OnlineTraining extends Model
                     $image_pdf = Imageable::uploadImage($value['download_image']);
                   } else {
                     $image_pdf = explode('/', $value['download_image']);
-                    $image_pdf = end($pdf);
+                    $image_pdf = end($image_pdf);
                   }
                   $row->image_pdf()->create(['url' => $image_pdf, 'is_pdf' => 2]);
                 }
