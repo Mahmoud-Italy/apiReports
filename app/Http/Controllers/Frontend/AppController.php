@@ -430,8 +430,9 @@ class AppController extends Controller
 
     # Social Network
     public function socials()
-    {
-        $rows = SocialResource::collection(Social::fetchData(request()->all()));
+    {   
+        $data = Social::where(['status' => true, 'trash'=>false])->orderBy('sort', 'DESC')->get();
+        $rows = SocialResource::collection($data);
         return response()->json(['rows' => $rows], 200);
     }
 
