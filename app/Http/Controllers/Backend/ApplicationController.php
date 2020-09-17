@@ -22,7 +22,7 @@ class ApplicationController extends Controller
 
     public function index($type)
     {
-        if($type == 'memberships-application') {
+        if($type == 'memberships-applications') {
             $data = Member::get();
             $rows = MemberResource::collection(Member::fetchData(request()->all()));
         } else if ($type == 'instructor-applications') {
@@ -51,7 +51,7 @@ class ApplicationController extends Controller
 
     public function show($type, $id)
     {
-        if($type == 'memberships-application') {
+        if($type == 'memberships-applications') {
             $row = Member::findOrFail(decrypt($id))
         } else if ($type == 'instructor-applications') {
             $row = Instructor::findOrFail(decrypt($id))
@@ -67,7 +67,7 @@ class ApplicationController extends Controller
 
     public function export($type)
     {
-        if($type == 'memberships-application') {
+        if($type == 'memberships-applications') {
             $data = Member::query();
             $rows = MemberResource::collection($data);
         } else if ($type == 'instructor-applications') {
@@ -94,7 +94,7 @@ class ApplicationController extends Controller
         }
 
         $data = $data->orderBy('id','DESC')->get();
-        if($type == 'memberships-application') {
+        if($type == 'memberships-applications') {
             $rows = MemberResource::collection($data);
         } else if ($type == 'instructor-applications') {
             $rows = InstructorResource::collection($data);
