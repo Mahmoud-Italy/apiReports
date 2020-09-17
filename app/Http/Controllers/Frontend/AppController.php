@@ -69,16 +69,12 @@ class AppController extends Controller
     # Popular Searchs
     public function popular()
     {
-        $navigation = PopularSearch::select('id', 'title', 'slug')
+        $rows = PopularSearch::select('id', 'title', 'slug')
                                 ->whereNULL('parent_id')
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $rows = PopularSearch::where(['status' => true, 'trash' => false])
-                                ->whereNULL('parent_id')
-                                ->orderBy('sort','DESC')
-                                ->paginate(20);
-        return response()->json(['rows' => $rows, 'navigation' => $navigation], 200);
+        return response()->json(['rows' => $rows], 200);
     }
     public function showpopular($slug)
     {
