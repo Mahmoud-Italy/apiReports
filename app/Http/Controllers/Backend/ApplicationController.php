@@ -8,7 +8,7 @@ use App\Models\Instructor;
 use App\Models\Experience;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Backend\TrianingResource;
+use App\Http\Resources\Backend\TrainingResource;
 use App\Http\Resources\Backend\MemberResource;
 use App\Http\Resources\Backend\InstructorResource;
 use App\Http\Resources\Backend\ExperienceResource;
