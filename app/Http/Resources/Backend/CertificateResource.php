@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Backend;
 
+use App\Models\Setting;
 use App\Models\CertificateCategory;
 use App\Http\Resources\Backend\CertificateCategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,6 +25,10 @@ class CertificateResource extends JsonResource
             'bgTitle1'      => $this->bgTitle1,
             'bgColor1'      => $this->bgColor1,
             'body1'         => $this->body1,
+
+            'cat1_name'      => Setting::select('body1')->where('id', 6)->first(),
+            'cat2_name'      => Setting::select('body2')->where('id', 6)->first(),
+            'cat3_name'      => Setting::select('body3')->where('id', 6)->first(),
 
             'has_download'   => (int)$this->has_download,
             'download_name'  => $this->download_name,
