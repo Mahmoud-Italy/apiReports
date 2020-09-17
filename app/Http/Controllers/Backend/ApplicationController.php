@@ -52,13 +52,13 @@ class ApplicationController extends Controller
     public function show($type, $id)
     {
         if($type == 'memberships-applications') {
-            $row = Member::findOrFail(decrypt($id))
+            $row = Member::findOrFail(decrypt($id));
         } else if ($type == 'instructor-applications') {
-            $row = Instructor::findOrFail(decrypt($id))
+            $row = Instructor::findOrFail(decrypt($id));
         } else if ($type == 'experience-applications') {
-            $row = Experience::findOrFail(decrypt($id))
+            $row = Experience::findOrFail(decrypt($id));
         } else {
-            $row = Training::findOrFail(decrypt($id))
+            $row = Training::findOrFail(decrypt($id));
         }
         $row = new ExperienceResource($row);
         return response()->json(['row' => $row], 200);
@@ -69,16 +69,12 @@ class ApplicationController extends Controller
     {
         if($type == 'memberships-applications') {
             $data = Member::query();
-            $rows = MemberResource::collection($data);
         } else if ($type == 'instructor-applications') {
             $data = Instructor::query();
-            $rows = InstructorResource::collection($data);
         } else if ($type == 'experience-applications') {
             $data = Experience::query();
-            $rows = ExperienceResource::collection($data);
         } else {
             $data = Training::query();
-            $rows = TrainingResource::collection($data);
         }
 
         if(request('id')) {
