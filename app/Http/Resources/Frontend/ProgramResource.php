@@ -32,8 +32,8 @@ class ProgramResource extends JsonResource
             'body'          => $this->body,
 
             'has_application'  => (int)$this->has_application,
-            'applicaiton_name' => $this->applicaiton_name,
-            'applicaiton_path' => $this->applicaiton_path,
+            'application_name' => $this->application_name,
+            'application_path' => $this->application_path,
             
             'has_sectors'   => (boolean)$this->has_sectors,
             'sectors'       => SectorResource::collection($this->sectors),

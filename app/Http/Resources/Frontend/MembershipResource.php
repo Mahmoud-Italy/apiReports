@@ -92,8 +92,8 @@ class MembershipResource extends JsonResource
             'has_faq'       => (boolean)$this->has_faq,
 
             'has_application'  => (int)$this->has_application,
-            'applicaiton_name' => $this->applicaiton_name,
-            'applicaiton_path' => $this->applicaiton_path,
+            'application_name' => $this->application_name,
+            'application_path' => $this->application_path,
         ];
     }
 }
