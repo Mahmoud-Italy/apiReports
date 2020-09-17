@@ -10,6 +10,13 @@ use App\Models\Imageable;
 use App\Models\Certificate;
 use App\Models\CertificateProduct;
 use App\Models\CertificateCategory;
+
+use App\Models\EmailTemplate;
+use App\Mail\IamInstructorMailable;
+use App\Mail\IveExperienceMailable;
+use App\Mail\TrainingProgramMailable;
+use App\Mail\MembershipMailable;
+
 use App\Models\Faq;
 use App\Models\About;
 use App\Models\Social;
@@ -135,6 +142,13 @@ class AppController extends Controller
     {
        $row = Training::createOrUpdate(NULL, $request->all());
         if($row === true) {
+
+            // Send Email
+            $data = EmailTemplate::find(1);
+            try {
+                Mail::to($row->email_Address)->send(new TrainingProgramMailable($row, $data));
+            } catch (\Exception $e) { }
+
             return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
@@ -236,6 +250,13 @@ class AppController extends Controller
     {
        $row = Member::createOrUpdate(NULL, $request->all());
         if($row === true) {
+            
+            // Send Email
+            $data = EmailTemplate::find(1);
+            try {
+                Mail::to($row->email_Address)->send(new MembershipMailable($row, $data));
+            } catch (\Exception $e) { }
+
             return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
@@ -247,6 +268,13 @@ class AppController extends Controller
     {
        $row = Instructor::createOrUpdate(NULL, $request->all());
         if($row === true) {
+
+            // Send Email
+            $data = EmailTemplate::find(1);
+            try {
+                Mail::to($row->email_Address)->send(new IamInstructorMailable($row, $data));
+            } catch (\Exception $e) { }
+
             return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
@@ -262,6 +290,13 @@ class AppController extends Controller
     {
        $row = Experience::createOrUpdate(NULL, $request->all());
         if($row === true) {
+
+            // Send Email
+            $data = EmailTemplate::find(1);
+            try {
+                Mail::to($row->email_Address)->send(new IveExperienceMailable($row, $data));
+            } catch (\Exception $e) { }
+
             return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
