@@ -227,8 +227,8 @@ class OnlineTrainingResource extends JsonResource
 
             'has_download'  => (int)$this->has_download,
             'has_programs'  => (int)$this->has_programs,
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }

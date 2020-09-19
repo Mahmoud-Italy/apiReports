@@ -229,8 +229,8 @@ class PageResource extends JsonResource
             'has_programs'  => (int)$this->has_programs,
             'has_header'    => (int)$this->has_header,
             'has_footer'    => (int)$this->has_footer,
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }

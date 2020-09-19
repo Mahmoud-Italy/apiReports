@@ -52,9 +52,9 @@ class ProgramResource extends JsonResource
             'application_name' => $this->application_name,
             'application_path' => $this->application_path,
             'sort'          => (int)$this->sort,
-            'has_sectors'   => (boolean)$this->has_sectors,
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'has_sectors'   => (int)$this->has_sectors,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }

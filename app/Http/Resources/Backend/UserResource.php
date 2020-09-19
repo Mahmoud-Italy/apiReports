@@ -43,8 +43,8 @@ class UserResource extends JsonResource
 
 
             // Status & Visibility
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }

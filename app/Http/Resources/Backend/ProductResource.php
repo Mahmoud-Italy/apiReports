@@ -63,8 +63,8 @@ class ProductResource extends JsonResource
             'application_name' => $this->application_name,
             'application_path' => $this->application_path,
             'sort'          => (int)$this->sort,
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }

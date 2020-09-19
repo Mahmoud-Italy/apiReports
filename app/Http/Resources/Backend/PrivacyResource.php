@@ -40,8 +40,8 @@ class PrivacyResource extends JsonResource
 
             // Status & Visibility
             'sort'          => (int)$this->sort,
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }

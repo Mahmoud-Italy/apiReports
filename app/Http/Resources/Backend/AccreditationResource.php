@@ -177,8 +177,8 @@ class AccreditationResource extends JsonResource
             'application_path' => $this->application_path,
 
             'has_download'  => (int)$this->has_download,
-            'status'        => (boolean)$this->status,
-            'trash'         => (boolean)$this->trash,
+            'status'        => (int)$this->status,
+            'trash'         => (int)$this->trash,
             'loading'       => false
         ];
     }
