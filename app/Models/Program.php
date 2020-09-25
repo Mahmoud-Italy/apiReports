@@ -92,6 +92,10 @@ class Program extends Model
               $row->body          = $value['body'] ?? NULL;
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
+
+              $row->imgDir        = $value['imgDir'] ?? NULL;
+              $row->link          = $value['link'] ?? NULL;
+              
               $row->download_name = $value['download_name'] ?? NULL;
 
               $row->sort          = (int)$value['sort'] ?? 0;

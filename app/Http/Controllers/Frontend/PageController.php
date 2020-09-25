@@ -42,7 +42,7 @@ class PageController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $page = Page::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
+        $page = Page::where('slug', $slug)->first();
         $row = new PageResource(Page::findOrFail(($page->id) ?? 0));
         return response()->json(['row' => $row, 'navigation' => $navigation], 200);
     }

@@ -46,6 +46,8 @@ class ProgramResource extends JsonResource
 
 
             // Status & Visibility
+            'imgDir'           => $this->imgDir,
+            'link'           => $this->link,
             'has_application'  => (int)$this->has_application,
             'application_name' => $this->application_name,
             'application_path' => $this->application_path,

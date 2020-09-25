@@ -34,6 +34,9 @@ class ProgramResource extends JsonResource
             'has_application'  => (int)$this->has_application,
             'application_name' => $this->application_name,
             'application_path' => $this->application_path,
+
+            'imgDir'         => $this->imgDir,
+            'link'           => $this->link,
             
             'has_sectors'   => (boolean)$this->has_sectors,
             'sectors'       => SectorResource::collection($this->sectors),
