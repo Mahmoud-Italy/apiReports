@@ -15,8 +15,8 @@ class ResultResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'pgName'  => $this->pgName,
-            'pgSlug'  => $this->pgSlug,
+            'pgName'  => $this->pageName,
+            'pgSlug'  => $this->pageSlug,
         ];
     }
 }
