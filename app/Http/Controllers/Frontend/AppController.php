@@ -60,6 +60,7 @@ use App\Http\Resources\Frontend\ProfileResource;
 use App\Http\Resources\Frontend\MyCertificateResource;
 use App\Http\Resources\Frontend\OurCertificateResource;
 use App\Http\Resources\Frontend\SettingResource;
+use App\Http\Resources\Frontend\ResultResource;
 use App\Http\Requests\NewsletterStoreRequest;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\TrainingStoreRequest;
@@ -515,7 +516,7 @@ class AppController extends Controller
     public function search()
     {
         $data = Search::paginate(30);
-        $rows = SearchResource::collection($data);
+        $rows = ResultResource::collection($data);
         return response()->json([
                 'rows'        => $rows,
                 'paginate'    => $this->paginate($rows)
