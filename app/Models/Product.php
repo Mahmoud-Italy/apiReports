@@ -13,7 +13,14 @@ class Product extends Model
     protected $guarded = [];
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 0)->select('url');
+    }
+
+    public function image_pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 2)->select('url');
+    }
+    public function pdf() {
+        return $this->morphOne(Imageable::class, 'imageable')->where('is_pdf', 1)->select('url');
     }
 
     public function sector() {
@@ -97,6 +104,7 @@ class Product extends Model
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->status        = (boolean)$value['status'] ?? false;
 
+              $row->download_name    = $value['download_name'] ?? NULL;
               $row->has_application  = (isset($value['has_application']) && $value['has_application'])
                                         ? (boolean)$value['has_application'] : false;
               $row->application_name = (isset($value['application_name']) && $value['application_name']) 
@@ -118,6 +126,32 @@ class Product extends Model
                   $row->image()->create(['url' => $image]);
                 }
               }
+
+              if(isset($value['download_file'])) {
+                $row->pdf()->delete();
+                if($value['download_file']) {
+                  if(!Str::contains($value['download_file'], ['uploads','false'])) {
+                    $pdf = Imageable::uploadImage($value['download_file']);
+                  } else {
+                    $pdf = explode('/', $value['download_file']);
+                    $pdf = end($pdf);
+                  }
+                  $row->pdf()->create(['url' => $pdf, 'is_pdf' => 1]);
+                }
+              }
+              if(isset($value['download_image'])) {
+                $row->image_pdf()->delete();
+                if($value['download_image']) {
+                  if(!Str::contains($value['download_image'], ['uploads','false'])) {
+                    $image_pdf = Imageable::uploadImage($value['download_image']);
+                  } else {
+                    $image_pdf = explode('/', $value['download_image']);
+                    $image_pdf = end($image_pdf);
+                  }
+                  $row->image_pdf()->create(['url' => $image_pdf, 'is_pdf' => 2]);
+                }
+              }
+
 
             DB::commit();
 
