@@ -12,10 +12,11 @@ use App\Models\CertificateProduct;
 use App\Models\CertificateCategory;
 
 use App\Models\EmailTemplate;
-use App\Http\Mail\IamInstructorMailable;
-use App\Http\Mail\IveExperienceMailable;
-use App\Http\Mail\TrainingProgramMailable;
-use App\Http\Mail\MembershipMailable;
+use App\Mail\IamInstructorMailable;
+use App\Mail\IveExperienceMailable;
+use App\Mail\TrainingProgramMailable;
+use App\Mail\MembershipMailable;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Faq;
 use App\Models\About;
