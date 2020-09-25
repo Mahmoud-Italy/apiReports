@@ -26,7 +26,7 @@ class SectorStoreRequest extends FormRequest
     {
         return [
             //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:sector2s,slug'
+            'slug'   => 'required|unique:sectors,slug'
         ];
     }
 
