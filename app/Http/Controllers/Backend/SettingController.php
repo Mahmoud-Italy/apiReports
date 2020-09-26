@@ -28,7 +28,15 @@ class SettingController extends Controller
     public function show($id)
     {
         $row = new SettingResource(Setting::findOrFail($id));
-        return response()->json(['row' => $row], 200);
+        if($id == 3) {
+            $active = Setting::select('status')->findOrFail(18);
+        } else {
+            $active = false;
+        }
+        return response()->json([
+            'row'     => $row, 
+            'active'  => $active,
+        ], 200);
     }
 
     public function update(SettingUpdateRequest $request, $id)

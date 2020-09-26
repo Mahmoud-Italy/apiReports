@@ -23,6 +23,7 @@ class ProgramController extends Controller
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
+            'active'      => Setting::select('status')->findOrFail(15),
             'paginate'    => $this->paginate($rows)
         ], 200);
     }

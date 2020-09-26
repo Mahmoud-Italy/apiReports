@@ -23,6 +23,7 @@ class PrivacyController extends Controller
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
+            'active'      => Setting::select('status')->findOrFail(19),
             'paginate'    => $this->paginate($rows)
         ], 200);
     }

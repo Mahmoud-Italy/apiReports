@@ -27,7 +27,15 @@ class CertificateController extends Controller
     public function show($id)
     {
         $row = new CertificateResource(Certificate::findOrFail($id));
-        return response()->json(['row' => $row], 200);
+        if($id == 1) {
+            $active = Setting::select('status')->findOrFail(22);
+        } else {
+            $active = false;
+        }
+        return response()->json([
+            'row'     => $row, 
+            'active'  => $active,
+        ], 200);
     }
 
     public function update(Request $request, $id)

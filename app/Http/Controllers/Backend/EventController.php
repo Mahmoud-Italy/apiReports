@@ -28,7 +28,15 @@ class EventController extends Controller
     public function show($id)
     {
         $row = new EventResource(Event::findOrFail($id));
-        return response()->json(['row' => $row], 200);
+        if($id == 1) {
+            $active = Setting::select('status')->findOrFail(20);
+        } else {
+            $active = false;
+        }
+        return response()->json([
+            'row'     => $row, 
+            'active'  => $active,
+        ], 200);
     }
 
     public function update(Request $request, $id)
