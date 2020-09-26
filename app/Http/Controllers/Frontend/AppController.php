@@ -317,11 +317,11 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $data = About::where(['status' => true, 'trash' => false])->orderBy('sort', 'DESC')->first();
-        //$rows = AboutResource::collection($data);
-        $row = new AboutResource($data);
+        $data = About::where(['status' => true, 'trash' => false])->orderBy('sort', 'DESC')->get();
+        $rows = AboutResource::collection($data);
+        //$row = new AboutResource($data);
         return response()->json([
-            'row'        => $row,
+            'row'        => $rows,
             'navigation'  => $navigation,
             //'paginate'    => $this->paginate($rows)
         ], 200);
