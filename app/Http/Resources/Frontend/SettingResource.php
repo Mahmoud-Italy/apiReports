@@ -31,7 +31,7 @@ class SettingResource extends JsonResource
             'body6'         => $this->body6,
             'link'          => $this->link,
 
-            'status'        => $this->status
+            'status'        => (boolean)$this->status
         ];
     }
 }
