@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Setting;
 use App\Models\Privacy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

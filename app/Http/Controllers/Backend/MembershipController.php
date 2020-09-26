@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Setting;
 use App\Models\Membership;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,7 @@ class MemberShipController extends Controller
         return response()->json([
             'statusBar'   => $this->statusBar($data),
             'rows'        => $rows,
+            'active'      => Setting::select('status')->findOrFail(16),
             'paginate'    => $this->paginate($rows)
         ], 200);
     }
