@@ -321,7 +321,7 @@ class AppController extends Controller
         $rows = AboutResource::collection($data);
         //$row = new AboutResource($data);
         return response()->json([
-            'row'        => $rows,
+            'rows'        => $rows,
             'navigation'  => $navigation,
             //'paginate'    => $this->paginate($rows)
         ], 200);
