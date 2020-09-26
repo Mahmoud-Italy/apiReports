@@ -34,6 +34,38 @@ class EmailTemplateResource extends JsonResource
             'wbody2' => $this->wbody2,
             'wbody3' => $this->wbody3,
             'wbody4' => $this->wbody4,
+
+            'mabody1' => $this->mabody1,
+            'mabody2' => $this->mabody2,
+            'mabody3' => $this->mabody3,
+            'mabody4' => $this->mabody4,
+
+            'iabody1' => $this->iabody1,
+            'iabody2' => $this->iabody2,
+            'iabody3' => $this->iabody3,
+            'iabody4' => $this->iabody4,
+
+            'pabody1' => $this->pabody1,
+            'pabody2' => $this->pabody2,
+            'pabody3' => $this->pabody3,
+            'pabody4' => $this->pabody4,
+
+            'habody1' => $this->habody1,
+            'habody2' => $this->habody2,
+            'habody3' => $this->habody3,
+            'habody4' => $this->habody4,
+
+            'cabody1' => $this->cabody1,
+            'cabody2' => $this->cabody2,
+            'cabody3' => $this->cabody3,
+            'cabody4' => $this->cabody4,
+
+            'aabody1' => $this->aabody1,
+            'aabody2' => $this->aabody2,
+            'aabody3' => $this->aabody3,
+            'aabody4' => $this->aabody4,
+
+
         ];
     }
 }
