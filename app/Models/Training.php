@@ -35,7 +35,7 @@ class Training extends Model
 
     public function courses() {
        return $this->hasMany(TrainingCourse::class, 'training_id')
-                  ->select('id','program','institute','duration','date_from', 'date_to');
+                   ->select('id','program','institute','duration','date_from','date_to','certificate');
     }
     public function languages() {
        return $this->hasMany(TrainingLanguage::class, 'training_id')
@@ -166,12 +166,16 @@ class Training extends Model
                 $row->courses()->delete();
                 foreach ($value['courses'] as $course) {
                   if(isset($course['program']) && $course['program']) {
+                    if($course['certificate']) {
+                      $certificate = Imageable::uploadImage($course['certificate']);
+                    }
                    $row->courses()->create([
                       'program'   => $course['program'] ?? NULL,
                       'institute' => $course['institute'] ?? NULL,
                       'duration'  => $course['duration'] ?? NULL,
                       'date_from' => $course['date_from'] ?? NULL,
-                      'date_to'   => $course['date_to'] ?? NULL
+                      'date_to'   => $course['date_to'] ?? NULL,
+                      'certificate' => $certificate ?? NULL
                     ]);
                    }
                 }
