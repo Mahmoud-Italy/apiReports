@@ -28,7 +28,8 @@ class Program extends Model
     public function sectors() {
         return $this->hasMany(Sector::class, 'program_id')
                     ->whereNULL('parent_id')
-                    ->where(['status' => true, 'trash' => false]);
+                    ->where(['status' => true, 'trash' => false])
+                    ->orderBY('sort','DESC');
     }
 
 
