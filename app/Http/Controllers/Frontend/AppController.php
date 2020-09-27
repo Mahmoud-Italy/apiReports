@@ -90,8 +90,7 @@ class AppController extends Controller
         $page = PopularSearch::where(['status' => true, 'trash' => false])
                                 ->whereNULL('parent_id')
                                 ->where('slug', $slug)->first();
-        $navigation = PopularSearch::select('id', 'title', 'slug')
-                                ->where('parent_id', $page->id)
+        $navigation = PopularSearch::where('parent_id', $page->id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
@@ -105,8 +104,7 @@ class AppController extends Controller
                                 ->whereNOTNULL('parent_id')
                                 ->where('slug', $slug)
                                 ->first();
-        $navigation = PopularSearch::select('id', 'title', 'slug')
-                                ->where('parent_id', $page->parent_id)
+        $navigation = PopularSearch::where('parent_id', $page->parent_id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
