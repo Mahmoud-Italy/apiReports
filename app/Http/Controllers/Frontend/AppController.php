@@ -94,9 +94,14 @@ class AppController extends Controller
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
+
+        $rows = PopularSearchResource::collection(PopularSearch::where('parent_id', $page->id)
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get());
         
         $row = new PopularSearchResource(PopularSearch::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
+        return response()->json(['row' => $row, 'navigation' => $navigation, 'rows'=> $rows], 200);
     }
     public function showShortcutPopular($slug)
     {
