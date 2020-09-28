@@ -42,8 +42,8 @@ class Instructor extends Model
                   ->select('id','language','level');
     }
     public function qualifcations() {
-       return $this->hasMany(InstructorQualification::class, 'training_id')
-                  ->select('id', 'educational', 'univeristy', 'grade', 'year');
+        return $this->hasMany(ExperienceQualification::class, 'training_id')
+                  ->select('id', 'educational', 'univeristy', 'grade', 'year','date_from','date_to','certificate');
     }
 
 
@@ -198,11 +198,19 @@ class Instructor extends Model
                 $row->qualifcations()->delete();
                 foreach ($value['qualifcations'] as $qual) {
                   if(isset($qual['educational']) && $qual['educational']) {
+
+                    if($qual['certificate']) {
+                      $certificate = Imageable::uploadImage($qual['certificate']);
+                    }
+
                    $row->qualifcations()->create([
                       'educational'   => $qual['educational'] ?? NULL,
                       'univeristy'    => $qual['univeristy'] ?? NULL,
                       'grade'         => $qual['grade'] ?? NULL,
-                      'year'          => $qual['year'] ?? NULL
+                      'year'          => $qual['year'] ?? NULL,
+                      'date_from'     => $qual['date_from'] ?? NULL,
+                      'date_to'       => $qual['date_to'] ?? NULL,
+                      'certificate'   => $certificate ?? NULL
                     ]);
                   }
                 }

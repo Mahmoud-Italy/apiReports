@@ -38,7 +38,7 @@ class InstructorResource extends JsonResource
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,
-            'qualifications'      => $this->qualifcations,
+            'qualifications'     => $this->qualifcations,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
