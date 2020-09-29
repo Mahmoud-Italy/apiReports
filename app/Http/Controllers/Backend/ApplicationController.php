@@ -101,5 +101,23 @@ class ApplicationController extends Controller
         }
         return response()->json(['rows' => $rows], 200);
     }
+
+    public function destroy($type, $id)
+    {
+        try {
+            if($type == 'memberships-applications') {
+                $data = Member::where('id', $id)->delete();
+            } else if ($type == 'instructor-applications') {
+                $data = Instructor::where('id', $id)->delete();
+            } else if ($type == 'experience-applications') {
+                $data = Experience::where('id', $id)->delete();
+            } else {
+                $data = Training::where('id', $id)->delete();
+            }
+            return response()->json(['message' => ''], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Unable to delete entry, '. $e->getMessage()], 500);
+        }
+    }
     
 }
