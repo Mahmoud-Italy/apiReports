@@ -155,9 +155,9 @@ class Member extends Model
              
 
               // Image
-              if(isset($value['image'])) {
-                if($value['image']) {
-                  $image = Imageable::uploadImage($value['image']);
+              if(isset($value['base64Image'])) {
+                if($value['base64Image']) {
+                  $image = Imageable::uploadImage($value['base64Image']);
                   $row->image()->delete();
                   $row->image()->create(['url' => $image]);
                 }
