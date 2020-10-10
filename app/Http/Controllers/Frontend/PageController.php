@@ -32,9 +32,10 @@ class PageController extends Controller
 
     public function show($slug)
     {   
-        $page = Page::where(['status' => true, 'trash' => false])
-                                ->whereNULL('parent_id')
-                                ->where('slug', $slug)->first();
+        $page = Page::whereNULL('parent_id')
+                      ->where('slug', $slug)
+                      ->first();
+                      
         $navigation = Page::where('parent_id', $page->id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
