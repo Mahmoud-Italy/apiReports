@@ -41,7 +41,7 @@ class PageController extends Controller
                                 ->orderBy('sort', 'DESC')
                                 ->get();
 
-        $rows = PopularSearchResource::collection(Page::where('parent_id', $page->id)
+        $rows = PageResource::collection(Page::where('parent_id', $page->id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get());
