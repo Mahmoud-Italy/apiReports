@@ -30,7 +30,13 @@ class InstructorResource extends JsonResource
             'middle_name'        => $this->middle_name,
             'last_name'          => $this->last_name,
             'full_name'          => $this->full_name,
+            
             'nationality'        => $this->nationality,
+            'nationality_slug'   => str_replace(' ', '-', $this->nationality),
+
+            'program'            => $this->program,
+            'program_slug'       => str_replace(' ', '-', $this->program),
+
             'residential_address'=> $this->residential_address,
             'telephone_no'       => $this->telephone_no,
             'email_Address'      => $this->email_Address,
