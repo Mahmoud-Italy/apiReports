@@ -174,12 +174,4 @@ class Sector extends Model
     }
 
 
-    public static function getName($id='')
-    {
-       if(isset($id) && $id ) {
-          $row = self::select('title')->where('id',$id)->first();
-       }
-       return $row ?? NULL;
-    }
-
 }

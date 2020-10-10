@@ -114,10 +114,10 @@ class Training extends Model
               $row->email_Address       = $value['email_Address'] ?? NULL;
               $row->video_url           = $value['video_url'] ?? NULL;
 
-              $row->program_id          = (isset($value['pid']) && $value['pid'])
-                                            ? $value['pid'] : NULL;
-              $row->sector_id           = (isset($value['sid']) && $value['sid'])
-                                            ? $value['sid'] : NULL;
+              $row->program          = (isset($value['program']) && $value['program'])
+                                            ? $value['program'] : NULL;
+              $row->sector           = (isset($value['sector']) && $value['sector'])
+                                            ? $value['sector'] : NULL;
               $row->reefer           = (isset($value['reefer']) && $value['reefer'])
                                             ? $value['reefer'] : NULL;
               $row->save();
