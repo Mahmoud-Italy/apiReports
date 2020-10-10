@@ -27,6 +27,12 @@ class ProductDetailResource extends JsonResource
             'bgTitle'       => $this->bgTitle,
             'bgColor'       => $this->bgColor,
 
+            'title1'         => $this->title1,
+            'title2'         => $this->title2,
+            'title3'         => $this->title3,
+            'title4'         => $this->title4,
+            'title5'         => $this->title5,
+
             'body1'         => $this->body1,
             'body2'         => $this->body2,
             'body3'         => $this->body3,
