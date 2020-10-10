@@ -210,11 +210,12 @@ class AppController extends Controller
     {
         $page = Product::where(['status' => true, 'trash' => false])->where('slug', $slug)->first();
         $row  = new ProductDetailResource(Product::findOrFail(($page->id) ?? 0));
+        $sector = Sector::where('id', $page->sector_id)->first();
         $related = ProductResource::collection(
                         Product::where(['status' => true, 'trash' => false])
                                 ->where('sector_id', $page->sector_id)
                                 ->paginate(10));
-        return response()->json(['row' => $row, 'related' => $related], 200);
+        return response()->json(['row' => $row, 'related' => $related, 'sector' => $sector], 200);
     }
 
 

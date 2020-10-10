@@ -85,6 +85,13 @@ class Product2 extends Model
 
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
+
+              $row->title1         = $value['title1'] ?? NULL;
+              $row->title2         = $value['title2'] ?? NULL;
+              $row->title3         = $value['title3'] ?? NULL;
+              $row->title4         = $value['title4'] ?? NULL;
+              $row->title5         = $value['title5'] ?? NULL;
+              
               $row->body1         = $value['body1'] ?? NULL;
               $row->body2         = $value['body2'] ?? NULL;
               $row->body3         = $value['body3'] ?? NULL;
