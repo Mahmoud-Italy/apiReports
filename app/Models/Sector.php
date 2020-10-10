@@ -173,4 +173,13 @@ class Sector extends Model
         }
     }
 
+
+    public static function getName($id='')
+    {
+       if(isset($id) && $id ) {
+          $row = self::findOrFail($id);
+       }
+       return $row ?? NULL;
+    }
+
 }

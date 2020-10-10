@@ -113,6 +113,11 @@ class Training extends Model
               $row->telephone_no        = $value['telephone_no'] ?? NULL;
               $row->email_Address       = $value['email_Address'] ?? NULL;
               $row->video_url           = $value['video_url'] ?? NULL;
+
+              $row->program_id          = (isset($value['pid']) && $value['pid'])
+                                            ? $value['pid'] ?? NULL;
+              $row->sector_id          = (isset($value['sid']) && $value['sid'])
+                                            ? $value['sid'] ?? NULL;
               $row->save();
 
               // files
