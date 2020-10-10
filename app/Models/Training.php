@@ -75,6 +75,15 @@ class Training extends Model
                   $obj->where('trash', true);
           }
 
+          // Filter By..
+            if(isset($value['filter']) && $value['filter']) {
+                if($value['filter_by'] == 'nationality') {
+                  $obj->where('nationality', $value['nationality']);
+                } else if($value['filter_by'] == 'program') {
+                  $obj->where('program', $value['program']);
+                }
+            }
+
           // order By..
           if(isset($value['order']) && $value['order']) {
             if($value['order_by'] == 'title')

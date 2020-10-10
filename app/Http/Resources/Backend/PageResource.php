@@ -228,7 +228,10 @@ class PageResource extends JsonResource
 
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
-            
+                
+            'has_footer'  => (int)$this->has_footer,
+            'has_header'  => (int)$this->has_header,
+
             'has_download'  => (int)$this->has_download,
             //'has_programs'  => (int)$this->has_programs,
             'status'        => (int)$this->status,

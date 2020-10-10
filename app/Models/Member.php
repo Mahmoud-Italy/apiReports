@@ -66,6 +66,14 @@ class Member extends Model
               });
           }
 
+          if(isset($value['filter']) && $value['filter']) {
+                if($value['filter_by'] == 'nationality') {
+                  $obj->where('nationality', $value['nationality']);
+                } else if($value['filter_by'] == 'program') {
+                  $obj->where('program', $value['program']);
+                }
+            }
+
           // status
           if(isset($value['status']) && $value['status']) {
               if($value['status'] == 'seen')
