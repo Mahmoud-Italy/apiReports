@@ -113,6 +113,9 @@ class Experience extends Model
               $row->telephone_no        = $value['telephone_no'] ?? NULL;
               $row->email_Address       = $value['email_Address'] ?? NULL;
               $row->video_url           = $value['video_url'] ?? NULL;
+
+              $row->reefer           = (isset($value['reefer']) && $value['reefer'])
+                                            ? $value['reefer'] : NULL;
               $row->save();
 
               // files
