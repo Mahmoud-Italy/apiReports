@@ -31,14 +31,22 @@ class PageController extends Controller
     }
 
     public function show($slug)
-    {
-        $navigation = Page::select('id', 'slug', 'title')
+    {   
+        $page = Page::where(['status' => true, 'trash' => false])
+                                ->whereNULL('parent_id')
+                                ->where('slug', $slug)->first();
+        $navigation = Page::where('parent_id', $page->id)
                                 ->where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
                                 ->get();
-        $page = Page::where('slug', $slug)->first();
+
+        $rows = PopularSearchResource::collection(Page::where('parent_id', $page->id)
+                                ->where(['status' => true, 'trash' => false])
+                                ->orderBy('sort', 'DESC')
+                                ->get());
+        
         $row = new PageResource(Page::findOrFail(($page->id) ?? 0));
-        return response()->json(['row' => $row, 'navigation' => $navigation], 200);
+        return response()->json(['row' => $row, 'navigation' => $navigation, 'rows'=> $rows], 200);
     }
 
 

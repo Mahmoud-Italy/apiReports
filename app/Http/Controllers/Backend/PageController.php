@@ -19,7 +19,11 @@ class PageController extends Controller
 
     public function index()
     {
-        $data = Page::get();
+        if(isset($request->parent_id) && $request->parent_id) {
+            $data = Page::where('parent_id', decrypt($request->parent_id))->get();
+        } else {
+            $data = Page::get();
+        }
         $rows = PageResource::collection(Page::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
