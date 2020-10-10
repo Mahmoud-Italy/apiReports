@@ -38,8 +38,8 @@ class ExperienceResource extends JsonResource
             'email_Address'      => $this->email_Address,
             'video_url'          => $this->video_url,
 
-            'program_name'      => Product::getName($this->program_id),
-            'sector_name'       => Sector::getName($this->sector_id),
+            'program'      => Product::getName($this->program_id),
+            'sector'       => Sector::getName($this->sector_id),
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,

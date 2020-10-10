@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Backend;
 
-use App\Models\Sector;
-use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TrainingResource extends JsonResource
@@ -37,9 +35,6 @@ class TrainingResource extends JsonResource
             'telephone_no'       => $this->telephone_no,
             'email_Address'      => $this->email_Address,
             'video_url'          => $this->video_url,
-
-            'program_name'      => Product::getName($this->program_id),
-            'sector_name'       => Sector::getName($this->sector_id),
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,
