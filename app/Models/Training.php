@@ -118,6 +118,8 @@ class Training extends Model
                                             ? $value['pid'] : NULL;
               $row->sector_id           = (isset($value['sid']) && $value['sid'])
                                             ? $value['sid'] : NULL;
+              $row->reefer           = (isset($value['reefer']) && $value['reefer'])
+                                            ? $value['reefer'] : NULL;
               $row->save();
 
               // files

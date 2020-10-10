@@ -40,6 +40,7 @@ class ExperienceResource extends JsonResource
 
             'program'      => Product::getName($this->program_id),
             'sector'       => Sector::getName($this->sector_id),
+            'reefer'       =>  $this->reefer,
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,
