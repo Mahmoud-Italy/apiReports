@@ -78,9 +78,9 @@ class Training extends Model
           // Filter By..
             if(isset($value['filter']) && $value['filter']) {
                 if($value['filter_by'] == 'nationality') {
-                  $obj->where('nationality', str_replace('-',' ',$value['nationality']));
+                  $obj->where('nationality', str_replace('-',' ',$value['filter']));
                 } else if($value['filter_by'] == 'program') {
-                  $obj->where('program', str_replace('-',' ',$value['program']));
+                  $obj->where('program', str_replace('-',' ',$value['filter']));
                 }
             }
 
