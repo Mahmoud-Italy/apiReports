@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Frontend;
 
+use App\Http\Resources\Frontend\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PageResource extends JsonResource
@@ -24,14 +25,14 @@ class PageResource extends JsonResource
             'download_name' => $this->download_name,
             'sort'          => (int)$this->sort,
             'has_faq'       => (int)$this->has_faq,
+            'has_application'=> (int)$this->has_application,
             'has_download'  => (int)$this->has_download,
+            //'has_programs'  => (int)$this->has_programs,
 
-            'has_header'    => (int)$this->has_header,
-            'has_footer'    => (int)$this->has_footer,
-
-            'has_application'  => (int)$this->has_application,
             'application_name' => $this->application_name,
             'application_path' => $this->application_path,
+
+            'programs'      => '',
 
 
             'slug'          => $this->slug,

@@ -21,18 +21,12 @@ class PageController extends Controller
 {
     public function index($value='')
     {
-        $navigation = Page::select('id', 'slug', 'title')
-                                ->where(['status' => true, 'trash' => false])
-                                ->orderBy('sort', 'DESC')
-                                ->get(); 
         $data = Page::where(['status' => true, 'trash' => false])
                                 ->orderBy('sort', 'DESC')
-                                ->paginate(20);
+                                ->get();
         $rows = PageResource::collection($data);
         return response()->json([
             'rows'        => $rows,
-            'navigation'  => $navigation,
-            'paginate'    => $this->paginate($rows)
         ], 200);
     }
 

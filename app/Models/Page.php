@@ -126,12 +126,26 @@ class Page extends Model
     }
 
 
+    public function childs() {
+        return $this->hasMany(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    }
+    public function parent() {
+        return $this->belongsTo(__NAMESPACE__.'\\'.class_basename(new self), 'parent_id'); 
+    }
+
+
     // fetchData
     public static function fetchData($value='')
     {
         // this way will fire up speed of the query
         $obj = self::query();
 
+
+          if(isset($value['parent_id']) && $value['parent_id']) {
+            $obj->where('parent_id', decrypt($value['parent_id']));
+          } else {
+            $obj->whereNULL('parent_id');
+          }
           
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -182,6 +196,9 @@ class Page extends Model
               $row                = (isset($id)) ? self::findOrFail($id) : new self;
               $row->slug          = strtolower($value['slug']) ?? NULL;
               $row->title         = $value['title'] ?? NULL;
+              $row->parent_id     = (isset($value['parent_id']) && $value['parent_id'])
+                                      ? decrypt($value['parent_id'])
+                                      : NULL;
               $row->bgTitle       = $value['bgTitle'] ?? NULL;
               $row->bgColor       = $value['bgColor'] ?? NULL;
 
@@ -274,13 +291,15 @@ class Page extends Model
               $row->body6_4       = $value['body6_4'] ?? NULL;
 
 
+            
+
               $row->download_name = $value['download_name'] ?? NULL;
               $row->sort          = (int)$value['sort'] ?? 0;
 
               $row->has_faq         = (isset($value['has_faq']) && $value['has_faq']) 
                                         ? (boolean)$value['has_faq'] 
                                         : false;
-                                        
+
               $row->has_application  = (isset($value['has_application']) && $value['has_application'])
                                         ? (boolean)$value['has_application'] : false;
               $row->application_name = (isset($value['application_name']) && $value['application_name']) 
@@ -291,15 +310,9 @@ class Page extends Model
               $row->has_download    = (isset($value['has_download']) && $value['has_download']) 
                                         ? (boolean)$value['has_download'] 
                                         : false;
-              $row->has_programs    = (isset($value['has_programs']) && $value['has_programs']) 
-                                        ? (boolean)$value['has_programs'] 
-                                        : false;
-              $row->has_header    = (isset($value['has_header']) && $value['has_header']) 
-                                        ? (boolean)$value['has_header'] 
-                                        : false;
-              $row->has_footer    = (isset($value['has_footer']) && $value['has_footer']) 
-                                        ? (boolean)$value['has_footer'] 
-                                        : false;
+              // $row->has_programs    = (isset($value['has_programs']) && $value['has_programs']) 
+              //                           ? (boolean)$value['has_programs'] 
+              //                           : false;
               $row->status          = (isset($value['status']) && $value['status']) 
                                         ? (boolean)$value['status'] 
                                         : false;
