@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use App\Models\Training;
 use App\Models\Experience;
 use App\Models\Instructor;
+use App\Models\NewApp;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\Sector;
@@ -54,6 +55,26 @@ class ExploreController extends Controller
    public function experiences(Request $request)
    {
       $data = Experience::fetchPeriod($request->headers->all(), $request->days);
+      return response()->json([
+            'total'      => $data['total'],
+            'percentage' => $data['percentage'],
+            'arrow'      => $data['arrow']
+        ], 200);
+   }
+
+
+   public function accrediations(Request $request)
+   {
+      $data = NewApp::fetchPeriod($request->headers->all(), $request->days, true);
+      return response()->json([
+            'total'      => $data['total'],
+            'percentage' => $data['percentage'],
+            'arrow'      => $data['arrow']
+        ], 200);
+   }
+   public function certificates(Request $request)
+   {
+      $data = NewApp::fetchPeriod($request->headers->all(), $request->days, false);
       return response()->json([
             'total'      => $data['total'],
             'percentage' => $data['percentage'],
