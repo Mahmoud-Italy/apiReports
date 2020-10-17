@@ -157,7 +157,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new TrainingProgramMailable($row, $data));
+                Mail::to(request('email_Address'))->send(new TrainingProgramMailable(request()->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -292,7 +292,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new MembershipMailable($request->all(), $data));
+                Mail::to(request('email_Address'))->send(new MembershipMailable(request()->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -310,7 +310,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new IamInstructorMailable($request->all(), $data));
+                Mail::to(request('email_Address'))->send(new IamInstructorMailable(request()->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -332,7 +332,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new IveExperienceMailable($request->all(), $data));
+                Mail::to(request('email_Address'))->send(new IveExperienceMailable(request()->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
