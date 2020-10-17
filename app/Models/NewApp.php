@@ -58,6 +58,13 @@ class NewApp extends Model
               });
           }
 
+          // Filter By..
+            if(isset($value['filter']) && $value['filter']) {
+                if($value['filter_by'] == 'nationality') {
+                  $obj->where('country', str_replace('-',' ',$value['filter']));
+                }
+            }
+
           // status
           if(isset($value['status']) && $value['status']) {
               if($value['status'] == 'seen')
