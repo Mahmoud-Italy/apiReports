@@ -51,10 +51,8 @@ class NewApp extends Model
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
             $obj->where(function($q) use ($value) {
-                $q->where('first_name', 'like', '%'.$value['search'].'%');
-                $q->orWhere('middle_name', 'like', '%'.$value['search'].'%');
-                $q->orWhere('last_name', 'like', '%'.$value['search'].'%');
-                $q->orWhere('email', 'like', '%'.$value['search'].'%');
+                $q->where('name', 'like', '%'.$value['search'].'%');
+                $q->orWhere('email_address', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
           }
@@ -69,18 +67,11 @@ class NewApp extends Model
                   $obj->where('trash', true);
           }
 
-          if(isset($value['filter']) && $value['filter']) {
-                if($value['filter_by'] == 'nationality') {
-                  $obj->where('nationality', str_replace('-',' ',$value['filter']));
-                } else if($value['filter_by'] == 'program') {
-                  $obj->where('program', str_replace('-',' ',$value['filter']));
-                }
-            }
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'name')
+              $obj->orderBy('name', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else

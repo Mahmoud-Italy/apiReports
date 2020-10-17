@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\NewApp;
 use App\Models\Training;
 use App\Models\Member;
 use App\Models\Instructor;
@@ -12,6 +13,7 @@ use App\Http\Resources\Backend\TrainingResource;
 use App\Http\Resources\Backend\MemberResource;
 use App\Http\Resources\Backend\InstructorResource;
 use App\Http\Resources\Backend\ExperienceResource;
+use App\Http\Resources\Backend\NewAppResource;
 
 class ApplicationController extends Controller
 {
@@ -31,15 +33,26 @@ class ApplicationController extends Controller
         } else if ($type == 'experience-applications') {
             $data = Experience::get();
             $rows = ExperienceResource::collection(Experience::fetchData(request()->all()));
-        } else {
+        } else if ($type == 'trainings-application') {
             $data = Training::get();
             $rows = TrainingResource::collection(Training::fetchData(request()->all()));
+        }
+
+        else if ($type == 'accrediation-application') {
+            $data = NewApp::where('is_accrediations', true)->get();
+            $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
+        }
+        else if ($type == 'certficiate-application') {
+            $data = NewApp::where('is_accrediations', false)->get();
+            $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }
         $statusBar = [
             'app1' => Training::count(),
             'app2' => Member::count(),
             'app3' => Instructor::count(),
-            'app4' => Experience::count()
+            'app4' => Experience::count(),
+            'app5' => NewApp::where('is_accrediations', true)->count(),
+            'app6' => NewApp::where('is_accrediations', false)->count()
         ];
         return response()->json([
             'statusBar'   => $statusBar,
