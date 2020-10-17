@@ -70,6 +70,7 @@ use App\Http\Resources\Backend\NewAppLayoutResource;
 use App\Http\Requests\NewsletterStoreRequest;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\TrainingStoreRequest;
+use App\Http\Requests\NewAppStoreRequest;
 
 
 class AppController extends Controller
@@ -176,7 +177,7 @@ class AppController extends Controller
         $row = new NewAppLayoutResource(NewAppLayout::find($id));
         return response()->json(['row' => $row], 200);
     }
-    public function doNewApp(Request $request)
+    public function doNewApp(NewAppStoreRequest $request)
     {
         $row = NewApp::createOrUpdate(NULL, $request->all());
         if($row === true) {

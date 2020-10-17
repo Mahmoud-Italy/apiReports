@@ -132,12 +132,12 @@ class NewApp extends Model
 
 
 
-              // Image
+              // logo
               if(isset($value['logo'])) {
                 if($value['logo']) {
                   $logo = Imageable::uploadImage($value['logo']);
-                  $row->image()->delete();
-                  $row->image()->create(['url' => $logo]);
+                  $row->logo()->delete();
+                  $row->logo()->create(['url' => $logo]);
                 }
               }
 
