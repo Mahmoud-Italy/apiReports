@@ -42,7 +42,7 @@ class ApplicationController extends Controller
             $data = NewApp::where('is_accrediation', true)->get();
             $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }
-        else if ($type == 'certficiate-applications') {
+        else if ($type == 'certificate-applications') {
             $data = NewApp::where('is_accrediation', false)->get();
             $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }

@@ -39,6 +39,9 @@ class NewAppResource extends JsonResource
             'email_address'       => $this->email_address,
             'website_url'         => $this->website_url,
 
+            'nationality'         => $this->country,
+            'program'             => '-',
+
             //
             'general1'           => (int)$this->general1,
             'general2'           => (int)$this->general2,
