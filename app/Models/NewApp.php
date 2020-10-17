@@ -235,7 +235,7 @@ class NewApp extends Model
 
   public static function fetchPeriodDay($header, $days, $isType)
     {
-        $obj = self::where('is_accrediation', $isType);
+        $obj = self::where('is_accreditation', $isType);
 
             // Today & else = Yesterday, 28 Days, 90 Days , 180 Days
             if($days == 0) {
