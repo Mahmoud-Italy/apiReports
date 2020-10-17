@@ -33,16 +33,16 @@ class ApplicationController extends Controller
         } else if ($type == 'experience-applications') {
             $data = Experience::get();
             $rows = ExperienceResource::collection(Experience::fetchData(request()->all()));
-        } else if ($type == 'trainings-application') {
+        } else if ($type == 'trainings-applications') {
             $data = Training::get();
             $rows = TrainingResource::collection(Training::fetchData(request()->all()));
         }
 
-        else if ($type == 'accrediation-application') {
+        else if ($type == 'accrediation-applications') {
             $data = NewApp::where('is_accrediation', true)->get();
             $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }
-        else if ($type == 'certficiate-application') {
+        else if ($type == 'certficiate-applications') {
             $data = NewApp::where('is_accrediation', false)->get();
             $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }
