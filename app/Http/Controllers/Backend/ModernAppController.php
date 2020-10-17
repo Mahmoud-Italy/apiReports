@@ -32,7 +32,7 @@ class ModernAppController extends Controller
 
     public function update($id)
     {
-        $row = NewAppLayout::createOrUpdate($id, $request->all());
+        $row = NewAppLayout::createOrUpdate($id, request()->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {
