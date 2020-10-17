@@ -42,11 +42,12 @@ class NewApp extends Model
 
 
     // fetch Data
-    public static function fetchData($value='')
+    public static function fetchData($value='',$id)
     {
         // this way will fire up speed of the query
         $obj = self::query();
 
+          $obj->where('is_accreditation', $id);
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -97,7 +98,6 @@ class NewApp extends Model
 
               // Row
               $row                      = (isset($id)) ? self::findOrFail($id) : new self;
-
               $row->name_of_institution = $value['name_of_institution'] ?? NULL;
               $row->address             = $value['address'] ?? NULL;
               $row->country             = $value['country'] ?? NULL;
@@ -159,7 +159,7 @@ class NewApp extends Model
                 if($value['file3']) {
                   $file3 = Imageable::uploadImage($value['file3']);
                   $row->file3()->delete();
-                  $row->file3()->create(['url' => $file1, 'is_pdf' => 3]);
+                  $row->file3()->create(['url' => $file3, 'is_pdf' => 3]);
                 }
               }
               if(isset($value['file4'])) {

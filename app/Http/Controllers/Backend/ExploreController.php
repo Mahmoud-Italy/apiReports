@@ -65,7 +65,7 @@ class ExploreController extends Controller
 
    public function accreditations(Request $request)
    {
-      $data = NewApp::fetchPeriod($request->headers->all(), $request->days, true);
+      $data = NewApp::fetchPeriod($request->headers->all(), $request->days, 1);
       return response()->json([
             'total'      => $data['total'],
             'percentage' => $data['percentage'],
@@ -74,7 +74,7 @@ class ExploreController extends Controller
    }
    public function certificates(Request $request)
    {
-      $data = NewApp::fetchPeriod($request->headers->all(), $request->days, false);
+      $data = NewApp::fetchPeriod($request->headers->all(), $request->days, 0);
       return response()->json([
             'total'      => $data['total'],
             'percentage' => $data['percentage'],

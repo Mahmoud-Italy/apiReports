@@ -40,11 +40,11 @@ class ApplicationController extends Controller
 
         else if ($type == 'accreditation-applications') {
             $data = NewApp::where('is_accreditation', 1)->get();
-            $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
+            $rows = NewAppResource::collection(NewApp::fetchData(request()->all(), 1));
         }
         else if ($type == 'certificate-applications') {
             $data = NewApp::where('is_accreditation', 0)->get();
-            $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
+            $rows = NewAppResource::collection(NewApp::fetchData(request()->all(), 0));
         }
         $statusBar = [
             'app1' => Training::count(),
