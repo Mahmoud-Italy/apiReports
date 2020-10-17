@@ -40,7 +40,7 @@ class NewAppResource extends JsonResource
             'website_url'         => $this->website_url,
 
             'nationality'         => $this->country,
-            'program'             => false,
+            'program'             => $this->pname ?? false,
 
             //
             'general1'           => (int)$this->general1,

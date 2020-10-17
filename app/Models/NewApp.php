@@ -106,6 +106,8 @@ class NewApp extends Model
               // Row
               $row                      = (isset($id)) ? self::findOrFail($id) : new self;
               $row->is_accreditation    = $value['type_id'] ?? false;
+              $row->pname               = (isset($value['pname']) && $value['pname'])
+                                            ? $value['pname'] : NULL;
               $row->name_of_institution = $value['name_of_institution'] ?? NULL;
               $row->address             = $value['address'] ?? NULL;
               $row->country             = $value['country'] ?? NULL;
