@@ -85,6 +85,9 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
         $router->get('contacts', 'PageController@contacts');
         $router->post('contacts', 'PageController@doContacts');
         
+        $router->get('new-applications/{id}', 'AppController@newApp');
+        $router->post('new-applications', 'AppController@doNewApp');
+
         $router->get('trainings-applications', 'AppController@trainings');
         $router->post('trainings-applications', 'AppController@doTrainings');
 

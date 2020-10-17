@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Search;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\NewApp;
+use App\Models\NewAppLayout;
 use App\Models\OnlineTraining as Online;
 use App\Models\Imageable;
 use App\Models\Certificate;
@@ -16,6 +18,8 @@ use App\Mail\IamInstructorMailable;
 use App\Mail\IveExperienceMailable;
 use App\Mail\TrainingProgramMailable;
 use App\Mail\MembershipMailable;
+use App\Mail\AccreditationMailable;
+use App\Mail\CertificateMailable;
 use Illuminate\Support\Facades\Mail;
 
 use App\Models\Faq;
@@ -62,6 +66,7 @@ use App\Http\Resources\Frontend\MyCertificateResource;
 use App\Http\Resources\Frontend\OurCertificateResource;
 use App\Http\Resources\Frontend\SettingResource;
 use App\Http\Resources\Frontend\ResultResource;
+use App\Http\Resources\Backend\NewAppLayoutResource;
 use App\Http\Requests\NewsletterStoreRequest;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\TrainingStoreRequest;
@@ -151,7 +156,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($row->email_Address)->send(new TrainingProgramMailable($row, $data));
+                Mail::to($request->email_Address)->send(new TrainingProgramMailable($row, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -163,6 +168,32 @@ class AppController extends Controller
     {
        $row = new SettingResource(Setting::find(7));
         return response()->json(['row' => $row], 200);
+    }
+
+
+    public function newApp($id)
+    {
+        $row = new NewAppLayoutResource(NewAppLayout::find($id));
+        return response()->json(['row' => $row], 200);
+    }
+    public function doNewApp(Request $request)
+    {
+        $row = NewApp::createOrUpdate(NULL, $request->all());
+        if($row === true) {
+            // Send Email
+            $data = EmailTemplate::find(1);
+            try {
+                if($request->type_id == 1) {
+                    Mail::to($request->email_address)->send(new AccreditationMailable($row, $data));
+                } else {
+                    Mail::to($request->email_address)->send(new CertificateMailable($row, $data));
+                }
+            } catch (\Exception $e) { }
+
+            return response()->json(['message' => ''], 201);
+        } else {
+            return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
+        }
     }
 
 
@@ -260,7 +291,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($row->email_Address)->send(new MembershipMailable($row, $data));
+                Mail::to($request->email_Address)->send(new MembershipMailable($row, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -278,7 +309,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($row->email_Address)->send(new IamInstructorMailable($row, $data));
+                Mail::to($request->email_Address)->send(new IamInstructorMailable($row, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -300,7 +331,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($row->email_Address)->send(new IveExperienceMailable($row, $data));
+                Mail::to($request->email_Address)->send(new IveExperienceMailable($row, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TrainingCenterMailable extends Mailable
+class CertificateMailable extends Mailable
 {
     use Queueable, SerializesModels;
     public $row;
@@ -30,7 +30,7 @@ class TrainingCenterMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.trainingCenterApplication')
+        return $this->view('emails.certificateApplication')
                     ->from('info@aips.com', 'AIPS')
                     ->subject('Your application sent successfully.');
     }
