@@ -44,4 +44,30 @@ class AboutController extends Controller
     {
         //
     }
+
+    public function active($id)
+    {
+        //
+    }
+
+    public function inactive($id)
+    {
+        //
+    }
+
+    public function trash($id)
+    {   
+        //
+    }
+
+    public function restore($id)
+    {   
+        //
+    }
+
+    public function export()
+    {   
+        //
+    }
+    
 }

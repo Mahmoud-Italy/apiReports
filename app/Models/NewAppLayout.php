@@ -26,6 +26,7 @@ class NewAppLayout extends Model
               $row->bgColor         = $value['bgColor'] ?? NULL;
               $row->bgTitle         = $value['bgTitle'] ?? NULL;
               $row->bgSubTitle      = $value['bgSubTitle'] ?? NULL;
+
               $row->text1           = $value['text1'] ?? NULL;
               $row->text2           = $value['text2'] ?? NULL;
               $row->text3           = $value['text3'] ?? NULL;

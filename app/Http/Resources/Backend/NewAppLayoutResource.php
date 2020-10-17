@@ -16,6 +16,8 @@ class NewAppLayoutResource extends JsonResource
     {
         return [
             'id'            => $this->id,
+            'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
+
             'bgColor'       => $this->bgColor,
             'bgTitle'       => $this->bgTitle,
             'bgSubTitle'    => $this->bgSubTitle,
@@ -33,6 +35,7 @@ class NewAppLayoutResource extends JsonResource
 
             'text4'         => $this->text4,
 
+            // Step 2
             'general1_title' => $this->general1_title,
             'general1_body'  => $this->general1_body,
             'general2_title' => $this->general2_title,
@@ -49,6 +52,7 @@ class NewAppLayoutResource extends JsonResource
 
             'text5'         => $this->text5,
 
+            // Step 3
             'authority_note'  => $this->authority_note,
             'authority_title' => $this->authority_title,
 
