@@ -30,12 +30,12 @@ class MemberStoreRequest extends FormRequest
             'state'               => 'required',
             'type'                => 'required',
             'establishment_date'  => 'required',
-            'commerical_register_no' => 'required'
+            'commerical_register_no' => 'required',
             'telephone_no'        => 'required',
             'email_address'       => 'required|email',
             'website_url'         => 'required',
             'name'                => 'required',
-            'date'                => 'required',
+            'date'                => 'required'
         ];
     }
 
