@@ -36,11 +36,11 @@ class NewAppResource extends JsonResource
             'establishment_date'  => $this->establishment_date,
             'commerical_register_no' => $this->commerical_register_no,
             'telephone_no'        => $this->telephone_no,
-            'email_address'       => $this->email_address,
+            'email_Address'       => $this->email_address,
             'website_url'         => $this->website_url,
 
             'nationality'         => $this->country,
-            'program'             => '-',
+            'program'             => false,
 
             //
             'general1'           => (int)$this->general1,
