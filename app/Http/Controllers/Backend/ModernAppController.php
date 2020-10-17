@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Backend\NewAppLayoutResource;
 
-class AboutController extends Controller
+class ModernAppController extends Controller
 {
     function __construct()
     {
