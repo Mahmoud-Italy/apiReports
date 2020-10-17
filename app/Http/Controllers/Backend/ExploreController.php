@@ -63,7 +63,7 @@ class ExploreController extends Controller
    }
 
 
-   public function accrediations(Request $request)
+   public function accreditations(Request $request)
    {
       $data = NewApp::fetchPeriod($request->headers->all(), $request->days, true);
       return response()->json([

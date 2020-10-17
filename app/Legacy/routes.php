@@ -47,7 +47,7 @@ class Routes
       $this->app->get($uri.'/totalMembers', $controller.'@members');
       $this->app->get($uri.'/totalInstructors', $controller.'@instructors');
       $this->app->get($uri.'/totalExperiences', $controller.'@experiences');
-      $this->app->get($uri.'/totalAccrediations', $controller.'@accrediations');
+      $this->app->get($uri.'/totalAccreditations', $controller.'@accreditations');
       $this->app->get($uri.'/totalCertificates', $controller.'@certificates');
       $this->app->get($uri.'/totalUsers', $controller.'@users');
       $this->app->get($uri.'/lineChart', $controller.'@lineChart');
