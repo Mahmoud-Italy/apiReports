@@ -39,11 +39,11 @@ class ApplicationController extends Controller
         }
 
         else if ($type == 'accreditation-applications') {
-            $data = NewApp::where('is_accreditation', true)->get();
+            $data = NewApp::where('is_accreditation', 1)->get();
             $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }
         else if ($type == 'certificate-applications') {
-            $data = NewApp::where('is_accreditation', false)->get();
+            $data = NewApp::where('is_accreditation', 0)->get();
             $rows = NewAppResource::collection(NewApp::fetchData(request()->all()));
         }
         $statusBar = [
@@ -51,8 +51,8 @@ class ApplicationController extends Controller
             'app2' => Member::count(),
             'app3' => Instructor::count(),
             'app4' => Experience::count(),
-            'app5' => NewApp::where('is_accreditation', true)->count(),
-            'app6' => NewApp::where('is_accreditation', false)->count()
+            'app5' => NewApp::where('is_accreditation', 1)->count(),
+            'app6' => NewApp::where('is_accreditation', 0)->count()
         ];
         return response()->json([
             'statusBar'   => $statusBar,
