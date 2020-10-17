@@ -179,15 +179,15 @@ class AppController extends Controller
     }
     public function doNewApp(NewAppStoreRequest $request)
     {
-        $row = NewApp::createOrUpdate(NULL, $request->all());
+        $row = NewApp::createOrUpdate(NULL, request()->all());
         if($row === true) {
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                if($request->type_id == 1) {
-                    Mail::to($request->email_address)->send(new AccreditationMailable($row, $data));
+                if(request('type_id') == 1) {
+                    Mail::to($request->email_address)->send(new AccreditationMailable(request()->all(), $data));
                 } else {
-                    Mail::to($request->email_address)->send(new CertificateMailable($row, $data));
+                    Mail::to($request->email_address)->send(new CertificateMailable(request()->all(), $data));
                 }
             } catch (\Exception $e) { }
 
@@ -292,7 +292,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new MembershipMailable($row, $data));
+                Mail::to($request->email_Address)->send(new MembershipMailable($request->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -310,7 +310,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new IamInstructorMailable($row, $data));
+                Mail::to($request->email_Address)->send(new IamInstructorMailable($request->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -332,7 +332,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to($request->email_Address)->send(new IveExperienceMailable($row, $data));
+                Mail::to($request->email_Address)->send(new IveExperienceMailable($request->all(), $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
