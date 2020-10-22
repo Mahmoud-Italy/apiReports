@@ -7,6 +7,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/clear-cache', function(){
+    \Cache::flush();
+});
 
 # API v1 created at August, 2020
 $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
