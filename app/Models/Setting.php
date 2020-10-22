@@ -75,6 +75,8 @@ class Setting extends Model
               $row->bgTitle    = (isset($value['bgTitle'])) ? $value['bgTitle'] : NULL;
               $row->bgSubTitle = (isset($value['bgSubTitle'])) ? $value['bgSubTitle'] : NULL;
               $row->bgColor    = (isset($value['bgColor'])) ? $value['bgColor'] : NULL;
+              $row->full_name_hint = (isset($value['full_name_hint']) && $value['full_name_hint']) 
+                                ? $value['full_name_hint'] : NULL;
               $row->body1      = (isset($value['body1']) && $value['body1']) ? $value['body1'] : NULL;
               $row->body2      = (isset($value['body2']) && $value['body2']) ? $value['body2'] : NULL;
               $row->body3      = (isset($value['body3']) && $value['body3']) ? $value['body3'] : NULL;

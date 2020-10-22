@@ -23,6 +23,7 @@ class SettingResource extends JsonResource
             'bgColor'       => $this->bgColor,
             'title'         => $this->title,
 
+            'full_name_hint' => $this->full_name_hint,
             'body1'         => $this->body1,
             'body2'         => $this->body2,
             'body3'         => $this->body3,
