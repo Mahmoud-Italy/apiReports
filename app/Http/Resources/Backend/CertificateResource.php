@@ -21,6 +21,24 @@ class CertificateResource extends JsonResource
             'id'            => $this->id,
             'image'        => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
 
+            'has_download'     => (int)$this->has_download,
+            'download_name'    => $this->download_name,
+            'download_file'    => ($this->pdf) 
+                                  ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
+            'download_image'   => ($this->image_pdf) 
+                                  ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+
+            'has_application'  => (int)$this->has_application,
+            'application_name' => $this->application_name,
+            'application_path' => $this->application_path,
+
+            'has_faq'          => (int)$this->has_faq,
+            'faq_link'         => $this->faq_link,
+
+            'has_payment'      => (int)$this->has_payment,
+            'payment_name'     => $this->payment_name,
+            'payment_link'     => $this->payment_link,
+            
             'bgSubTitle1'   => $this->bgSubTitle1,
             'bgTitle1'      => $this->bgTitle1,
             'bgColor1'      => $this->bgColor1,
@@ -29,11 +47,6 @@ class CertificateResource extends JsonResource
             'cat1_name'      => Setting::select('body1')->where('id', 6)->first(),
             'cat2_name'      => Setting::select('body2')->where('id', 6)->first(),
             'cat3_name'      => Setting::select('body3')->where('id', 6)->first(),
-
-            'has_download'   => (int)$this->has_download,
-            'download_name'  => $this->download_name,
-            'download_file'  => ($this->pdf) ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
-            'download_image' => ($this->image_pdf) ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
 
 
             'image2'        => ($this->image2) ? request()->root() .'/uploads/' . $this->image2->url : NULL,

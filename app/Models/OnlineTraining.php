@@ -274,13 +274,12 @@ class OnlineTraining extends Model
               $row->body6_4       = $value['body6_4'] ?? NULL;
 
 
-              $row->download_name = $value['download_name'] ?? NULL;
-              $row->sort          = (int)$value['sort'] ?? 0;
-
               $row->has_faq         = (isset($value['has_faq']) && $value['has_faq']) 
-                                        ? (boolean)$value['has_faq'] 
-                                        : false;
-              
+                                        ? (boolean)$value['has_faq'] : false;
+              $row->faq_link       = (isset($value['faq_link']) && $value['faq_link']) 
+                                        ? $value['faq_link'] : NULL;
+
+
               $row->has_application  = (isset($value['has_application']) && $value['has_application'])
                                         ? (boolean)$value['has_application'] : false;
               $row->application_name = (isset($value['application_name']) && $value['application_name']) 
@@ -288,12 +287,24 @@ class OnlineTraining extends Model
               $row->application_path = (isset($value['application_path']) && $value['application_path']) 
                                         ? $value['application_path'] : NULL;
                                         
+                                        
               $row->has_download    = (isset($value['has_download']) && $value['has_download']) 
-                                        ? (boolean)$value['has_download'] 
-                                        : false;
-              $row->has_programs    = (isset($value['has_programs']) && $value['has_programs']) 
-                                        ? (boolean)$value['has_programs'] 
-                                        : false;
+                                        ? (boolean)$value['has_download']  : false;
+              $row->download_name   = $value['download_name'] ?? NULL;
+
+
+              $row->has_payment     = (isset($value['has_payment']) && $value['has_payment'])
+                                        ? (boolean)$value['has_payment'] : false;
+              $row->payment_name    = (isset($value['payment_name']) && $value['payment_name']) 
+                                        ? $value['payment_name'] : NULL;
+              $row->payment_link    = (isset($value['payment_link']) && $value['payment_link']) 
+                                        ? $value['payment_link'] : NULL;
+
+
+              // $row->has_programs    = (isset($value['has_programs']) && $value['has_programs']) 
+              //                           ? (boolean)$value['has_programs'] 
+              //                           : false;
+              $row->sort            = (int)$value['sort'] ?? 0;
               $row->status          = (isset($value['status']) && $value['status']) 
                                         ? (boolean)$value['status'] 
                                         : false;

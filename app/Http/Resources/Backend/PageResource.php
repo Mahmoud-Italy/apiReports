@@ -18,10 +18,7 @@ class PageResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) ? request()->root() .'/uploads/' . $this->image->url : NULL,
-            'download_file' => ($this->pdf) 
-                                ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
-            'download_image' => ($this->image_pdf) 
-                                ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+            
 
             'childs'        => count($this->childs),
             'parent_name'   => ($this->parent) ? $this->parent->title : NULL,
@@ -219,21 +216,29 @@ class PageResource extends JsonResource
             'timestamp'     => $this->created_at,
 
 
-            // Status & Visibility
+            'has_download'     => (int)$this->has_download,
+            'download_name'    => $this->download_name,
+            'download_file'    => ($this->pdf) 
+                                  ? request()->root() . '/uploads/' . $this->pdf->url : NULL,
+            'download_image'   => ($this->image_pdf) 
+                                  ? request()->root() . '/uploads/' . $this->image_pdf->url : NULL,
+
             'has_application'  => (int)$this->has_application,
             'application_name' => $this->application_name,
             'application_path' => $this->application_path,
 
-            'download_name'    => $this->download_name,
+            'has_faq'          => (int)$this->has_faq,
+            'faq_link'         => $this->faq_link,
 
-            'sort'          => (int)$this->sort,
-            'has_faq'       => (int)$this->has_faq,
-                
+            'has_payment'      => (int)$this->has_payment,
+            'payment_name'     => $this->payment_name,
+            'payment_link'     => $this->payment_link,
+
+            // Status & Visibility
             'has_footer'  => (int)$this->has_footer,
             'has_header'  => (int)$this->has_header,
 
-            'has_download'  => (int)$this->has_download,
-            //'has_programs'  => (int)$this->has_programs,
+            'sort'          => (int)$this->sort,
             'status'        => (int)$this->status,
             'trash'         => (int)$this->trash,
             'loading'       => false

@@ -140,22 +140,34 @@ class Membership extends Model
               $row->label2_4      = $value['label2_4'] ?? NULL;
               $row->color2_4      = $value['color2_4'] ?? NULL;
 
-              $row->download_name = $value['download_name'] ?? NULL;
-              $row->sort          = (int)$value['sort'] ?? 0;
-              $row->has_faq       = (isset($value['has_faq']) && $value['has_faq']) 
-                                      ? (boolean)$value['has_faq'] 
-                                      : false;
-                                      
+
+              $row->has_faq         = (isset($value['has_faq']) && $value['has_faq']) 
+                                        ? (boolean)$value['has_faq'] : false;
+              $row->faq_link       = (isset($value['faq_link']) && $value['faq_link']) 
+                                        ? $value['faq_link'] : NULL;
+
+
               $row->has_application  = (isset($value['has_application']) && $value['has_application'])
                                         ? (boolean)$value['has_application'] : false;
               $row->application_name = (isset($value['application_name']) && $value['application_name']) 
                                         ? $value['application_name'] : NULL;
               $row->application_path = (isset($value['application_path']) && $value['application_path']) 
                                         ? $value['application_path'] : NULL;
+                                        
+                                        
+              $row->has_download    = (isset($value['has_download']) && $value['has_download']) 
+                                        ? (boolean)$value['has_download']  : false;
+              $row->download_name   = $value['download_name'] ?? NULL;
 
-              $row->has_download  = (isset($value['has_download']) && $value['has_download']) 
-                                      ? (boolean)$value['has_download'] 
-                                      : false;
+
+              $row->has_payment     = (isset($value['has_payment']) && $value['has_payment'])
+                                        ? (boolean)$value['has_payment'] : false;
+              $row->payment_name    = (isset($value['payment_name']) && $value['payment_name']) 
+                                        ? $value['payment_name'] : NULL;
+              $row->payment_link    = (isset($value['payment_link']) && $value['payment_link']) 
+                                        ? $value['payment_link'] : NULL;
+
+              $row->sort          = (int)$value['sort'] ?? 0;
               $row->status        = (isset($value['status']) && $value['status']) 
                                       ? (boolean)$value['status'] 
                                       : false;

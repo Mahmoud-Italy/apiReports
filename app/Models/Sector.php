@@ -117,10 +117,7 @@ class Sector extends Model
               $row->bgTitle        = $value['bgTitle'] ?? NULL;
               $row->bgColor        = $value['bgColor'] ?? NULL;
               $row->sort           = (int)$value['sort'] ?? 0;
-              $row->status         = (boolean)$value['status'] ?? false;
-
-              $row->download_name        = $value['download_name'] ?? NULL;
-              
+              $row->status         = (boolean)$value['status'] ?? false;              
               $row->save();
 
 
