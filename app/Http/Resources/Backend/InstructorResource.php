@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Backend;
 
-use App\Http\Resources\QualifcationResource;
+use App\Http\Resources\Backend\QualifcationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class InstructorResource extends JsonResource

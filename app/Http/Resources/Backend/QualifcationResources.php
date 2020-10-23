@@ -4,7 +4,7 @@ namespace App\Http\Resources\Backend;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QualifcationsResource extends JsonResource
+class QualifcationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
