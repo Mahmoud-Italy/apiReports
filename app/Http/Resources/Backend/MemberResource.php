@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Backend;
 
-use App\Http\Resources\QualifcationsResource;
+use App\Http\Resources\QualifcationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MemberResource extends JsonResource
@@ -45,7 +45,7 @@ class MemberResource extends JsonResource
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,
-            'qualifications'     => new QualifcationsResource($this->qualifcations),
+            'qualifications'     => new QualifcationResource($this->qualifcations),
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
