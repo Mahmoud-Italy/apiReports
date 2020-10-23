@@ -49,7 +49,7 @@ class ExperienceResource extends JsonResource
 
             'courses'            => $this->courses,
             'languages'          => $this->languages,
-            'qualifications'      => new QualifcationResource($this->qualifcations),
+            'qualifications'      => ($this->qualifications) ? new QualifcationResource($this->qualifcations) : NULL,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
