@@ -33,7 +33,7 @@ class NewAppResource extends JsonResource
             'country'             => $this->country,
             'state'               => $this->state,
             'type'                => $this->type,
-            'establishment_date'  => $this->establishment_date,
+            'establishment_date'  => date('Y-m-d', strtotime($this->establishment_date)),
             'commerical_register_no' => $this->commerical_register_no,
             'telephone_no'        => $this->telephone_no,
             'email_Address'       => $this->email_address,
@@ -57,7 +57,7 @@ class NewAppResource extends JsonResource
             'authority6'         => (int)$this->authority6,
 
             'name'                => $this->name,
-            'date'                => $this->date,
+            'date'                => date('Y-m-d', strtotime($this->date)),
             
 
             // Dates
