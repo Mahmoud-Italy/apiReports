@@ -31,7 +31,7 @@ class IveExperienceMailable extends Mailable
     public function build()
     {
         return $this->view('emails.iveExperienceApplication')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Your application sent successfully.');
     }
 }

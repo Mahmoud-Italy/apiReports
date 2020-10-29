@@ -31,7 +31,7 @@ class IamInstructorMailable extends Mailable
     public function build()
     {
         return $this->view('emails.iamInstructorApplication')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Your application sent successfully.');
     }
 }

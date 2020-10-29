@@ -31,7 +31,7 @@ class WelcomeMailable extends Mailable
     public function build()
     {
         return $this->view('emails.welcome')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Your account verified successfully.');
     }
 }

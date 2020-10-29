@@ -31,7 +31,7 @@ class AccreditationMailable extends Mailable
     public function build()
     {
         return $this->view('emails.accreditationApplication')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Your application sent successfully.');
     }
 }

@@ -31,7 +31,7 @@ class MembershipMailable extends Mailable
     public function build()
     {
         return $this->view('emails.membershipApplication')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Your application sent successfully.');
     }
 }

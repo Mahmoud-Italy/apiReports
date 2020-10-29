@@ -31,7 +31,7 @@ class ResetMailable extends Mailable
     public function build()
     {
         return $this->view('emails.reset')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Your password reset successfully.');
     }
 }

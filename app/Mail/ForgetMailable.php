@@ -31,7 +31,7 @@ class ForgetMailable extends Mailable
     public function build()
     {
         return $this->view('emails.forget')
-                    ->from('info@aips.com', 'AIPS')
+                    ->from('info@aips.us', 'AIPS')
                     ->subject('Forget password.');
     }
 }
