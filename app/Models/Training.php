@@ -123,8 +123,11 @@ class Training extends Model
               $row->email_Address       = $value['email_Address'] ?? NULL;
               $row->video_url           = $value['video_url'] ?? NULL;
 
-              $row->program          = (isset($value['program']) && $value['program'])
-                                            ? $value['program'] : NULL;
+              $row->pname           = (isset($value['pname']) && $value['pname'])
+                                            ? $value['pname'] : NULL;
+
+              // $row->program          = (isset($value['program']) && $value['program'])
+              //                               ? $value['program'] : NULL;
               $row->sector           = (isset($value['sector']) && $value['sector'])
                                             ? $value['sector'] : NULL;
               $row->reefer           = (isset($value['reefer']) && $value['reefer'])
@@ -182,7 +185,7 @@ class Training extends Model
                 $row->courses()->delete();
                 foreach ($value['courses'] as $course) {
                   if(isset($course['program']) && $course['program']) {
-                    if($course['certificate']) {
+                    if(isset($course['certificate']) && $course['certificate']) {
                       $certificate = Imageable::uploadImage($course['certificate']);
                     }
                    $row->courses()->create([

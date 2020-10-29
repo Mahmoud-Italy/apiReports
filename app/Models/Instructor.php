@@ -124,6 +124,8 @@ class Instructor extends Model
 
               $row->reefer           = (isset($value['reefer']) && $value['reefer'])
                                             ? $value['reefer'] : NULL;
+              $row->pname           = (isset($value['pname']) && $value['pname'])
+                                            ? $value['pname'] : NULL;
               $row->save();
 
               // files
@@ -177,7 +179,7 @@ class Instructor extends Model
                 $row->courses()->delete();
                 foreach ($value['courses'] as $course) {
                   if(isset($course['program']) && $course['program']) {
-                    if($course['certificate']) {
+                    if(isset($course['certificate']) && $course['certificate']) {
                       $certificate = Imageable::uploadImage($course['certificate']);
                     }
                    $row->courses()->create([
