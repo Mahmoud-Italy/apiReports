@@ -86,8 +86,12 @@ class ApplicationController extends Controller
             $data = Instructor::query();
         } else if ($type == 'experience-applications') {
             $data = Experience::query();
-        } else {
+        } else if ($type == 'trainings-applications') {
             $data = Training::query();
+        } else if ($type == 'certificate-applications') {
+            $data = NewApp::where('is_accreditation', false);
+        } else if ($type == 'accreditation-applications') {
+            $data = NewApp::where('is_accreditation', true);
         }
 
         if(request('id')) {
@@ -109,8 +113,12 @@ class ApplicationController extends Controller
             $rows = InstructorResource::collection($data);
         } else if ($type == 'experience-applications') {
             $rows = ExperienceResource::collection($data);
-        } else {
+        } else if ($type == 'trainings-applications') {
             $rows = TrainingResource::collection($data);
+        } else if ($type == 'certificate-applications') {
+            $data = NewAppResource::collection($data);
+        } else if ($type == 'accreditation-applications') {
+            $data = NewAppResource::collection($data);
         }
         return response()->json(['rows' => $rows], 200);
     }

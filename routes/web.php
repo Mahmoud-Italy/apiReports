@@ -27,7 +27,7 @@ $router->group(['prefix' => 'api/v1'], function($router) use ($app) {
 
         $router->get('applications/{type}', 'ApplicationController@index');
         $router->get('applications/{type}/{id}', 'ApplicationController@show');
-        $router->get('applications/{type}/export', 'ApplicationController@export');
+        $router->get('applications/{type}/export/file', 'ApplicationController@export');
         $router->delete('applications/{type}/{id}', 'ApplicationController@destroy');
 
         $app->apiResource('memberships', 'MembershipController');
