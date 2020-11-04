@@ -45,7 +45,8 @@ class ExperienceResource extends JsonResource
             'email_Address'      => $this->email_Address,
             'video_url'          => $this->video_url,
 
-            'program'      => $this->program,
+            'program'             => $this->pname ?? NULL,
+            
             'sector'       => $this->sector,
             'reefer'       => $this->reefer,
 

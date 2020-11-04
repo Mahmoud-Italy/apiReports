@@ -35,7 +35,7 @@ class MemberResource extends JsonResource
             'nationality'        => $this->nationality,
             'nationality_slug'   => str_replace(' ', '-', $this->nationality),
 
-            'program'             => $this->pname ?? false,
+            'program'             => $this->pname ?? NULL,
             
             // 'program'            => $this->program,
             // 'program_slug'       => str_replace(' ', '-', $this->program),
