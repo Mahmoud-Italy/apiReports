@@ -124,8 +124,12 @@ class ApplicationController extends Controller
                 $data = Instructor::where('id', $id)->delete();
             } else if ($type == 'experience-applications') {
                 $data = Experience::where('id', $id)->delete();
-            } else {
+            } else if ($type == 'trainings-applications') {
                 $data = Training::where('id', $id)->delete();
+            } else if ($type == 'certificate-applications') {
+                $data = NewApp::where('is_accreditation', false)->where('id', $id)->delete();
+            } else if ($type == 'accreditation-applications') {
+                $data = NewApp::where('is_accreditation', true)->where('id', $id)->delete();
             }
             return response()->json(['message' => ''], 200);
         } catch (\Exception $e) {
