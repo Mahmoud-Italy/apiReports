@@ -116,9 +116,9 @@ class ApplicationController extends Controller
         } else if ($type == 'trainings-applications') {
             $rows = TrainingResource::collection($data);
         } else if ($type == 'certificate-applications') {
-            $data = NewAppResource::collection($data);
+            $rows = NewAppResource::collection($data);
         } else if ($type == 'accreditation-applications') {
-            $data = NewAppResource::collection($data);
+            $rows = NewAppResource::collection($data);
         }
         return response()->json(['rows' => $rows], 200);
     }
