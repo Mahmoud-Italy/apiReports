@@ -185,9 +185,9 @@ class AppController extends Controller
             $data = EmailTemplate::find(1);
             try {
                 if(request('type_id') == 1) {
-                    Mail::to($request->email_address)->send(new AccreditationMailable($request->first_name, $data));
+                    Mail::to($request->email_address)->send(new AccreditationMailable($request->name, $data));
                 } else {
-                    Mail::to($request->email_address)->send(new CertificateMailable($request->first_name, $data));
+                    Mail::to($request->email_address)->send(new CertificateMailable($request->name, $data));
                 }
             } catch (\Exception $e) { }
 
