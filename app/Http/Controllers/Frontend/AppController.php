@@ -155,10 +155,10 @@ class AppController extends Controller
         if($row === true) {
 
             // Send Email
-            $data = EmailTemplate::find(1);
             try {
-                $row = ['first_name' => $request->first_name];
-                Mail::to($request->email_Address)->send(new TrainingProgramMailable($row, $data));
+                $data = EmailTemplate::find(1);
+                $rows = ['first_name' => $request->first_name];
+                Mail::to($request->email_Address)->send(new TrainingProgramMailable($rows, $data));
             } catch (\Exception $e) { }
 
 
