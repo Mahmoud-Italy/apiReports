@@ -157,15 +157,10 @@ class AppController extends Controller
             // Send Email
             try {
                 $data = EmailTemplate::find(1);
-                $rows = ['first_name' => $request->first_name];
                 Mail::to($request->email_Address)->send(new TrainingProgramMailable($request->first_name, $data));
-                return response()->json(['message' => 'good'], 201);
-            } catch (\Exception $e) {
-                return response()->json(['message' => $e->getMessage()], 201);
-            }
+            } catch (\Exception $e) {}
 
-
-            //return response()->json(['message' => ''], 201);
+            return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
         }
@@ -190,9 +185,9 @@ class AppController extends Controller
             $data = EmailTemplate::find(1);
             try {
                 if(request('type_id') == 1) {
-                    Mail::to($request->email_address)->send(new AccreditationMailable(request()->all(), $data));
+                    Mail::to($request->email_address)->send(new AccreditationMailable($request->first_name, $data));
                 } else {
-                    Mail::to($request->email_address)->send(new CertificateMailable(request()->all(), $data));
+                    Mail::to($request->email_address)->send(new CertificateMailable($request->first_name, $data));
                 }
             } catch (\Exception $e) { }
 
@@ -297,7 +292,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to(request('email_Address'))->send(new MembershipMailable(request()->all(), $data));
+                Mail::to($request->email_Address)->send(new MembershipMailable($request->first_name, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -315,7 +310,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to(request('email_Address'))->send(new IamInstructorMailable(request()->all(), $data));
+                Mail::to($request->email_Address)->send(new IamInstructorMailable($request->first_name, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);
@@ -337,7 +332,7 @@ class AppController extends Controller
             // Send Email
             $data = EmailTemplate::find(1);
             try {
-                Mail::to(request('email_Address'))->send(new IveExperienceMailable(request()->all(), $data));
+                Mail::to($request->email_Address)->send(new IveExperienceMailable($request->first_name, $data));
             } catch (\Exception $e) { }
 
             return response()->json(['message' => ''], 201);

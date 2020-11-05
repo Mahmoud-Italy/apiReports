@@ -4,7 +4,7 @@
   <title></title>
 </head>
 <body>
-<p>Hi {{ $row->first_name }},<br/></p>
+<p>Hi {{ $row }},<br/></p>
 
 <p>{!! nl2br($data->cabody1) !!}</p>
 
