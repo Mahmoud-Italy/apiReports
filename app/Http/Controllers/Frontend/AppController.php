@@ -159,10 +159,13 @@ class AppController extends Controller
                 $data = EmailTemplate::find(1);
                 $rows = ['first_name' => $request->first_name];
                 Mail::to($request->email_Address)->send(new TrainingProgramMailable($rows, $data));
-            } catch (\Exception $e) { }
+                return response()->json(['message' => 'good'], 201);
+            } catch (\Exception $e) {
+                return response()->json(['message' => $e->getMessage()], 201);
+            }
 
 
-            return response()->json(['message' => ''], 201);
+            //return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
         }
