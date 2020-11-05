@@ -158,7 +158,7 @@ class AppController extends Controller
             try {
                 $data = EmailTemplate::find(1);
                 $rows = ['first_name' => $request->first_name];
-                Mail::to($request->email_Address)->send(new TrainingProgramMailable($rows, $data));
+                Mail::to($request->email_Address)->send(new TrainingProgramMailable($request->first_name, $data));
                 return response()->json(['message' => 'good'], 201);
             } catch (\Exception $e) {
                 return response()->json(['message' => $e->getMessage()], 201);
