@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use App\Models\Subscriber;
 use App\Models\Imageable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -127,6 +128,9 @@ class Product2 extends Model
               $row->sort          = (int)$value['sort'] ?? 0;
               $row->status        = (boolean)$value['status'] ?? false;
               $row->save();
+
+              // send email for subscribers
+              (isset($id)) ? '' : Subscriber::send(request()->root().'/popular-search/in/program/'.$row->slug, $row->title, $row->short_body);
 
               // Image
               if(isset($value['base64Image'])) {

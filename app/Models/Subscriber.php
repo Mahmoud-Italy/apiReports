@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use DB;
+use App\Models\EmailTemplate;
+use App\Mail\SubscribersMailable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class Subscriber extends Model
 {
@@ -75,6 +78,18 @@ class Subscriber extends Model
         } catch (\Exception $e) {
             DB::rollback();
             return $e;
+        }
+    }
+
+
+    public static function send($slug, $title, $body)
+    { 
+        $data = EmailTemplate::find(1);
+        $rows = self::get();
+        foreach ($rows as $row) {
+            try {
+                Mail::to($row->email)->send(new SubscribersMailable($slug, $title, $body, $data));
+            } catch (\Exception $e) { }
         }
     }
 
