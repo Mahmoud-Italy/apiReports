@@ -14,7 +14,23 @@ class AboutResource extends JsonResource
      */
     public function toArray($request)
     {
-        
+        $url           = $this->video2_2;
+        $video         = '';
+        if($url) {
+            $youtube_id    = '';
+            $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+            $longUrlRegex  = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+            if (preg_match($longUrlRegex, $url, $matches)) {
+                $youtube_id = $matches[count($matches) - 1];
+            }
+
+            if (preg_match($shortUrlRegex, $url, $matches)) {
+                $youtube_id = $matches[count($matches) - 1];
+            }
+            $video  = 'https://www.youtube.com/embed/' . $youtube_id;
+        }
+
         return [
             'id'            => $this->id,
             'image'         => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
@@ -29,7 +45,7 @@ class AboutResource extends JsonResource
             'title2_1'       => $this->title2_1,
             'title2_2'       => $this->title2_2,
             'body2_1'        => $this->body2_1,
-            'video2_2'       => str_replace('watch?v=', 'embed/', $this->video2_2),
+            'video2_2'       => $video,
 
             'title3_1'       => $this->title3_1,
             'title3_2'       => $this->title3_2,
