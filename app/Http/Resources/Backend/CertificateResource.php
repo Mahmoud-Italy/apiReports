@@ -41,6 +41,7 @@ class CertificateResource extends JsonResource
             
             'bgSubTitle1'   => $this->bgSubTitle1,
             'bgTitle1'      => $this->bgTitle1,
+            'lineColor1'    => $this->lineColor1,
             'bgColor1'      => $this->bgColor1,
             'body1'         => $this->body1,
 

@@ -117,6 +117,7 @@ class Certificate extends Model
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
               $row->bgTitle1       = $value['bgTitle1'] ?? NULL;
               $row->bgSubTitle1    = $value['bgSubTitle1'] ?? NULL;
+              $row->lineColor1     = $value['lineColor1'] ?? NULL;
               $row->bgColor1       = $value['bgColor1'] ?? NULL;
               $row->body1          = $value['body1'] ?? NULL;
 

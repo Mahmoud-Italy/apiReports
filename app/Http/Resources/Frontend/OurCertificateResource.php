@@ -23,6 +23,7 @@ class OurCertificateResource extends JsonResource
             'image1'      => ($this->image) ? request()->root() . '/uploads/' . $this->image->url : NULL,
             'bgTitle1'    => $this->bgTitle1,
             'bgSubTitle1' => $this->bgSubTitle1,
+            'lineColor1'  => $this->lineColor1,
             'bgColor1'    => $this->bgColor1,
             'body1'       => $this->body1,
 
