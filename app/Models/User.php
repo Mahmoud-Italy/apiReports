@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use App\Models\Imageable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -110,12 +111,18 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
               // role
               if(isset($value['base64Image'])) {
+                $row->image()->delete();
                 if($value['base64Image']) {
-                  $image = Imageable::uploadImage($value['base64Image']);
-                  $row->image()->delete();
+                  if(!Str::contains($value['base64Image'], ['uploads','false'])) {
+                    $image = Imageable::uploadImage($value['base64Image']);
+                  } else {
+                    $image = explode('/', $value['base64Image']);
+                    $image = end($image);
+                  }
                   $row->image()->create(['url' => $image]);
                 }
               }
+
 
             DB::commit();
 
