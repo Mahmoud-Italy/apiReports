@@ -99,7 +99,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
               $row->last_name      = $value['last_name'] ?? NULL;
               $row->email          = $value['email'] ?? NULL;
               $row->country        = $value['country'] ?? NULL;
-              $row->role_id        = 0;
+              $row->role_id        = $value['role_id'] ?? false;
 
               if(isset($value['password']) && $value['password']) {
                   $plainPassword   = $value['password'];
