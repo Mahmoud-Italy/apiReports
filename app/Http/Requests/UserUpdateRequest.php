@@ -24,7 +24,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = request('id');
+        $id = decrypt(request('id'));
 
         return [
             //'image' => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
