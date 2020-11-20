@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Inbox extends Model
@@ -51,5 +52,32 @@ class Inbox extends Model
 
         $obj = $obj->paginate($value['paginate'] ?? 10);
         return $obj;
+    }
+
+
+
+    // 
+    public static function createOrUpdate($value)
+    {
+        try {
+            
+            DB::beginTransaction();
+
+              // Row
+              $row              = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->name        = $value['name'] ?? NULL;
+              $row->email       = $value['email'] ?? NULL;
+              $row->message     = $value['message'] ?? NULL;
+              $row->save();
+
+              //
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
     }
 }
