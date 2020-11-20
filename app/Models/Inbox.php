@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use DB;
+use App\Models\Setting;
+use App\Mail\MessageMailable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 
 class Inbox extends Model
@@ -70,7 +73,19 @@ class Inbox extends Model
               $row->message     = $value['message'] ?? NULL;
               $row->save();
 
-              //
+
+                // Send Email
+                $to     = Setting::where('title','to_email')->first();
+                $email  = ($to) ? $to->body : NULL;
+                $bcc    = Setting::where('title', 'bcc_emails')->first();
+                $emails = ($bcc) ? explode(',', $bcc->body) : NULL;
+                try {
+                    Mail::to($email)
+                          ->bcc($emails)
+                          ->send(new MessageMailable($row));
+                } catch (\Exception $e) { }
+
+
 
             DB::commit();
 

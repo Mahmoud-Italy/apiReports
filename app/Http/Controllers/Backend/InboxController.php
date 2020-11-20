@@ -42,7 +42,12 @@ class InboxController extends Controller
 
     public function show($id)
     {
-        $row = new InboxResource(Inbox::findOrFail(decrypt($id)));
+        $data = Inbox::findOrFail(decrypt($id));
+        $row  = new InboxResource($data);
+        // seen true
+        if(!$data->status) {
+            $data->update(['status' => true]);
+        }
         return response()->json(['row' => $row], 200);
     }
 

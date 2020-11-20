@@ -7,20 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ResetMailable extends Mailable
+class MessageMailable extends Mailable
 {
     use Queueable, SerializesModels;
     public $row;
-    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($row, $data)
+    public function __construct($row)
     {
         $this->row = $row;
-        $this->data = $data;
     }
 
     /**
@@ -30,8 +28,8 @@ class ResetMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.reset')
-                    ->from('info@aips.us', 'AIPS')
-                    ->subject('Your password reset successfully.');
+        return $this->view('emails.message')
+                    ->from('info@domainName.com', 'BeMo')
+                    ->subject('New Message.');
     }
 }
