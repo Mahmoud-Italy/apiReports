@@ -122,7 +122,7 @@ class Setting extends Model
         if(is_numeric($value)) {
            $row->where('id', $value);
         } else {
-           $row->where('slug', $value);
+           $row->where('title', $value);
         }
       $row = $row->first();  
       return $row ?? NULL;
