@@ -77,7 +77,7 @@ class Social extends Model
               $row               = (isset($id)) ? self::findOrFail($id) : new self;
               $row->user_id      = auth()->guard('api')->user()->id;
               $row->provider     = strtolower($value['provider']) ?? NULL;
-              $row->provider_url = $value['provider'] ?? NULL;
+              $row->provider_url = $value['provider_url'] ?? NULL;
               $row->status       = (boolean)$value['status'] ?? false;
               $row->save();
 
