@@ -115,13 +115,9 @@ class Setting extends Model
     }
 
 
-    public static function getRow($value, $hasTenant = false)
+    public static function getRow($value)
     {
-        if($hasTenant) {
-          $row = self::has('tenant');
-        } else {
-         $row = self::query();
-        }
+      $row = self::query();
 
         if(is_numeric($value)) {
            $row->where('id', $value);

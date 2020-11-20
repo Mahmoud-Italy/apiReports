@@ -11,10 +11,10 @@ class PageController extends Controller
 {
     public function index()
     {
-        //
+        # code...
     }
 
-    public function store($slug)
+    public function store()
     {
         # code...
     }
