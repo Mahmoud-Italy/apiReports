@@ -83,6 +83,7 @@ class Permission extends Model
             else if(strpos($migrate->migration, 'imageables') !== false) {}
             else if(strpos($migrate->migration, 'visitors') !== false) {}
             else if(strpos($migrate->migration, 'ipblockers') !== false) {}
+            else if(strpos($migrate->migration, 'caches') !== false) {}
                 // feel free to add any restirected tables...
                 
             else {
