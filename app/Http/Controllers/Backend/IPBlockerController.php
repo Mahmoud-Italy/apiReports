@@ -9,7 +9,7 @@ use App\Http\Requests\IPBlockerStoreRequest;
 use App\Http\Requests\IPBlockerUpdateRequest;
 use App\Http\Resources\Backend\IPBlockerResource;
 
-class IPBlockerController extends Controller
+class IpblockerController extends Controller
 {
     function __construct()
     {
