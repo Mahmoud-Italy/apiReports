@@ -67,7 +67,6 @@ class Role extends Model
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->user_id        = auth()->guard('api')->user()->id;
               $row->name           = $value['name'] ?? NULL;
               $row->status         = $value['status'] ?? false;
               $row->save();
