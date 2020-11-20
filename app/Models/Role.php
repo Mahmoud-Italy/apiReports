@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DB;
 use App\Models\User;
+use App\Models\RoleHasPermission;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
@@ -12,6 +13,10 @@ class Role extends Model
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function role_has_permissions() {
+        return $this->hasMany(RoleHasPermission::class, 'role_id');
     }
 
     // fetch Data
@@ -71,6 +76,15 @@ class Role extends Model
               $row->guard_name     = 'api';
               $row->status         = (boolean)$value['status'] ?? false;
               $row->save();
+
+              // Permissions
+              if(isset($value['permissions_ids']) && count($value['permissions_ids'])) {
+                $row->role_has_permissions()->delete();
+                foreach ($value['permissions_ids'] as $permission_id) {
+                   $permissions_ids[] = ['permission_id' => $permission_id, 'role_id' => $row->id];
+                }
+                $row->role_has_permissions()->insert($permissions_ids);
+              }
 
             DB::commit();
 
