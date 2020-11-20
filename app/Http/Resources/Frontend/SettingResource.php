@@ -21,7 +21,7 @@ class SettingResource extends JsonResource
             'image'         => ($this->image) ? (new ImageableResource($this->image))->foo('settings') : NULL,
             
             'title'         => $this->title,
-            'body'          => strip_tags($this->body)
+            'body'          => $this->body
         ];
     }
 }

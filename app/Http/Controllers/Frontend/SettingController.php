@@ -11,8 +11,8 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $data = Setting::whereIN('title', ['gogole_analytics', 'facebook_pixelcode'])->get();
-        $rows  = SettingResource::collection($data);
+        $data = Setting::whereIN('title', ['google_analytics', 'facebook_pixelcode'])->get();
+        $rows = SettingResource::collection($data);
         return response()->json(['rows' => $rows], 200);
     }
 
