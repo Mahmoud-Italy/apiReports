@@ -103,6 +103,8 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
               $row->save();
 
+              $row->assignRole($value['role'] ?? 'root'); // assign admin role
+
               // role
               if(isset($value['base64Image'])) {
                 $row->image()->delete();

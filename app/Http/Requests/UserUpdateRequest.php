@@ -27,7 +27,9 @@ class UserUpdateRequest extends FormRequest
         $id = decrypt(request('id'));
 
         return [
-            'email' => 'required|unique:users,email,' . $id
+            'email'    => 'required|unique:users,email,' . $id,
+            'password' => 'required',
+            'role'     => 'required'
         ];
     }
 
