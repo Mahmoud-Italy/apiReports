@@ -69,7 +69,7 @@ class Role extends Model
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
               $row->name           = $value['name'] ?? NULL;
               $row->guard_name     = 'api';
-              $row->status         = $value['status'] ?? false;
+              $row->status         = (boolean)$value['status'] ?? false;
               $row->save();
 
             DB::commit();
