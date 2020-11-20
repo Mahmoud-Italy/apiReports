@@ -35,7 +35,7 @@ class IpblockerController extends Controller
     public function store(IPBlockerStoreRequest $request)
     {
         $row = IPBlocker::createOrUpdate(NULL, $request->all());
-        if($row === true) {
+        if($row === true) { 
             return response()->json(['message' => ''], 201);
         } else {
             return response()->json(['message' => 'Unable to create entry, ' . $row], 500);
