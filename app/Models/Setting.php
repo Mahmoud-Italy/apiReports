@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use App\Models\User;
 use App\Models\Imageable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -11,16 +12,18 @@ class Setting extends Model
 {
     protected $guarded = [];
 
-    public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('type', false)->select('url');
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function image2() {
-        return $this->morphOne(Imageable::class, 'imageable')->where('type', true)->select('url');
+    public function image() {
+        return $this->morphOne(Imageable::class, 'imageable')
+                    ->select('image_url', 'image_alt', 'image_title');
     }
+
 
     // fetch Data
-    public static function fetchData($value='')
+    public static function fetchData($value)
     {
         // this way will fire up speed of the query
         $obj = self::query();
@@ -31,6 +34,12 @@ class Setting extends Model
                 $q->where('title', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
+          }
+
+          if(isset($value['filter']) && $value['filter']) {
+            if($value['filter_by'] == 'author') {
+              $obj->where('user_id', decrypt($value['filter']));
+            }
           }
 
           // status
@@ -45,8 +54,8 @@ class Setting extends Model
 
           // order By..
           if(isset($value['order']) && $value['order']) {
-            if($value['order_by'] == 'title')
-              $obj->orderBy('title', $value['order']);
+            if($value['order_by'] == 'name')
+              $obj->orderBy('name', $value['order']);
             else if ($value['order_by'] == 'created_at')
               $obj->orderBy('created_at', $value['order']);
             else
@@ -71,45 +80,27 @@ class Setting extends Model
             DB::beginTransaction();
 
               // Row
-              $row             = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->bgTitle    = (isset($value['bgTitle'])) ? $value['bgTitle'] : NULL;
-              $row->bgSubTitle = (isset($value['bgSubTitle'])) ? $value['bgSubTitle'] : NULL;
-              $row->bgColor    = (isset($value['bgColor'])) ? $value['bgColor'] : NULL;
-              $row->full_name_hint = (isset($value['full_name_hint']) && $value['full_name_hint']) 
-                                ? $value['full_name_hint'] : NULL;
-              $row->body1      = (isset($value['body1']) && $value['body1']) ? $value['body1'] : NULL;
-              $row->body2      = (isset($value['body2']) && $value['body2']) ? $value['body2'] : NULL;
-              $row->body3      = (isset($value['body3']) && $value['body3']) ? $value['body3'] : NULL;
-              $row->body4      = (isset($value['body4']) && $value['body4']) ? $value['body4'] : NULL;
-              $row->body5      = (isset($value['body5']) && $value['body5']) ? $value['body5'] : NULL;
-              $row->body6      = (isset($value['body6']) && $value['body6']) ? $value['body6'] : NULL;
-              $row->link       = (isset($value['link']) && $value['link']) ? $value['link'] : NULL;
+              $row              = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->user_id     = auth()->guard('api')->user()->id;
+              $row->title       = $value['title'] ?? NULL;
+              $row->body        = $value['body'] ?? NULL;
               $row->save();
 
               // Image
-              if(isset($value['image'])) {
+              if(isset($value['image_base64'])) {
                 $row->image()->delete();
-                if($value['image']) {
-                  if(!Str::contains($value['image'], ['uploads','false'])) {
-                    $image = Imageable::uploadImage($value['image']);
+                if($value['image_base64']) {
+                  if(!Str::contains($value['image_base64'], [ Imageable::contains() ])) {
+                    $image = Imageable::uploadImage($value['image_base64'], 'setting');
                   } else {
-                    $image = explode('/', $value['image']);
+                    $image = explode('/', $value['image_base64']);
                     $image = end($image);
                   }
-                  $row->image()->create(['url' => $image]);
-                }
-              }
-
-              if(isset($value['image2'])) {
-                $row->image2()->delete();
-                if($value['image2']) {
-                  if(!Str::contains($value['image2'], ['uploads','false'])) {
-                    $image2 = Imageable::uploadImage($value['image2']);
-                  } else {
-                    $image2 = explode('/', $value['image2']);
-                    $image2 = end($image2);
-                  }
-                  $row->image2()->create(['url' => $image2, 'type' => 1]);
+                  $row->image()->create([
+                      'image_url'       => $image ?? NULL,
+                      'image_alt'       => $value['image_alt'] ?? NULL,
+                      'image_title'     => $value['image_title'] ?? NULL
+                  ]);
                 }
               }
 
@@ -121,6 +112,24 @@ class Setting extends Model
             DB::rollback();
             return $e->getMessage();
         }
+    }
+
+
+    public static function getRow($value, $hasTenant = false)
+    {
+        if($hasTenant) {
+          $row = self::has('tenant');
+        } else {
+         $row = self::query();
+        }
+
+        if(is_numeric($value)) {
+           $row->where('id', $value);
+        } else {
+           $row->where('slug', $value);
+        }
+      $row = $row->first();  
+      return $row ?? NULL;
     }
 
 }

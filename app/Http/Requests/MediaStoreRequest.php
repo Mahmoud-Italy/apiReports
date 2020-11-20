@@ -25,7 +25,8 @@ class MediaStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
+            //'slug'   => 'required|unique:destinations,slug,NULL,id,tenant_id,' . $tenant_id
         ];
     }
 

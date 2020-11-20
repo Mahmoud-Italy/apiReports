@@ -25,12 +25,12 @@ class PageStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:pages,slug',
-            'title'  => 'required'
+            'title'  => 'required',
+            'slug'   => 'required|unique:pages,slug'
         ];
     }
 
+    // in case you want to return single line of error instead of array of errors..
     protected function formatErrors (Validator $validator)
     {
         return ['message' => $validator->errors()->first()];

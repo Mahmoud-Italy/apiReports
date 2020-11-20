@@ -42,18 +42,36 @@ class Routes
 
     function exploreResource($uri, $controller)
     {
-      $this->app->get($uri.'/totalVisitors', $controller.'@visitors');
-      $this->app->get($uri.'/totalTrainings', $controller.'@trainings');
-      $this->app->get($uri.'/totalMembers', $controller.'@members');
-      $this->app->get($uri.'/totalInstructors', $controller.'@instructors');
-      $this->app->get($uri.'/totalExperiences', $controller.'@experiences');
-      $this->app->get($uri.'/totalAccreditations', $controller.'@accreditations');
-      $this->app->get($uri.'/totalCertificates', $controller.'@certificates');
-      $this->app->get($uri.'/totalUsers', $controller.'@users');
-      $this->app->get($uri.'/lineChart', $controller.'@lineChart');
-      $this->app->get($uri.'/pieChart', $controller.'@pieChart');
-      $this->app->get($uri.'/recentPrograms', $controller.'@recentPrograms');
-      $this->app->get($uri.'/topSectors', $controller.'@topSectors');
+      $this->app->get($uri.'/totalVisitors/{days}', $controller.'@visitors');
+      $this->app->get($uri.'/totalPages/{days}', $controller.'@pages');
+      $this->app->get($uri.'/totalMessages/{days}', $controller.'@messages');
+      $this->app->get($uri.'/totalUsers/{days}', $controller.'@users');
+      $this->app->get($uri.'/lineChart/{type}', $controller.'@lineChart');
+      $this->app->get($uri.'/pieChart/{days}', $controller.'@pieChart');
+    }
+
+    function artisanResource($uri, $controller)
+    {
+      $this->app->get($uri.'/cache-clear', $controller.'@cacheClear');
+      $this->app->get($uri.'/config-clear', $controller.'@configClear');
+      $this->app->get($uri.'/view-clear', $controller.'@viewClear');
+      $this->app->get($uri.'/route-cache', $controller.'@routeCache');
+      $this->app->get($uri.'/route-clear', $controller.'@routeClear');
+    }
+
+    function frontResource($uri, $controller)
+    {
+      $this->app->get($uri, $controller.'@index');
+      $this->app->post($uri, $controller.'@store');
+      $this->app->get($uri.'/{slug}', $controller.'@show');
+    }
+
+    function meResource($uri, $controller)
+    {
+      $this->app->get($uri, $controller.'@index');
+      $this->app->get($uri.'/account', $controller.'@account');
+      $this->app->post($uri, $controller.'@store');
+      $this->app->post($uri.'/password', $controller.'@update');
     }
 
     public function legacy($uri='')

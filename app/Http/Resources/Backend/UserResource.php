@@ -18,15 +18,12 @@ class UserResource extends JsonResource
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
             'image'         => ($this->image) 
-                                    ? request()->root() . '/uploads/' . $this->image->url 
-                                    : request()->root() . '/uploads/default_avatar.png',
+                                    ? request()->root() . '/uploads/' . $this->image->image_url 
+                                    : request()->root() . '/uploads/avatar.png',
             
-            'first_name'    => $this->first_name,
-            'last_name'     => $this->last_name,
-            'name'          => $this->first_name.' '.$this->last_name,
+            'name'          => $this->name,
             'email'         => $this->email,
-            'country'       => $this->country,
-            'role_id'       => $this->role_id,
+            'role'          => $this->roles()->first()->name,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

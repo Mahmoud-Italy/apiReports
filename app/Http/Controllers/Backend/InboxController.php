@@ -6,13 +6,16 @@ use App\Models\Inbox;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InboxStoreRequest;
+use App\Http\Requests\InboxUpdateRequest;
 use App\Http\Resources\Backend\InboxResource;
 
 class InboxController extends Controller
 {
     function __construct()
     {
-        //
+        $this->middleware('permission:view_inboxes', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:show_inboxes', ['only' => ['show']]);
+        $this->middleware('permission:delete_inboxes', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -21,6 +24,7 @@ class InboxController extends Controller
         $rows = InboxResource::collection(Inbox::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('inboxes'),
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
         ], 200);
@@ -39,13 +43,17 @@ class InboxController extends Controller
     public function show($id)
     {
         $row = new InboxResource(Inbox::findOrFail(decrypt($id)));
-        $this->active(decrypt($id));
         return response()->json(['row' => $row], 200);
     }
 
-    public function update($id)
+    public function update(InboxUpdateRequest $request, $id)
     {
-        //
+        $row = Inbox::createOrUpdate(decrypt($id), $request->all());
+        if($row === true) {
+            return response()->json(['message' => ''], 200);
+        } else {
+            return response()->json(['message' => 'Unable to update entry, ' . $row], 500);
+        }
     }
 
     public function destroy($id)

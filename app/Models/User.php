@@ -24,7 +24,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name','country','email',
+        'name','email',
     ];
 
     /**
@@ -48,7 +48,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     }
 
     public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+        return $this->morphOne(Imageable::class, 'imageable')->select('image_url');
     }
 
     public static function fetchData($value='')
@@ -56,12 +56,9 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         // this way will fire up speed of the query
         $obj = self::query();
 
-          $obj->where('role_id', false);
-
             if(isset($value['search']) && $value['search']) {
                 $obj->where(function($q){
-                    $q->where('first_name', 'like','%'.$value['search'].'%');
-                    $q->where('last_name', 'like','%'.$value['search'].'%');
+                    $q->where('name', 'like','%'.$value['search'].'%');
                     $q->orWhere('email', 'like', '%'.$value['search'].'%');
                     $q->orWhere('id', $value['search']);
                 });
@@ -96,11 +93,8 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->first_name     = $value['first_name'] ?? NULL;
-              $row->last_name      = $value['last_name'] ?? NULL;
+              $row->name           = $value['name'] ?? NULL;
               $row->email          = $value['email'] ?? NULL;
-              $row->country        = $value['country'] ?? NULL;
-              $row->role_id        = $value['role_id'] ?? false;
 
               if(isset($value['password']) && $value['password']) {
                   $plainPassword   = $value['password'];

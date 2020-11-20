@@ -3,14 +3,21 @@
 namespace App\Models;
 
 use DB;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Social extends Model
 {
     protected $guarded = [];
 
-    // fetch Data
-    public static function fetchData($value='')
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+     // fetch Data
+    public static function fetchData($value)
     {
         // this way will fire up speed of the query
         $obj = self::query();
@@ -21,6 +28,12 @@ class Social extends Model
                 $q->where('provider', 'like', '%'.$value['search'].'%');
                 $q->orWhere('id', $value['search']);
               });
+          }
+
+          if(isset($value['filter']) && $value['filter']) {
+            if($value['filter_by'] == 'author') {
+              $obj->where('user_id', decrypt($value['filter']));
+            }
           }
 
           // status
@@ -42,7 +55,7 @@ class Social extends Model
             else
               $obj->orderBy('id', $value['order']);
           } else {
-            $obj->orderBy('sort', 'DESC');
+            $obj->orderBy('id', 'DESC');
           }
 
           // feel free to add any query filter as much as you want...
@@ -61,11 +74,15 @@ class Social extends Model
             DB::beginTransaction();
 
               // Row
-              $row                = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->provider      = $value['provider'] ?? NULL;
-              $row->provider_url  = $value['provider_url'] ?? NULL;
-              $row->sort          = (int)$value['sort'] ?? 0;
+              $row               = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->user_id      = auth()->guard('api')->user()->id;
+              $row->provider     = strtolower($value['provider']) ?? NULL;
+              $row->provider_url = $value['provider'] ?? NULL;
+              $row->status       = (boolean)$value['status'] ?? false;
               $row->save();
+
+              //
+
 
             DB::commit();
 
@@ -75,5 +92,4 @@ class Social extends Model
             return $e->getMessage();
         }
     }
-
 }

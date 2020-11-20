@@ -37,7 +37,7 @@ class AuthController extends Controller
             $user->password = app('hash')->make($plainPassword);
             $user->save();
 
-            $user->assignRole('Admin'); // assign admin role
+            $user->assignRole('root'); // assign admin role
 
             return response()->json(['message' => ''], 201);
         } catch (\Exception $e) {
@@ -57,10 +57,10 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        if(auth()->guard('api')->user()->role_id == 0) {
-            auth()->logout();
-            return response()->json(['error' => 'Access denied'], 403);
-        }
+        // if(auth()->guard('api')->user()->role_id == 0) {
+        //     auth()->logout();
+        //     return response()->json(['error' => 'Access denied .'], 403);
+        // }
         
         return $this->respondWithToken($token);
     }

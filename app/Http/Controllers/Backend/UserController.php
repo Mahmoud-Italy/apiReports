@@ -5,23 +5,28 @@ namespace App\Http\Controllers\Backend;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\Backend\UserResource;
 
 class UserController extends Controller
 {
     function __construct()
     {
-        //
+        $this->middleware('permission:view_users', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_users',  ['only' => ['store']]);
+        $this->middleware('permission:edit_users', 
+                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        $this->middleware('permission:delete_users', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $data = User::where('role_id', false)->paginate(20);
+        $data = User::get();
         $rows = UserResource::collection(User::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('users'),
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
         ], 200);
@@ -40,7 +45,6 @@ class UserController extends Controller
     public function show($id)
     {
         $row = new UserResource(User::findOrFail(decrypt($id)));
-        $this->active(decrypt($id));
         return response()->json(['row' => $row], 200);
     }
 
@@ -162,7 +166,7 @@ class UserController extends Controller
     public function export()
     {
         $data = User::where(['status' => true, 'trash' => false]);
-
+        
         if(request('id')) {
             $id = request('id');
             if(strpos($id, ',') !== false) {

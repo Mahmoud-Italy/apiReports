@@ -20,7 +20,7 @@ class InboxResource extends JsonResource
             
             'name'          => $this->name,
             'email'         => $this->email,
-            'body'          => $this->body,
+            'message'       => $this->message,
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),

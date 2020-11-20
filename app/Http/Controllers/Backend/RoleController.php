@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoleUpdateRequest;
 use App\Http\Requests\RoleStoreRequest;
+use App\Http\Requests\RoleUpdateRequest;
 use App\Http\Resources\Backend\RoleResource;
 
 class RoleController extends Controller
 {
     function __construct()
     {
-        // 
+        $this->middleware('permission:view_roles', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_roles',  ['only' => ['store']]);
+        $this->middleware('permission:edit_roles', 
+                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        $this->middleware('permission:delete_roles', ['only' => ['destroy']]);
     }
 
     public function index()

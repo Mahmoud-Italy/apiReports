@@ -25,11 +25,9 @@ class PageUpdateRequest extends FormRequest
     public function rules()
     {
         $id        = decrypt(request('id'));
-        
         return [
-            //'image'  => 'mimes:jpeg,jpg,png,gif|max:10000', // max 10MB
-            'slug'   => 'required|unique:pages,slug,' . $id,
-            'title'  => 'required'
+            'title'  => 'required',
+            'slug'   => 'required|unique:pages,slug,' . $id
         ];
     }
 

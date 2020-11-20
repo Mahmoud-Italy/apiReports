@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Social;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SocialUpdateRequest;
 use App\Http\Requests\SocialStoreRequest;
+use App\Http\Requests\SocialUpdateRequest;
 use App\Http\Resources\Backend\SocialResource;
 
 class SocialController extends Controller
 {
     function __construct()
     {
-        //
+        $this->middleware('permission:view_socials', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_socials',  ['only' => ['store']]);
+        $this->middleware('permission:edit_socials', 
+                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        $this->middleware('permission:delete_socials', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -22,6 +26,7 @@ class SocialController extends Controller
         $rows = SocialResource::collection(Social::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('socials'),
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
         ], 200);
@@ -39,13 +44,13 @@ class SocialController extends Controller
 
     public function show($id)
     {
-        $row = new SocialResource(Social::findOrFail($id));
+        $row = new SocialResource(Social::findOrFail(decrypt($id)));
         return response()->json(['row' => $row], 200);
     }
 
     public function update(SocialUpdateRequest $request, $id)
     {
-        $row = Social::createOrUpdate($id, $request->all());
+        $row = Social::createOrUpdate(decrypt($id), $request->all());
         if($row === true) {
             return response()->json(['message' => ''], 200);
         } else {

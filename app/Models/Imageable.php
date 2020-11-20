@@ -13,25 +13,35 @@ class Imageable extends Model
         return $this->morphTo();
     }
 
-    public static function uploadImage($file)
+    public static function uploadImage($file, $folder='', $key=0)
     {
         $base64_str   = substr($file, strpos($file, ",")+1);
         $imageDecoded = base64_decode($base64_str);
         if(explode(';', $file)[0]) {
           $fileType   = explode(';', $file)[0];
-          $fileType   = explode('/', $fileType)[1]; // png or jpg etc
-          if ($fileType == 'svg+xml') {
+          $fileType   = explode('/', $fileType)[1];
+           if ($fileType == 'svg+xml') {
                 $fileType = 'svg';
-          }
+            }
         }
-        $fileName     = date('Y-m-d-h-i-s').'-'.uniqid().'.'.$fileType;
-        Storage::disk('public')->put('uploads/'.$fileName, $imageDecoded);
+        $fileName     = date('Y-m-d-h-i-s').'-'.$key.uniqid().'.'.$fileType;
+        Storage::disk('public')->put('uploads/'.self::plural($folder).'/'.$fileName, $imageDecoded);
         return $fileName;
     }
 
     public static function getImagePath($path, $image)
     {
-        return request()->root().'/'.$path.'/'.$image;
+        return self::baseURL() . $path .'/'.$image;
+    }
+
+    public static function contains($value='')
+    {
+        return 'uploads/';
+    }
+
+    public static function baseURL()
+    {
+        return request()->root() . '/uploads/';
     }
 
     public static function plural($singular = '')

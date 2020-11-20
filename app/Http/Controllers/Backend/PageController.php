@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Setting;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PageUpdateRequest;
 use App\Http\Requests\PageStoreRequest;
+use App\Http\Requests\PageUpdateRequest;
 use App\Http\Resources\Backend\PageResource;
 
 class PageController extends Controller
 {
     function __construct()
     {
-        //
+        $this->middleware('permission:view_pages', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_pages',  ['only' => ['store']]);
+        $this->middleware('permission:edit_pages', 
+                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        $this->middleware('permission:delete_pages', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        if(isset($request->parent_id) && $request->parent_id) {
-            $data = Page::where('parent_id', decrypt($request->parent_id))->get();
-        } else {
-            $data = Page::get();
-        }
+        $data = Page::get();
         $rows = PageResource::collection(Page::fetchData(request()->all()));
         return response()->json([
             'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('pages'),
             'rows'        => $rows,
             'paginate'    => $this->paginate($rows)
         ], 200);

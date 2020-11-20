@@ -4,17 +4,11 @@ namespace App\Models;
 
 use DB;
 use App\Models\User;
-use App\Models\Domain;
-use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
     protected $guarded = [];
-
-    public function tenant() {
-        return $this->belongsTo(Tenant::class, 'tenant_id')->where('tenant_id', Domain::getTenantId());
-    }
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
@@ -25,9 +19,6 @@ class Role extends Model
     {
         // this way will fire up speed of the query
         $obj = self::query();
-
-          // get only his tenants
-          $obj->has('tenant');
 
           // search for multiple columns..
           if(isset($value['search']) && $value['search']) {
@@ -76,10 +67,8 @@ class Role extends Model
 
               // Row
               $row                 = (isset($id)) ? self::findOrFail($id) : new self;
-              $row->tenant_id      = Domain::getTenantId();
               $row->user_id        = auth()->guard('api')->user()->id;
               $row->name           = $value['name'] ?? NULL;
-              $row->authority      = $value['authority'] ?? false;
               $row->status         = $value['status'] ?? false;
               $row->save();
 
@@ -90,5 +79,9 @@ class Role extends Model
             DB::rollback();
             return $e->getMessage();
         }
+    }
+
+    public static function getPermissionsId($role_id) {
+      return DB::table('role_has_permissions')->where('role_id', $role_id)->pluck('permission_id');
     }
 }

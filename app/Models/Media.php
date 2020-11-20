@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use DB;
+use App\Models\User;
 use App\Models\Imageable;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
     protected $guarded = [];
 
-
-    public function image() {
-        return $this->morphOne(Imageable::class, 'imageable')->select('url');
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function image() {
+        return $this->morphOne(Imageable::class, 'imageable')->select('image_url');
+    }
 
 
     // fetch Data
@@ -64,18 +66,15 @@ class Media extends Model
 
               // Row
               $row              = (isset($id)) ? self::findOrFail($id) : new self;
+              $row->user_id     = auth()->guard('api')->user()->id;
               $row->mime_type   = self::mimeType($value['file']);
-              $row->size        = self::filesize_formatted($value['file']);
+              $row->size        = self::getFileSize($value['file']);
               $row->save();
 
-              // file
-              if(isset($value['file'])) {
-                  if($value['file'] && !Str::contains($value['file'], ['uploads','false'])) {
-                  $file = Imageable::uploadImage($value['file']);
-                  $row->image()->delete();
-                  $row->image()->create(['url' => $file]);
-                }
-              }
+              // image
+              $image = Imageable::uploadImage($value['file'], 'media');
+              $row->image()->delete();
+              $row->image()->create(['image_url' => $image]);
 
             DB::commit();
 
@@ -86,6 +85,7 @@ class Media extends Model
         }
     }
 
+
     public static function mimeType($file='')
     {
         $base64_str   = substr($file, strpos($file, ",")+1);
@@ -93,26 +93,38 @@ class Media extends Model
         if(explode(';', $file)[0]) {
           $fileType   = explode(';', $file)[0];
           $fileType   = explode(':', $fileType)[1];
+          if ($fileType == 'svg+xml') {
+                $fileType = 'svg';
+            }
         }
-        return $fileType;
-    }
-    public static function filesize_formatted($path)
-    {
-        //return getimagesize($path) ?? '512 KB';
-      return '512 KB';
+        return $fileType ?? NULL;
     }
 
-    public static function getFileSize($value='')
+    public static function getFileSize($base64Image){
+      $size = (int)strlen(base64_decode($base64Image)) / 1024;
+      return ($size > 1024) ? (int)$size . ' MB' : (int)$size. ' KB';
+    }
+
+    public static function filesize_formatted($path)
+    {
+        $size = filesize($path);
+        $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $power = $size > 0 ? floor(log($size, 1024)) : 0;
+        return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+    }
+
+
+    public static function getFilesSize()
     {
         $size = [];
-        $rows = self::all();
+        $rows = self::get();
         foreach ($rows as $row) {
             $type = explode(' ',$row->size)[1];
-                if($type == 'KB') {
-                    $size[] = explode(' ',$row->size)[0] * 1000;
-                } else if ($type == 'MB') {
-                    $size[] = explode(' ',$row->size)[0] * 1000000;
-                }
+              if($type == 'KB') {
+                  $size[] = explode(' ',$row->size)[0] * 1000;
+              } else if ($type == 'MB') {
+                  $size[] = explode(' ',$row->size)[0] * 1000000;
+              }
         }
         return self::calculate_size(array_sum($size));
     }

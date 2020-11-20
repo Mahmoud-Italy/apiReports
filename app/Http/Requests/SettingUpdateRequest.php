@@ -24,15 +24,13 @@ class SettingUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id   = request('id');
-
+        $id        = decrypt(request('id'));
         return [
-            //'id' => 'required|unique:settings,id,' . $id,
-            // 'title' => 'required',
-            //'base64Image' => 'dimensions:min_width=1250,min_height=50|mimes:png,gif|max:10000', // max 10MB
+            'title'  => 'required'
         ];
     }
 
+    // in case you want to return single line of error instead of array of errors..
     protected function formatErrors (Validator $validator)
     {
         return ['message' => $validator->errors()->first()];

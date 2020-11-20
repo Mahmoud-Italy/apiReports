@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Backend;
 
+use App\Http\Resources\Backend\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SocialResource extends JsonResource
@@ -17,10 +18,10 @@ class SocialResource extends JsonResource
         return [
             'id'            => $this->id,
             'encrypt_id'    => encrypt($this->id),
-            
+            'user'          => ($this->user) ? new UserResource($this->user) : NULL,
+
             'provider'      => $this->provider,
             'provider_url'  => $this->provider_url,
-
 
             // Dates
             'dateForHumans' => $this->created_at->diffForHumans(),
@@ -37,9 +38,8 @@ class SocialResource extends JsonResource
 
 
             // Status & Visibility
-            'sort'          => (int)$this->sort,
-            'status'        => (int)$this->status,
-            'trash'         => (int)$this->trash,
+            'status'        => (boolean)$this->status,
+            'trash'         => (boolean)$this->trash,
             'loading'       => false
         ];
     }

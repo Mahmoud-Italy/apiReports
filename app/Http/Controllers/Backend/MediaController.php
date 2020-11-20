@@ -5,26 +5,31 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MediaUpdateRequest;
 use App\Http\Requests\MediaStoreRequest;
+use App\Http\Requests\MediaUpdateRequest;
 use App\Http\Resources\Backend\MediaResource;
 
 class MediaController extends Controller
 {
     function __construct()
     {
-        // 
+        $this->middleware('permission:view_media', ['only' => ['index', 'show', 'export']]);
+        $this->middleware('permission:add_media',  ['only' => ['store']]);
+        $this->middleware('permission:edit_media', 
+                                ['only' => ['update', 'active', 'inactive', 'trash', 'restore']]);
+        $this->middleware('permission:delete_media', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $fileSize = Media::getFileSize();
+        $data = Media::get();
         $rows = MediaResource::collection(Media::fetchData(request()->all()));
         return response()->json([
-                'fileSize'  => $fileSize,
-                'rows'      => $rows,
-                'paginate'  => $this->paginate($rows)
-            ], 200);
+            'statusBar'   => $this->statusBar($data),
+            'permissions' => $this->permissions('media'),
+            'rows'        => $rows,
+            'paginate'    => $this->paginate($rows)
+        ], 200);
     }
 
     public function store(MediaStoreRequest $request)
