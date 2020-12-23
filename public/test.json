@@ -1,0 +1,57 @@
+[
+  {
+    "uuid": "2c84d52d-2584-410d-9728-e7392b0765dc1",
+    "body": {
+      "bankName": "Blanda Bank 1",
+      "bankBIC": [
+        "JND"
+      ],
+      "reportScore": 71.49769153273903,
+      "type": "extended"
+    },
+    "createdAt": "2020-03-07T15:51:28.133Z",
+    "publishedAt": "2020-04-01T04:58:46.016Z"
+  },
+
+  {
+    "uuid": "2c84d52d-2584-410d-9728-e7392b0765dc2",
+    "body": {
+      "bankName": "Witting Bank 2",
+      "bankBIC": [
+        "NDS"
+      ],
+      "reportScore": 72.49769153273903,
+      "type": "intermediate"
+    },
+    "createdAt": "2020-03-07T15:51:28.133Z",
+    "publishedAt": "2020-04-01T04:58:46.016Z"
+  },
+
+  {
+    "uuid": "2c84d52d-2584-410d-9728-e7392b0765dc3",
+    "body": {
+      "bankName": "Ceba kio Bank 3",
+      "bankBIC": [
+        "PAR"
+      ],
+      "reportScore": 78.49769153273903,
+      "type": "primary"
+    },
+    "createdAt": "2020-03-07T15:51:28.133Z",
+    "publishedAt": "2020-04-01T04:58:46.016Z"
+  },
+
+  {
+    "uuid": "2c84d52d-2584-410d-9728-e7392b0765dc4",
+    "body": {
+      "bankName": "MAO mch 4 ",
+      "bankBIC": [
+        "DOM"
+      ],
+      "reportScore": 79.49769153273903,
+      "type": "extended"
+    },
+    "createdAt": "2020-03-07T15:51:28.133Z",
+    "publishedAt": "2021-04-01T04:58:46.016Z"
+  }
+]
